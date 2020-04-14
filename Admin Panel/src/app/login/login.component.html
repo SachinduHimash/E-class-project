@@ -1,0 +1,39 @@
+<div class="image">
+  <div>
+    <mat-card style="background: none;">
+      <mat-card-content class="main-container">
+        <mat-card-title class="title">Welcome</mat-card-title>
+        <mat-card-title class="title-2">Login to continue</mat-card-title>
+        <form (ngSubmit)="submit()" [formGroup]="form">
+          <mat-form-field appearance="outline">
+            <mat-label>Admin Email</mat-label>
+            <input formControlName="username" matInput type="text">
+            <mat-hint
+              *ngIf="form.controls['username'].invalid && (form.controls['username'].dirty || form.controls['username'].touched)"
+              class="alert alert-danger">
+              <div *ngIf="form.controls['username'].errors.email">Please enter a valid email.</div>
+              <div *ngIf="form.controls['username'].errors.required">Email is required</div>
+            </mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Admin Password</mat-label>
+            <input formControlName="password" matInput type="{{passwordType}}">
+            <mat-icon (click)="showPassword()" *ngIf="passwordType === 'text'" matSuffix>visibility_off</mat-icon>
+            <mat-icon (click)="showPassword()" *ngIf="passwordType === 'password'" matSuffix>visibility</mat-icon>
+            <mat-hint
+              *ngIf="form.controls['password'].invalid && (form.controls['password'].dirty || form.controls['password'].touched)"
+              class="alert alert-danger">
+              <div *ngIf="form.controls['password'].errors.required">
+                Password is required
+              </div>
+            </mat-hint>
+          </mat-form-field>
+
+          <button [disabled]="form.invalid" class="button" mat-raised-button type="submit">Login</button>
+
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
