@@ -4,6 +4,7 @@ import 'package:kf_drawer/kf_drawer.dart';
 
 import 'screens/auth_page.dart';
 import 'screens/calendar_page.dart';
+import 'screens/paperAccess_page.dart';
 import 'screens/main_page.dart';
 import 'utils/class_builder.dart';
 
@@ -43,24 +44,32 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
       initialPage: ClassBuilder.fromString('MainPage'),
       items: [
         KFDrawerItem.initWithPage(
-          text: Text('MAIN', style: TextStyle(color: Colors.white)),
-          icon: Icon(Icons.home, color: Colors.white),
+          text: Text('MAIN', style: TextStyle(color: Colors.black)),
+          icon: Icon(Icons.home, color: Colors.black),
           page: MainPage(),
         ),
         KFDrawerItem.initWithPage(
           text: Text(
-            'CALENDAR',
-            style: TextStyle(color: Colors.white),
+            'PAPER',
+            style: TextStyle(color: Colors.black),
           ),
-          icon: Icon(Icons.calendar_today, color: Colors.white),
+          icon: Icon(Icons.chrome_reader_mode, color: Colors.black),
+          page: PaperAccessPage(),
+        ),
+        KFDrawerItem.initWithPage(
+          text: Text(
+            'CALENDAR',
+            style: TextStyle(color: Colors.black),
+          ),
+          icon: Icon(Icons.calendar_today, color: Colors.black),
           page: CalendarPage(),
         ),
         KFDrawerItem.initWithPage(
           text: Text(
             'SETTINGS',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.black),
           ),
-          icon: Icon(Icons.settings, color: Colors.white),
+          icon: Icon(Icons.settings, color: Colors.black),
           page: ClassBuilder.fromString('SettingsPage'),
         ),
       ],
@@ -88,12 +97,12 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
         ),
         footer: KFDrawerItem(
           text: Text(
-            'SIGN IN',
-            style: TextStyle(color: Colors.white),
+            'SIGN OUT',
+            style: TextStyle(color: Colors.black),
           ),
           icon: Icon(
             Icons.input,
-            color: Colors.white,
+            color: Colors.black,
           ),
           onPressed: () {
             Navigator.of(context).push(CupertinoPageRoute(
