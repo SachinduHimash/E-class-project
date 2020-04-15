@@ -19,6 +19,7 @@
     "@angular/common": "9.0.1",
     "@angular/compiler": "9.0.1",
     "@angular/core": "9.0.1",
+    "@angular/fire": "^6.0.0",
     "@angular/flex-layout": "^9.0.0-beta.29",
     "@angular/forms": "9.0.1",
     "@angular/material": "^8.2.3",
@@ -29,6 +30,7 @@
     "@swimlane/ngx-datatable": "^16.0.3",
     "chartist": "^0.11.3",
     "core-js": "^2.6.11",
+    "firebase": "^7.14.0",
     "hammerjs": "^2.0.8",
     "ng-chartist": "4.1.0",
     "node-sass": "^4.13.1",
@@ -58,6 +60,11 @@
     "protractor": "~5.1.2",
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
-    "typescript": "3.7.5"
+    "typescript": "3.7.5",
+    "@angular-devkit/architect": "~0.900",
+    "firebase-tools": "^7.12.1",
+    "fuzzy": "^0.1.3",
+    "inquirer": "^6.2.2",
+    "inquirer-autocomplete-prompt": "^1.0.1"
   }
 }
