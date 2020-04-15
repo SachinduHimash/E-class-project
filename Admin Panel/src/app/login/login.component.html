@@ -24,9 +24,7 @@
             <mat-hint
               *ngIf="form.controls['password'].invalid && (form.controls['password'].dirty || form.controls['password'].touched)"
               class="alert alert-danger">
-              <div *ngIf="form.controls['password'].errors.required">
-                Password is required
-              </div>
+              <div *ngIf="form.controls['password'].errors.required">Password is required</div>
             </mat-hint>
           </mat-form-field>
 
