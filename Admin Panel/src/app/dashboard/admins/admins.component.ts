@@ -1,13 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {AngularFirestore} from '@angular/fire/firestore';
 import {Observable} from 'rxjs';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AngularFirestore} from '@angular/fire/firestore';
 import {AngularFireAuth} from '@angular/fire/auth';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
-import {CustomValidator} from '../../custom-validator';
-
-// import_for_adding_timestamp
+// use_for_timestamp
 import * as firebase from 'firebase';
+import 'firebase/firestore';
 
 @Component({
   selector: 'app-admins',
@@ -23,22 +22,17 @@ export class AdminsComponent implements OnInit {
   conFirmPasswordType = 'password';
   // form
   form: FormGroup;
+  // password_not_match
+  passwordError = false;
 
   constructor(private _af: AngularFirestore,
-              private _fb: FormBuilder,
-              private _auth: AngularFireAuth) {
+              private _auth: AngularFireAuth,
+              private _fb: FormBuilder) {
   }
-
 
   ngOnInit(): void {
     this.fetchAdmins();
     this.buildForm();
-  }
-
-  fetchAdmins() {
-    this.adminList = this._af.collection('users', ref => ref.where('role', '==', 'admin')).valueChanges();
-    // tc
-    // this.adminList.subscribe(console.log);
   }
 
   // build_form
@@ -50,11 +44,17 @@ export class AdminsComponent implements OnInit {
         confirmPassword: new FormControl('', Validators.required),
       },
       // custom_validate_for_match_password_and_confirm_password_class_locate_on_'app/custom-validators.ts'{fn}
-      {
-        validators: CustomValidator.passwordMatchValidator
-      }
+      // {
+      //   // validators: CustomValidator.passwordMatchValidator
+      // }
     );
   }// eo_buildForm
+
+  fetchAdmins() {
+    this.adminList = this._af.collection('users', ref => ref.where('role', '==', 'admin')).valueChanges();
+    // tc
+    // this.adminList.subscribe(console.log);
+  }
 
   // change_password_input_field_type
   showPassword() {
@@ -65,8 +65,11 @@ export class AdminsComponent implements OnInit {
     this.conFirmPasswordType === 'text' ? this.conFirmPasswordType = 'password' : this.conFirmPasswordType = 'text';
   }
 
-  // submit_form_value
   submit() {
+
+    if (this.form.value.password !== this.form.value.confirmPassword) {
+
+    }
     if (this.form.valid) {
 
       // tc
@@ -102,7 +105,7 @@ export class AdminsComponent implements OnInit {
     } // eo_if
   }// eo_submit
 
-
-
-
+  watchPassword() {
+    this.form.value.password !== this.form.value.confirmPassword ? this.passwordError = true : this.passwordError = false;
+  }
 }

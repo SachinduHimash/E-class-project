@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
 import {AngularFireAuth} from '@angular/fire/auth';
-import validate = WebAssembly.validate;
 
 @Component({
   selector: 'app-login',
@@ -41,9 +40,9 @@ export class LoginComponent implements OnInit {
     if (this.form.valid) {
       console.log(this.form.value);
       this._auth
-          .signInWithEmailAndPassword(this.form.value.username, this.form.value.password)
-          .then((credential) => console.log(credential.user))
-          .catch((err) => console.log(err));
+        .signInWithEmailAndPassword(this.form.value.username, this.form.value.password)
+        .then((credential) => console.log(credential.user))
+        .catch((err) => console.log(err));
     }
   }
 }

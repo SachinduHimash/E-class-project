@@ -1,21 +1,22 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {RouterModule} from '@angular/router';
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule, HttpClient} from '@angular/common/http';
-import {LocationStrategy, PathLocationStrategy} from '@angular/common';
-import {AppRoutes} from './app.routing';
-import {AppComponent} from './app.component';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { AppRoutes } from './app.routing';
+import { AppComponent } from './app.component';
 
-import {FlexLayoutModule} from '@angular/flex-layout';
-import {FullComponent} from './layouts/full/full.component';
-import {AppHeaderComponent} from './layouts/full/header/header.component';
-import {AppSidebarComponent} from './layouts/full/sidebar/sidebar.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {DemoMaterialModule} from './demo-material-module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FullComponent } from './layouts/full/full.component';
+import { AppHeaderComponent } from './layouts/full/header/header.component';
+import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DemoMaterialModule } from './demo-material-module';
 
-import {SharedModule} from './shared/shared.module';
-import {SpinnerComponent} from './shared/spinner.component';
+import { SharedModule } from './shared/shared.module';
+import { SpinnerComponent } from './shared/spinner.component';
 
 // firebase
 import {AngularFireModule} from '@angular/fire';
@@ -24,6 +25,7 @@ import {AngularFireAuthModule} from '@angular/fire/auth';
 import {environment} from '../environments/environment';
 
 import { LoginComponent } from './login/login.component';
+import { ERROR404Component } from './error404/error404.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { LoginComponent } from './login/login.component';
     AppHeaderComponent,
     SpinnerComponent,
     AppSidebarComponent,
-    LoginComponent
+    LoginComponent,
+    ERROR404Component
   ],
   imports: [
     BrowserModule,
@@ -41,12 +44,12 @@ import { LoginComponent } from './login/login.component';
     FormsModule,
     FlexLayoutModule,
     HttpClientModule,
+    SharedModule,
     // firebase_initialization
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireAuthModule,
     //
-    SharedModule,
     RouterModule.forRoot(AppRoutes),
     ReactiveFormsModule
   ],
@@ -58,5 +61,4 @@ import { LoginComponent } from './login/login.component';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}

@@ -1,1 +1,115 @@
-<p>classes works!</p>
+<div fxLayout="row wrap">
+  <!--  change_'fxFlex.gt-md=50'-->
+  <div fxFlex="100" fxFlex.gt-lg="25" fxFlex.gt-md="40" fxFlex.gt-xs="100">
+    <ul>
+      <mat-card *ngFor="let class of testClass">
+        <div class="p-20 bg-info position-relative">
+          <h4 class="card-title text-white m-0">Grade {{class?.grade}}</h4>
+          <!--        <h6 class="card-subtitle text-white m-0 op-5">Checkout my contacts here</h6>-->
+          <!--        <button mat-mini-fab color="accent" class="add-contact">+</button>-->
+        </div>
+        <div class="message-box contact-box p-20">
+          <div class="message-widget contact-widget">
+            <ul>
+              <!-- Message -->
+              <a *ngFor="let doc of class?.name">
+                <!--            <div class="user-img"> <img src="../assets/images/users/1.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>-->
+                <div class="mail-contnet">
+                  <h5>{{doc.name}}</h5>
+                </div>
+              </a>
+              <!-- Message -->
+            </ul>
+          </div>
+        </div>
+      </mat-card>
+    </ul>
+
+ <!-- <mat-card>-->
+<!--      <div class="p-20 bg-info position-relative">-->
+<!--        <h4 class="card-title text-white m-0">Grade 09</h4>-->
+<!--        &lt;!&ndash;        <h6 class="card-subtitle text-white m-0 op-5">Checkout my contacts here</h6>&ndash;&gt;-->
+<!--        &lt;!&ndash;        <button mat-mini-fab color="accent" class="add-contact">+</button>&ndash;&gt;-->
+<!--      </div>-->
+<!--      <div class="message-box contact-box p-20">-->
+<!--        <div class="message-widget contact-widget">-->
+<!--          <ul>-->
+<!--            <li *ngFor="let class of testClass">-->
+<!--              {{ class }}-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--          &lt;!&ndash; Message &ndash;&gt;-->
+<!--          <a href="#">-->
+<!--            &lt;!&ndash;            <div class="user-img"> <img src="../assets/images/users/1.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>&ndash;&gt;-->
+<!--            <div class="mail-contnet">-->
+<!--              <h5>Pavan kumar</h5>-->
+<!--            </div>-->
+<!--          </a>-->
+<!--          &lt;!&ndash; Message &ndash;&gt;-->
+<!--          <a href="#">-->
+<!--            &lt;!&ndash;            <div class="user-img"> <img src="../assets/images/users/1.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>&ndash;&gt;-->
+<!--            <div class="mail-contnet">-->
+<!--              <h5>Pavan kumar</h5>-->
+<!--            </div>-->
+<!--          </a>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </mat-card>-->
+  </div>
+  <!--  change_'fxFlex.gt-md=50'-->
+  <div fxFlex="100" fxFlex.gt-lg="75" fxFlex.gt-md="60" fxFlex.gt-xs="100">
+    <mat-card>
+      <div class="p-20 bg-info position-relative">
+        <h4 class="card-title text-white m-0">Add class</h4>
+      </div>
+      <mat-card-content class="main-container">
+        <form (ngSubmit)="submit()" [formGroup]="createClass">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Grade</mat-label>
+            <input formControlName="grade" matInput type="number" min="0">
+            <mat-hint
+              *ngIf="createClass.controls['grade'].invalid && (createClass.controls['grade'].dirty || createClass.controls['grade'].touched)"
+              class="alert alert-danger">
+              <div *ngIf="createClass.controls['grade'].errors.required">Grade is required</div>
+            </mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Class Name</mat-label>
+            <input formControlName="name" matInput type="text">
+            <mat-hint
+              *ngIf="createClass.controls['name'].invalid && (createClass.controls['name'].dirty || createClass.controls['name'].touched)"
+              class="alert alert-danger">
+              <div *ngIf="createClass.controls['name'].errors.required">Name is required</div>
+            </mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Fees</mat-label>
+            <input formControlName="fees" matInput type="number" min="0">
+            <mat-hint
+              *ngIf="createClass.controls['fees'].invalid && (createClass.controls['fees'].dirty || createClass.controls['fees'].touched)"
+              class="alert alert-danger">
+              <div *ngIf="createClass.controls['fees'].errors.required">Grade is required</div>
+            </mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Class type</mat-label>
+            <mat-select formControlName="type" >
+              <mat-option *ngFor="let type of classTypes" [value]="type">
+                {{type}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="createClass.controls['type'].hasError('required')">
+              You must make a selection
+            </mat-error>
+          </mat-form-field>
+
+          <button [disabled]="createClass.invalid" class="button" mat-raised-button type="submit">Create class</button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
