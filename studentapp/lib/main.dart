@@ -89,8 +89,11 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
             width: MediaQuery.of(context).size.width * 0.6,
-            child: Image.asset(
-              'assets/logo.png',
+            child: 
+            // Text('hi'
+            // ),
+            Image.asset(
+              'assets/logo1.png',
               alignment: Alignment.centerLeft,
             ),
           ),
