@@ -6,11 +6,13 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {DashboardComponent} from './dashboard.component';
 import {DashboardRoutes} from './dashboard.routing';
 import {ChartistModule} from 'ng-chartist';
-import {StudentComponent} from './student/student.component';
+import {AdminsComponent} from './admins/admins.component';
+import {StudentsComponent} from './students/students.component';
 import {ClassesComponent} from './classes/classes.component';
-import { PapersComponent } from './papers/papers.component';
-import { AdminsComponent } from './admins/admins.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {PapersComponent} from './papers/papers.component';
+
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { UserprofileComponent } from './userprofile/userprofile.component';
 
 @NgModule({
   imports: [
@@ -18,10 +20,11 @@ import {ReactiveFormsModule} from '@angular/forms';
     DemoMaterialModule,
     FlexLayoutModule,
     ChartistModule,
-    RouterModule.forChild(DashboardRoutes),
-    ReactiveFormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule.forChild(DashboardRoutes)
   ],
-  declarations: [DashboardComponent, StudentComponent, ClassesComponent, PapersComponent, AdminsComponent]
+  declarations: [DashboardComponent, AdminsComponent, StudentsComponent, ClassesComponent, PapersComponent, UserprofileComponent]
 })
 export class DashboardModule {
 }

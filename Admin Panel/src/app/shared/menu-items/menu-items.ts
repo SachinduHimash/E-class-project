@@ -15,10 +15,10 @@ const MENUITEMS = [
     icon: 'home'
   },
   {
-    state: 'student',
-    name: 'Student',
+    state: 'students',
+    name: 'Students',
     type: 'link',
-    icon: 'account_circle'
+    icon: 'face'
   },
   {
     state: 'classes',
@@ -33,12 +33,18 @@ const MENUITEMS = [
     icon: 'description'
   },
   {
-    state: 'admin',
-    name: 'Admin',
+    state: 'admins',
+    name: 'Admins',
     type: 'link',
     icon: 'verified_user'
+  },
+  {
+    state: 'profile',
+    name: 'Profile',
+    type: 'link',
+    icon: 'account_circle'
   }
-];
+  ];
 
 @Injectable()
 export class MenuItems {

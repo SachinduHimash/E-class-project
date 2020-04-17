@@ -1,10 +1,11 @@
 import {Routes} from '@angular/router';
 
 import {DashboardComponent} from './dashboard.component';
-import {StudentComponent} from './student/student.component';
+import {StudentsComponent} from './students/students.component';
 import {ClassesComponent} from './classes/classes.component';
 import {PapersComponent} from './papers/papers.component';
 import {AdminsComponent} from './admins/admins.component';
+import {UserprofileComponent} from './userprofile/userprofile.component';
 
 export const DashboardRoutes: Routes = [
   {
@@ -16,8 +17,8 @@ export const DashboardRoutes: Routes = [
     component: DashboardComponent
   },
   {
-    path: 'student',
-    component: StudentComponent
+    path: 'students',
+    component: StudentsComponent
   },
   {
     path: 'classes',
@@ -28,8 +29,11 @@ export const DashboardRoutes: Routes = [
     component: PapersComponent
   },
   {
-    path: 'admin',
+    path: 'admins',
     component: AdminsComponent
+  },
+  {
+    path: 'profile',
+    component: UserprofileComponent
   }
-
 ];
