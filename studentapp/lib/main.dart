@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
 class MainWidget extends StatefulWidget {
   MainWidget({Key key, this.title}) : super(key: key);
   final String title;
+  static String page;
 
   @override
   _MainWidgetState createState() => _MainWidgetState();
@@ -36,44 +37,83 @@ class MainWidget extends StatefulWidget {
 
 class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
   KFDrawerController _drawerController;
-
+  
   @override
   void initState() {
-    super.initState();
-    _drawerController = KFDrawerController(
-      initialPage: ClassBuilder.fromString('MainPage'),
-      items: [
-        KFDrawerItem.initWithPage(
-          text: Text('MAIN', style: TextStyle(color: Colors.black)),
-          icon: Icon(Icons.home, color: Colors.black),
-          page: MainPage(),
-        ),
-        KFDrawerItem.initWithPage(
-          text: Text(
-            'PAPER',
-            style: TextStyle(color: Colors.black),
+    if(MainWidget.page != null){
+      super.initState();
+      _drawerController = KFDrawerController(
+        initialPage: ClassBuilder.fromString(MainWidget.page),
+        items: [
+          KFDrawerItem.initWithPage(
+            text: Text('DASHBOARD', style: TextStyle(color: Colors.black)),
+            icon: Icon(Icons.home, color: Colors.black),
+            page: MainPage(),
           ),
-          icon: Icon(Icons.chrome_reader_mode, color: Colors.black),
-          page: PaperAccessPage(),
-        ),
-        KFDrawerItem.initWithPage(
-          text: Text(
-            'CALENDAR',
-            style: TextStyle(color: Colors.black),
+          KFDrawerItem.initWithPage(
+            text: Text(
+              'PAPER',
+              style: TextStyle(color: Colors.black),
+            ),
+            icon: Icon(Icons.chrome_reader_mode, color: Colors.black),
+            page: PaperAccessPage(),
           ),
-          icon: Icon(Icons.calendar_today, color: Colors.black),
-          page: CalendarPage(),
-        ),
-        KFDrawerItem.initWithPage(
-          text: Text(
-            'SETTINGS',
-            style: TextStyle(color: Colors.black),
+          KFDrawerItem.initWithPage(
+            text: Text(
+              'CALENDAR',
+              style: TextStyle(color: Colors.black),
+            ),
+            icon: Icon(Icons.calendar_today, color: Colors.black),
+            page: CalendarPage(),
           ),
-          icon: Icon(Icons.settings, color: Colors.black),
-          page: ClassBuilder.fromString('SettingsPage'),
-        ),
-      ],
-    );
+          KFDrawerItem.initWithPage(
+            text: Text(
+              'SETTINGS',
+              style: TextStyle(color: Colors.black),
+            ),
+            icon: Icon(Icons.settings, color: Colors.black),
+            page: ClassBuilder.fromString('SettingsPage'),
+          ),
+        ],
+      );
+    } else {
+      super.initState();
+      _drawerController = KFDrawerController(
+        initialPage: ClassBuilder.fromString('MainPage'),
+        items: [
+          KFDrawerItem.initWithPage(
+            text: Text('MAIN', style: TextStyle(color: Colors.black)),
+            icon: Icon(Icons.home, color: Colors.black),
+            page: MainPage(),
+          ),
+          KFDrawerItem.initWithPage(
+            text: Text(
+              'PAPER',
+              style: TextStyle(color: Colors.black),
+            ),
+            icon: Icon(Icons.chrome_reader_mode, color: Colors.black),
+            page: PaperAccessPage(),
+          ),
+          KFDrawerItem.initWithPage(
+            text: Text(
+              'CALENDAR',
+              style: TextStyle(color: Colors.black),
+            ),
+            icon: Icon(Icons.calendar_today, color: Colors.black),
+            page: CalendarPage(),
+          ),
+          KFDrawerItem.initWithPage(
+            text: Text(
+              'SETTINGS',
+              style: TextStyle(color: Colors.black),
+            ),
+            icon: Icon(Icons.settings, color: Colors.black),
+            page: ClassBuilder.fromString('SettingsPage'),
+          ),
+        ],
+      );
+    }
+    
   }
   @override
   Widget build(BuildContext context) {
@@ -89,8 +129,11 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
             width: MediaQuery.of(context).size.width * 0.6,
-            child: Image.asset(
-              'assets/logo.png',
+            child: 
+            // Text('hi'
+            // ),
+            Image.asset(
+              'assets/logo1.png',
               alignment: Alignment.centerLeft,
             ),
           ),
