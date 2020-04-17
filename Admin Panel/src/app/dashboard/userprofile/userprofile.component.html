@@ -1,0 +1,166 @@
+<div fxLayout="row wrap">
+  <!--  change_'fxFlex.gt-md=50'-->
+  <div fxFlex="100" fxFlex.gt-lg="25" fxFlex.gt-md="40" fxFlex.gt-xs="100">
+    <mat-card class="oh text-center little-profile">
+      <img alt="Photo of a Shiba Inu" mat-card-image src="assets/images/background/login.jpg">
+      <mat-card-content>
+        <div class="pro-img">
+          <img alt="user" class="img-circle" src="assets/images/users/4.jpg" width="100">
+        </div>
+        <h3 class="m-b-0">{{userData?.name}}</h3>
+        <h6 class="m-t-0 ">{{user?.email}}</h6>
+
+        <div class="m-t-30" fxLayout="row" fxLayoutWrap="wrap">
+          <div fxFlex="100" fxFlex.gt-sm="40%" fxFlex.gt-xs="33.33%">
+            <h6 class="m-0 font-light">Last Login</h6>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="60%" fxFlex.gt-xs="33.33%">
+            <h6 class="m-0 font-light">{{user?.metadata?.lastSignInTime.replace('GMT', '')}}</h6>
+          </div>
+        </div>
+        <div class="m-t-30" fxLayout="row" fxLayoutWrap="wrap">
+          <div fxFlex="100" fxFlex.gt-sm="40%" fxFlex.gt-xs="33.33%">
+            <h6 class="m-0 font-light">Admin Since</h6>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="60%" fxFlex.gt-xs="33.33%">
+            <h6 class="m-0 font-light">{{user?.metadata?.creationTime.replace('GMT', '')}}</h6>
+          </div>
+        </div>
+
+        <!--        <mat-card-actions>-->
+        <!--          <button mat-raised-button color="warn">Follow</button>-->
+        <!--        </mat-card-actions>-->
+        <!--        <div fxLayout="row" fxLayoutWrap="wrap" class="m-t-30">-->
+        <!--          <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="33.33%" fxFlex="100">-->
+        <!--            <h3 class="m-0 font-light">1099</h3>-->
+        <!--            <small>Articles</small>-->
+        <!--          </div>-->
+        <!--          <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="33.33%" fxFlex="100">-->
+        <!--            <h3 class="m-0 font-light">23,469</h3>-->
+        <!--            <small>Followers</small>-->
+        <!--          </div>-->
+        <!--          <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="33.33%" fxFlex="100">-->
+        <!--            <h3 class="m-0 font-light">6035</h3>-->
+        <!--            <small>Likes</small>-->
+        <!--          </div>-->
+        <!--        </div>-->
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <!--  change_'fxFlex.gt-md=50'-->
+  <div fxFlex="100" fxFlex.gt-lg="75" fxFlex.gt-md="60" fxFlex.gt-xs="100">
+    <mat-card>
+      <div class="p-20 bg-info position-relative">
+        <h4 class="card-title text-white m-0">Update</h4>
+      </div>
+
+      <mat-tab-group>
+        <!-- Tab 1 -->
+        <mat-tab label="Profile">
+          <mat-card-content class="main-container">
+            <form (ngSubmit)="submit()" [formGroup]="userProfile">
+
+              <mat-form-field appearance="outline">
+                <mat-label>Username</mat-label>
+                <input formControlName="userName" matInput type="text">
+                <mat-hint
+                  *ngIf="userProfile.controls['userName'].invalid && (userProfile.controls['userName'].dirty || userProfile.controls['userName'].touched)"
+                  class="alert alert-danger">
+                  <div *ngIf="userProfile.controls['userName'].errors.required">Password is required</div>
+                </mat-hint>
+              </mat-form-field>
+
+              <button [disabled]="userProfile.invalid" class="button" mat-raised-button type="submit">Update Username
+              </button>
+            </form>
+          </mat-card-content>
+        </mat-tab>
+        <!-- End Tab 1 -->
+        <!-- Tab 2 -->
+        <mat-tab label="Password">
+          <mat-card-content>
+            <form (ngSubmit)="submitUpdatePassword()" [formGroup]="updatePassword">
+
+              <mat-form-field appearance="outline">
+                <mat-label>Old password</mat-label>
+                <input formControlName="oldPassword" matInput [type]="passwordType">
+                <mat-icon (click)="showPassword()" *ngIf="passwordType === 'text'" matSuffix>visibility_off</mat-icon>
+                <mat-icon (click)="showPassword()" *ngIf="passwordType === 'password'" matSuffix>visibility</mat-icon>
+                <mat-hint
+                  *ngIf="updatePassword.controls['oldPassword'].invalid && (updatePassword.controls['oldPassword'].dirty || updatePassword.controls['oldPassword'].touched)"
+                  class="alert alert-danger">
+                  <div *ngIf="updatePassword.controls['oldPassword'].errors.required">Old Password is required</div>
+                </mat-hint>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>New Password</mat-label>
+                <input formControlName="password" matInput [type]="passwordType">
+                <mat-icon (click)="showPassword()" *ngIf="passwordType === 'text'" matSuffix>visibility_off</mat-icon>
+                <mat-icon (click)="showPassword()" *ngIf="passwordType === 'password'" matSuffix>visibility</mat-icon>
+                <mat-hint
+                  *ngIf="updatePassword.controls['password'].invalid && (updatePassword.controls['password'].dirty || updatePassword.controls['password'].touched)"
+                  class="alert alert-danger">
+                  <div *ngIf="updatePassword.controls['password'].errors.required">Password is required</div>
+                </mat-hint>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Confirm Password</mat-label>
+                <input (ngModelChange)="watchPassword()" formControlName="confirmPassword" matInput [type]="passwordType">
+                <mat-icon (click)="showPassword()" *ngIf="passwordType === 'text'" matSuffix>visibility_off
+                </mat-icon>
+                <mat-icon (click)="showPassword()" *ngIf="passwordType === 'password'" matSuffix>visibility
+                </mat-icon>
+                <mat-hint
+                  *ngIf="updatePassword.controls['confirmPassword'].invalid && (updatePassword.controls['confirmPassword'].dirty || updatePassword.controls['confirmPassword'].touched)"
+                  class="alert alert-danger">
+                  <div *ngIf="updatePassword.controls['confirmPassword'].errors.required">Password is required</div>
+                  <div *ngIf="passwordError">Password do not match</div>
+                </mat-hint>
+                <mat-hint *ngIf="passwordError" class="alert alert-danger">
+                  <div>Password do not match</div>
+                </mat-hint>
+              </mat-form-field>
+
+              <!--              <button class="button" mat-raised-button type="submit">Update Password</button>-->
+              <button [disabled]="updatePassword.invalid || passwordError" class="button" mat-raised-button type="submit">Update Password</button>
+            </form>
+          </mat-card-content>
+        </mat-tab>
+        <mat-tab label="Email">
+          <mat-card-content class="main-container">
+            <form (ngSubmit)="submitUpdateEmail()" [formGroup]="updateEmail">
+
+              <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input formControlName="email" matInput type="text">
+                <mat-hint
+                  *ngIf="updateEmail.controls['email'].invalid && (updateEmail.controls['email'].dirty || updateEmail.controls['email'].touched)"
+                  class="alert alert-danger">
+                  <div *ngIf="updateEmail.controls['email'].errors.email">Please enter a valid email.</div>
+                  <div *ngIf="updateEmail.controls['email'].errors.required">Email is required</div>
+                </mat-hint>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input formControlName="password" matInput [type]="passwordType">
+                <mat-icon (click)="showPassword()" *ngIf="passwordType === 'text'" matSuffix>visibility_off</mat-icon>
+                <mat-icon (click)="showPassword()" *ngIf="passwordType === 'password'" matSuffix>visibility</mat-icon>
+                <mat-hint
+                  *ngIf="updateEmail.controls['password'].invalid && (updatePassword.controls['password'].dirty || updateEmail.controls['password'].touched)"
+                  class="alert alert-danger">
+                  <div *ngIf="updateEmail.controls['password'].errors.required">Password is required</div>
+                </mat-hint>
+              </mat-form-field>
+
+              <button [disabled]="updateEmail.invalid" class="button" mat-raised-button type="submit">Update Email</button>
+            </form>
+          </mat-card-content>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card>
+
+  </div>
+</div>

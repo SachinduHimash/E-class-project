@@ -1,0 +1,39 @@
+.image{
+  margin-top: -2vh;
+  height:100vh; background-size:cover; width:auto;
+  display: grid;
+  background-image:url('../../assets/images/background/login.jpg');
+  background-position:50% 50%;
+}
+mat-card{
+  width: 350px;
+  height: 400px;
+  display: block;
+  margin-top:25vh;
+  margin-left:auto;
+  margin-right:auto;
+  vertical-align:middle;
+  box-shadow: none !important;
+}
+
+.title{
+  text-align: center;
+  font-size: 40px;
+  font-weight: 800;
+}
+
+.title-2{
+  text-align: center;
+  font-size: 19px;
+  margin: 20px !important;
+}
+
+.button{
+  margin: auto;
+  display: block;
+}
+
+mat-hint{
+  color: #e91e63 !important;
+}
+
