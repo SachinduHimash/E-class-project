@@ -1,3 +1,6 @@
+import '../screens/qustionSelcet.dart';
+import '../screens/paperAccess_page.dart';
+import '../screens/paper_page.dart';
 import '../screens/calendar_page.dart';
 import '../screens/main_page.dart';
 import '../screens/settings_page.dart';
@@ -15,6 +18,9 @@ class ClassBuilder {
     register<MainPage>(() => MainPage());
     register<CalendarPage>(() => CalendarPage());
     register<SettingsPage>(() => SettingsPage());
+    register<PaperAccessPage>(() => PaperAccessPage());
+    register<PaperPage>(() => PaperPage());
+    register<QustionSelect>(() => QustionSelect());
   }
 
   static dynamic fromString(String type) {

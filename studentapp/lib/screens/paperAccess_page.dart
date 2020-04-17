@@ -1,38 +1,21 @@
-import 'package:flip_panel/flip_panel.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kf_drawer/kf_drawer.dart';
-import 'package:scrolling_page_indicator/scrolling_page_indicator.dart';
 
-import 'qustionSelcet.dart';
+import '../main.dart';
+import 'paper_page.dart';
 
 class PaperAccessPage extends KFDrawerContent {
+
   @override
   _PaperAccessPageState createState() => _PaperAccessPageState();
 }
 
 class _PaperAccessPageState extends State<PaperAccessPage> {
-   
-  PageController _controller;
-
-  @override
-  void initState() {
-    _controller = PageController();
-    super.initState();
-  }
-
+  
   @override
   Widget build(BuildContext context) {
-    List<Widget> items = [
-      buildPage("0", Colors.red),
-      buildPage("1", Colors.blue),
-      buildPage("2", Colors.green),
-      buildPage("3", Colors.amber),
-      buildPage("4", Colors.deepPurple),
-      buildPage("5", Colors.teal),
-      buildPage("6", Colors.pink),
-      buildPage("7", Colors.brown)
-    ];
-
+    PaperPage.qNumber = 0;
     return SafeArea(
       child: Center(
         child: Column(
@@ -54,78 +37,27 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                     ),
                   ),
                 ),
-                Expanded(
-                  child: Center(
-                    heightFactor: 1.4,
-                    child: FlipClock.countdown(
-                      duration: Duration(minutes: 20),
-                      digitColor: Colors.white,
-                      backgroundColor: Colors.black,
-                      digitSize: 48.0,
-                      borderRadius: const BorderRadius.all(Radius.circular(3.0)),
-                      onDone: () => print('ih'),
-                    ),
-                  ),
-                ),
               ],
             ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+            RaisedButton(
+              onPressed: () {
+                Navigator.of(context).push(CupertinoPageRoute(
+                    fullscreenDialog: true,
+                    builder: (BuildContext context) {
+                      MainWidget.page = 'PaperPage';
+                      return MainWidget();
+                    },
+                  ),
+                );
+              },
+              padding: EdgeInsets.all(30),
+              child: Row(
                 children: <Widget>[
-                  Expanded(
-                    flex: 8,
-                    child: PageView(
-                      children: items,
-                      controller: _controller,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(0, 3 , 0, 5),
-                    child: ScrollingPageIndicator(
-                      dotColor: Colors.grey,
-                      dotSelectedColor: Colors.deepPurple,
-                      dotSize: 6,
-                      dotSelectedSize: 8,
-                      dotSpacing: 12,
-                      controller: _controller,
-                      itemCount: items.length,
-                      orientation: Axis.horizontal
-                    ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        RaisedButton(
-                          color: Colors.blue[800],
-                          child: Text(
-                            'Back'
-                          ),
-                          onPressed: () { _controller.previousPage(duration: Duration(microseconds: 150), curve: Curves.ease);},
-                        ),
-                        RaisedButton(
-                          child: Text(
-                            'All'
-                          ),
-                          onPressed: () { 
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => QustionSelect()),
-                            );
-                          },
-                        ),
-                        RaisedButton(
-                          child: Text(
-                            'Next'
-                          ),
-                          onPressed: () { _controller.nextPage(duration: Duration(microseconds: 150), curve: Curves.ease);},
-                        ),
-                      ],
-                    )
-                  ),
+                  Icon(Icons.access_alarm),
+                  Text('hi')
                 ],
-              ),
+              )
+
             ),
           ],
         ),
