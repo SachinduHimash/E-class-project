@@ -9,6 +9,7 @@ import '../main.dart';
 
 class PaperPage extends KFDrawerContent {
   static double qNumber;
+  static List<int> awnser= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
   @override
   _PaperPageState createState() => _PaperPageState();
 }
@@ -34,33 +35,32 @@ class _PaperPageState extends State<PaperPage> {
  
   @override
   Widget build(BuildContext context) {
-     var currentPageValue = 0.0;
     _controller.addListener(() {
     setState(() {
       PaperPage.qNumber = _controller.page;
     });
   });
     List<Widget> items = [
-      buildPage("1", Colors.blue),
-      buildPage("2", Colors.green),
-      buildPage("3", Colors.amber),
-      buildPage("4", Colors.deepPurple),
-      buildPage("5", Colors.teal),
-      buildPage("6", Colors.pink),
-      buildPage("7", Colors.brown),
-      buildPage("8", Colors.red),
-      buildPage("9", Colors.blue),
-      buildPage("10", Colors.green),
-      buildPage("11", Colors.amber),
-      buildPage("12", Colors.deepPurple),
-      buildPage("13", Colors.teal),
-      buildPage("14", Colors.pink),
-      buildPage("15", Colors.brown),
-      buildPage("16", Colors.red),
-      buildPage("17", Colors.blue),
-      buildPage("18", Colors.green),
-      buildPage("19", Colors.amber),
-      buildPage("20", Colors.deepPurple),
+      buildPage(1, Colors.blue),
+      buildPage(2, Colors.green),
+      buildPage(3, Colors.amber),
+      buildPage(4, Colors.deepPurple),
+      buildPage(5, Colors.teal),
+      buildPage(6, Colors.pink),
+      buildPage(7, Colors.brown),
+      buildPage(8, Colors.red),
+      buildPage(9, Colors.blue),
+      buildPage(10, Colors.green),
+      buildPage(11, Colors.amber),
+      buildPage(12, Colors.deepPurple),
+      buildPage(13, Colors.teal),
+      buildPage(14, Colors.pink),
+      buildPage(15, Colors.brown),
+      buildPage(16, Colors.red),
+      buildPage(17, Colors.blue),
+      buildPage(18, Colors.green),
+      buildPage(19, Colors.amber),
+      buildPage(20, Colors.deepPurple),
     ];
 
     if( PaperPage.qNumber == 19){
@@ -73,20 +73,6 @@ class _PaperPageState extends State<PaperPage> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        ClipRRect(
-                          borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                          child: Material(
-                            shadowColor: Colors.transparent,
-                            color: Colors.transparent,
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.menu,
-                                color: Colors.black,
-                              ),
-                              onPressed: widget.onMenuPressed,
-                            ),
-                          ),
-                        ),
                         Expanded(
                           child: Center(
                             heightFactor: 1.4,
@@ -151,6 +137,7 @@ class _PaperPageState extends State<PaperPage> {
                                     fullscreenDialog: true,
                                     builder: (BuildContext context) {
                                       PaperPage.qNumber = _controller.page;
+                                      print(PaperPage.qNumber);
                                       MainWidget.page = 'QustionSelect';
                                       return MainWidget();
                                     },
@@ -187,20 +174,6 @@ class _PaperPageState extends State<PaperPage> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        ClipRRect(
-                          borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                          child: Material(
-                            shadowColor: Colors.transparent,
-                            color: Colors.transparent,
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.menu,
-                                color: Colors.black,
-                              ),
-                              onPressed: widget.onMenuPressed,
-                            ),
-                          ),
-                        ),
                         Expanded(
                           child: Center(
                             heightFactor: 1.4,
@@ -254,6 +227,7 @@ class _PaperPageState extends State<PaperPage> {
                                     fullscreenDialog: true,
                                     builder: (BuildContext context) {
                                       PaperPage.qNumber = _controller.page;
+                                      print(PaperPage.qNumber);
                                       MainWidget.page = 'QustionSelect';
                                       return MainWidget();
                                     },
@@ -293,20 +267,6 @@ class _PaperPageState extends State<PaperPage> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        ClipRRect(
-                          borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                          child: Material(
-                            shadowColor: Colors.transparent,
-                            color: Colors.transparent,
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.menu,
-                                color: Colors.black,
-                              ),
-                              onPressed: widget.onMenuPressed,
-                            ),
-                          ),
-                        ),
                         Expanded(
                           child: Center(
                             heightFactor: 1.4,
@@ -371,6 +331,7 @@ class _PaperPageState extends State<PaperPage> {
                                     fullscreenDialog: true,
                                     builder: (BuildContext context) {
                                       PaperPage.qNumber = _controller.page;
+                                      print(PaperPage.qNumber);
                                       MainWidget.page = 'QustionSelect';
                                       return MainWidget();
                                     },
@@ -489,12 +450,95 @@ class _PaperPageState extends State<PaperPage> {
     // }
   }
 
-  Widget buildPage(String text, Color color) {
+  Widget buildPage(int qNumber, Color color) {
     return Padding(
       padding: EdgeInsets.all(12),
       child: Container(
         color: color,
-        child: Center(child: Text(text, style: TextStyle(fontSize: 42, color: Colors.white),),),
+        child: DraggableScrollableSheet(
+          expand: true,
+          initialChildSize: 1,
+          minChildSize: 1,
+          maxChildSize: 1,
+          builder: (BuildContext context, ScrollController scrollController) {
+            return Container(
+              color: color,
+              child: Column(
+                children: <Widget>[ 
+                  Row(
+
+                    children: <Widget>[
+                      Text(
+                        '$qNumber',
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      RaisedButton(
+                        color: PaperPage.awnser[qNumber-1] == 1 ?  Colors.green[400] : Colors.amber,
+                        onPressed: () {
+                          setState(() {
+                            PaperPage.awnser[qNumber-1] = 1;
+                          });
+                        },
+                        child: Text(
+                          '1  i am sexy boy 11',
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                      RaisedButton(
+                        color: PaperPage.awnser[qNumber-1] == 2 ?  Colors.green[400] : Colors.amber,
+                        onPressed: () {
+                          setState(() {
+                            PaperPage.awnser[qNumber-1] = 2;
+                          });
+                        },
+                        child: Text(
+                          '2   i am ',
+                          textAlign: TextAlign.start,
+                      ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      RaisedButton(
+                        color: PaperPage.awnser[qNumber-1] == 3 ?  Colors.green[400] : Colors.amber,
+                        onPressed: () {
+                          setState(() {
+                            PaperPage.awnser[qNumber-1] = 3;
+                          });
+                        },
+                        child: Text(
+                          '3  xxx',
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                      RaisedButton(
+                        color: PaperPage.awnser[qNumber-1] == 4 ?  Colors.green[400] : Colors.amber,
+                        onPressed: () {
+                          setState(() {
+                            PaperPage.awnser[qNumber-1] = 4;
+                          });
+                        },
+                        child: Text(
+                          '4   i am',
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              
+            );
+          },
+        ),
+        //Center(child: Text(text, style: TextStyle(fontSize: 42, color: Colors.white),),),
       ),
     );
   }

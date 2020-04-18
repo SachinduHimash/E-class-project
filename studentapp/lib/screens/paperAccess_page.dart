@@ -15,7 +15,6 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
   
   @override
   Widget build(BuildContext context) {
-    PaperPage.qNumber = 0;
     return SafeArea(
       child: Center(
         child: Column(

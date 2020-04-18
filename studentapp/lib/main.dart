@@ -41,9 +41,11 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
   @override
   void initState() {
     if(MainWidget.page != null){
+      String pageName = MainWidget.page;
+      MainWidget.page = null;
       super.initState();
       _drawerController = KFDrawerController(
-        initialPage: ClassBuilder.fromString(MainWidget.page),
+        initialPage: ClassBuilder.fromString(pageName),
         items: [
           KFDrawerItem.initWithPage(
             text: Text('DASHBOARD', style: TextStyle(color: Colors.black)),
@@ -82,7 +84,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
         initialPage: ClassBuilder.fromString('MainPage'),
         items: [
           KFDrawerItem.initWithPage(
-            text: Text('MAIN', style: TextStyle(color: Colors.black)),
+            text: Text('DASHBOARD', style: TextStyle(color: Colors.black)),
             icon: Icon(Icons.home, color: Colors.black),
             page: MainPage(),
           ),
@@ -119,10 +121,11 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       body: KFDrawer(
-//        borderRadius: 0.0,
-//        shadowBorderRadius: 0.0,
-//        menuPadding: EdgeInsets.all(0.0),
-//        scrollable: true,
+        //borderRadius: 0.0,
+        //shadowBorderRadius: 0.0,
+        //menuPadding: EdgeInsets.all(0.0),
+        //scrollable: true,
+        disableContentTap: true,
         controller: _drawerController,
         header: Align(
           alignment: Alignment.centerLeft,
