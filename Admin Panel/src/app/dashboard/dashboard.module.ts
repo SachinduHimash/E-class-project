@@ -13,6 +13,7 @@ import {PapersComponent} from './papers/papers.component';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { UserprofileComponent } from './userprofile/userprofile.component';
+import { PaymentsComponent } from './payments/payments.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,7 @@ import { UserprofileComponent } from './userprofile/userprofile.component';
     ReactiveFormsModule,
     RouterModule.forChild(DashboardRoutes)
   ],
-  declarations: [DashboardComponent, AdminsComponent, StudentsComponent, ClassesComponent, PapersComponent, UserprofileComponent]
+  declarations: [DashboardComponent, AdminsComponent, StudentsComponent, ClassesComponent, PapersComponent, UserprofileComponent, PaymentsComponent]
 })
 export class DashboardModule {
 }
