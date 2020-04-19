@@ -13,6 +13,7 @@ import {PapersComponent} from './papers/papers.component';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UserprofileComponent} from './userprofile/userprofile.component';
+import { PaymentsComponent } from './payments/payments.component';
 import {DropzoneDirective} from './dropzone.directive';
 import {UploaderComponent} from './uploader/uploader.component';
 
@@ -33,6 +34,7 @@ import {UploaderComponent} from './uploader/uploader.component';
     ClassesComponent,
     PapersComponent,
     UserprofileComponent,
+    PaymentsComponent,
     DropzoneDirective,
     UploaderComponent,
   ]
