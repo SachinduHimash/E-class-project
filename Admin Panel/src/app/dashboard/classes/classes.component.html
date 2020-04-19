@@ -58,58 +58,61 @@
   </div>
   <!--  change_'fxFlex.gt-md=50'-->
   <div fxFlex="100" fxFlex.gt-lg="75" fxFlex.gt-md="60" fxFlex.gt-xs="100">
-    <mat-card>
-      <div class="p-20 bg-info position-relative">
-        <h4 class="card-title text-white m-0">Add class</h4>
-      </div>
-      <mat-card-content class="main-container">
-        <form (ngSubmit)="submit()" [formGroup]="createClass">
+    <button class="button-add-class" mat-raised-button  color="primary" (click)="showAddClass()">{{buttonText}}</button>
+    <ng-template [ngIf]="addClassShow">
+      <mat-card>
+        <div class="p-20 bg-info position-relative">
+          <h4 class="card-title text-white m-0">Add class</h4>
+        </div>
+        <mat-card-content class="main-container">
+          <form (ngSubmit)="submit()" [formGroup]="createClass">
 
-          <mat-form-field appearance="outline">
-            <mat-label>Grade</mat-label>
-            <input formControlName="grade" matInput type="number" min="0">
-            <mat-hint
-              *ngIf="createClass.controls['grade'].invalid && (createClass.controls['grade'].dirty || createClass.controls['grade'].touched)"
-              class="alert alert-danger">
-              <div *ngIf="createClass.controls['grade'].errors.required">Grade is required</div>
-            </mat-hint>
-          </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Grade</mat-label>
+              <input formControlName="grade" matInput type="number" min="0">
+              <mat-hint
+                *ngIf="createClass.controls['grade'].invalid && (createClass.controls['grade'].dirty || createClass.controls['grade'].touched)"
+                class="alert alert-danger">
+                <div *ngIf="createClass.controls['grade'].errors.required">Grade is required</div>
+              </mat-hint>
+            </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Class Name</mat-label>
-            <input formControlName="name" matInput type="text">
-            <mat-hint
-              *ngIf="createClass.controls['name'].invalid && (createClass.controls['name'].dirty || createClass.controls['name'].touched)"
-              class="alert alert-danger">
-              <div *ngIf="createClass.controls['name'].errors.required">Name is required</div>
-            </mat-hint>
-          </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Class Name</mat-label>
+              <input formControlName="name" matInput type="text">
+              <mat-hint
+                *ngIf="createClass.controls['name'].invalid && (createClass.controls['name'].dirty || createClass.controls['name'].touched)"
+                class="alert alert-danger">
+                <div *ngIf="createClass.controls['name'].errors.required">Name is required</div>
+              </mat-hint>
+            </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Fees</mat-label>
-            <input formControlName="fees" matInput type="number" min="0">
-            <mat-hint
-              *ngIf="createClass.controls['fees'].invalid && (createClass.controls['fees'].dirty || createClass.controls['fees'].touched)"
-              class="alert alert-danger">
-              <div *ngIf="createClass.controls['fees'].errors.required">Grade is required</div>
-            </mat-hint>
-          </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Fees</mat-label>
+              <input formControlName="fees" matInput type="number" min="0">
+              <mat-hint
+                *ngIf="createClass.controls['fees'].invalid && (createClass.controls['fees'].dirty || createClass.controls['fees'].touched)"
+                class="alert alert-danger">
+                <div *ngIf="createClass.controls['fees'].errors.required">Grade is required</div>
+              </mat-hint>
+            </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Class type</mat-label>
-            <mat-select formControlName="type" >
-              <mat-option *ngFor="let type of classTypes" [value]="type">
-                {{type}}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="createClass.controls['type'].hasError('required')">
-              You must make a selection
-            </mat-error>
-          </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Class type</mat-label>
+              <mat-select formControlName="type" >
+                <mat-option *ngFor="let type of classTypes" [value]="type">
+                  {{type}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="createClass.controls['type'].hasError('required')">
+                You must make a selection
+              </mat-error>
+            </mat-form-field>
 
-          <button [disabled]="createClass.invalid" class="button" mat-raised-button type="submit">Create class</button>
-        </form>
-      </mat-card-content>
-    </mat-card>
+            <button [disabled]="createClass.invalid" class="button" mat-raised-button type="submit">Create class</button>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </ng-template>
   </div>
 </div>

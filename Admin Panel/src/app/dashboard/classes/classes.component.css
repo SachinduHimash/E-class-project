@@ -23,3 +23,12 @@ ul {
   margin-inline-end: 0px;
   padding-inline-start: 0px !important;
 }
+
+.button-add-class {
+  display: block;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 16px;
+  padding: 5px;
+}

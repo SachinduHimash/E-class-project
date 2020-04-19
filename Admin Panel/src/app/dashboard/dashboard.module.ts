@@ -12,7 +12,9 @@ import {ClassesComponent} from './classes/classes.component';
 import {PapersComponent} from './papers/papers.component';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { UserprofileComponent } from './userprofile/userprofile.component';
+import {UserprofileComponent} from './userprofile/userprofile.component';
+import {DropzoneDirective} from './dropzone.directive';
+import {UploaderComponent} from './uploader/uploader.component';
 
 @NgModule({
   imports: [
@@ -24,7 +26,16 @@ import { UserprofileComponent } from './userprofile/userprofile.component';
     ReactiveFormsModule,
     RouterModule.forChild(DashboardRoutes)
   ],
-  declarations: [DashboardComponent, AdminsComponent, StudentsComponent, ClassesComponent, PapersComponent, UserprofileComponent]
+  declarations: [
+    DashboardComponent,
+    AdminsComponent,
+    StudentsComponent,
+    ClassesComponent,
+    PapersComponent,
+    UserprofileComponent,
+    DropzoneDirective,
+    UploaderComponent,
+  ]
 })
 export class DashboardModule {
 }
