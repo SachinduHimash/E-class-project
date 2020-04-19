@@ -1,0 +1,62 @@
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
+
+.uploader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-weight: 200;
+  height: 200px;
+  border: 2px dashed #1e88e5;
+  border-radius: 2px;
+  background: white;
+  margin: 10px;
+}
+.uploader.hovering{
+   border: 2px solid #3e444a;
+   color: #dadada;
+ }
+
+.file-label{
+  font-size: 1.2em;
+  color: white;
+}
+
+
+progress::-webkit-progress-value{
+  transition: width 0.1s ease;
+}
+
+img{
+  width: 250px;
+}
+
+mat-raised-button{
+  padding: 20px;
+}
+.btn-custom{
+  margin: 10px;
+}
+
+.file{
+  margin-bottom: 20px
+}

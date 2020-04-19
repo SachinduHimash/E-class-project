@@ -28,6 +28,9 @@ export class ClassesComponent implements OnInit {
   classes: any;
   testClass: any[] = [];
 
+  // show_hide_add_class
+  addClassShow = false;
+  buttonText = 'Insert class';
 
   constructor(private _fb: FormBuilder,
               private _af: AngularFirestore) {
@@ -85,13 +88,20 @@ export class ClassesComponent implements OnInit {
       console.log(docs);
 
       docs = docs.map((data) => {
-                const grade = data.id.toString().split('.')[0];
-                return {...data, grade};
-              }).map((doc) => {
-                const classFound = this.testClass.find(classes => classes['grade'] === doc.grade);
-                classFound ? classFound.name.push(doc) : this.testClass.push({grade: doc.grade, name: [doc]});
-              });
+        const grade = data.id.toString().split('.')[0];
+        return {...data, grade};
+      }).map((doc) => {
+        const classFound = this.testClass.find(classes => classes['grade'] === doc.grade);
+        classFound ? classFound.name.push(doc) : this.testClass.push({grade: doc.grade, name: [doc]});
+      });
       console.log(this.testClass);
     });
+  }
+
+  // show_hide_add_class_content
+  showAddClass() {
+    this.addClassShow ? this.buttonText = 'Insert class' : this.buttonText = 'Hide form';
+    this.addClassShow = !this.addClassShow;
+
   }
 }

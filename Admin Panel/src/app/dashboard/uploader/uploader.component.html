@@ -1,0 +1,24 @@
+<div>
+  <div (dropped)="Upload($event)" (hovered)="toggleHover($event)" [class.hovering]="isHovering" appDropzone
+       class="uploader">
+    <!--  <h3>Image uploader</h3>-->
+    <h3>Drag and drop a file</h3>
+    <h4 style="text-align: center">Or</h4>
+    <div class="file">
+      <label class="file-label">
+        <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+        <input hidden (change)="Upload($event.target?.files)" #fileInput type="file" id="file">
+      </label>
+    </div>
+  </div>
+  <div *ngIf="( precentage | async )as precent" class="pl-5 pr-5">
+    <p>
+      <mat-progress-bar mode="determinate" [value]="precent"></mat-progress-bar>
+    </p>
+  </div>
+  <div *ngIf="(snapshot | async ) as snap">
+    <button class="btn-custom" (click)="task.pause()" [disabled]="!isActive(snap)" mat-raised-button color="primary">Pause</button>
+    <button class="btn-custom" (click)="task.cancel()" [disabled]="!isActive(snap)"  mat-raised-button color="primary">Cancel</button>
+    <button class="btn-custom" (click)="task.resume()" [disabled]="!(snap.state === 'paused')"  mat-raised-button color="primary">Resume</button>
+  </div>
+</div>

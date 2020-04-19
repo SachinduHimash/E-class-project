@@ -6,6 +6,7 @@ import {ClassesComponent} from './classes/classes.component';
 import {PapersComponent} from './papers/papers.component';
 import {AdminsComponent} from './admins/admins.component';
 import {UserprofileComponent} from './userprofile/userprofile.component';
+import {UploaderComponent} from './uploader/uploader.component';
 
 export const DashboardRoutes: Routes = [
   {
@@ -35,5 +36,9 @@ export const DashboardRoutes: Routes = [
   {
     path: 'profile',
     component: UserprofileComponent
+  },
+  {
+    path: 'uploader',
+    component: UploaderComponent
   }
 ];
