@@ -33,8 +33,6 @@ export class UploaderComponent implements OnInit , OnChanges {
 
   ngOnInit(): void {
     this.getImages();
-    console.log('call me');
-    console.log(this.dataReceive);
   }
 
   ngOnChanges() {

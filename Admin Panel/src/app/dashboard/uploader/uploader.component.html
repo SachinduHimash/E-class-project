@@ -10,7 +10,6 @@
         <input hidden (change)="Upload($event.target?.files)" #fileInput type="file" id="file">
       </label>
     </div>
-    <button (click)="sendLink()">send link</button>
   </div>
   <div *ngIf="( percentage | async )as precent" class="pl-5 pr-5">
     <p>
