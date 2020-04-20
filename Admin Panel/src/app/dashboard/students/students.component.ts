@@ -104,6 +104,7 @@ export class StudentsComponent implements OnInit {
         this.classTypes = docs.map((data) => {
           const grade = data.id.toString().split('.')[0];
           let name = '';
+          //@ts-ignore
           data?.name ? name = grade.concat(' - ').concat(data?.name) : name = grade;
           return {name, value: data.id, grade};
         });
