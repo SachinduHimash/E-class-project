@@ -10,8 +10,9 @@
         <input hidden (change)="Upload($event.target?.files)" #fileInput type="file" id="file">
       </label>
     </div>
+    <button (click)="sendLink()">send link</button>
   </div>
-  <div *ngIf="( precentage | async )as precent" class="pl-5 pr-5">
+  <div *ngIf="( percentage | async )as precent" class="pl-5 pr-5">
     <p>
       <mat-progress-bar mode="determinate" [value]="precent"></mat-progress-bar>
     </p>

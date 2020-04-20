@@ -4,6 +4,9 @@ import {AngularFirestore} from '@angular/fire/firestore';
 
 import * as firebase from 'firebase';
 import 'firebase/firestore';
+import {MatDialog} from '@angular/material';
+
+import {UploaderComponent} from '../uploader/uploader.component';
 
 @Component({
   selector: 'app-papers',
@@ -15,6 +18,9 @@ export class PapersComponent implements OnInit {
   // create_form
   formGroup: FormGroup;
   form: FormArray;
+
+  // show_hide_create_paper_stepper
+  showCreatePaper = false;
 
   // dropdown_selector
   correctAnswer = [
@@ -37,7 +43,8 @@ export class PapersComponent implements OnInit {
   ];
 
   constructor(private _fb: FormBuilder,
-              private _af: AngularFirestore) {
+              private _af: AngularFirestore,
+              public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -47,8 +54,8 @@ export class PapersComponent implements OnInit {
   // create_main_form
   buildForm() {
     this.formGroup = this._fb.group({
-      grade: new FormControl('',),
-      paperNumber: new FormControl('',),
+      grade: new FormControl('', Validators.required),
+      paperNumber: new FormControl('', Validators.required),
       form: this._fb.array([])
     });
     for (let i = 0; i < 20; i++) {
@@ -79,6 +86,34 @@ export class PapersComponent implements OnInit {
 
   submit() {
 
+    console.log(this.formGroup.value)
+
+    // let paperNumber = this.formGroup.value.paperNumber;
+    //
+    // if (paperNumber < 10) {
+    //   paperNumber = '0'.concat(paperNumber.toString());
+    // }
+    //
+    // // docRef_'papers/9/paperNumbers/202001
+    // // tslint:disable-next-line:max-line-length
+    // const docRef = `papers/${this.formGroup.value.grade}/paperNumbers/${new Date().getFullYear().toString().concat(paperNumber)}`;
+    //
+    // // first_check_exist_of_paper
+    // this._af
+    //   .firestore.doc(docRef).get().then(docSnapshot => {
+    //   if (docSnapshot.exists) {
+    //     console.log('paper already exists');
+    //   } else {
+    //     this._af.doc(docRef).set({
+    //       questions: this.form.value,
+    //       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    //       updatedAt: null
+    //     }).catch(console.log);
+    //   }
+    // });
+  }
+
+  showPaper() {
     let paperNumber = this.formGroup.value.paperNumber;
 
     if (paperNumber < 10) {
@@ -88,19 +123,36 @@ export class PapersComponent implements OnInit {
     // docRef_'papers/9/paperNumbers/202001
     // tslint:disable-next-line:max-line-length
     const docRef = `papers/${this.formGroup.value.grade}/paperNumbers/${new Date().getFullYear().toString().concat(paperNumber)}`;
-
-    // first_check_exist_of_paper
-    this._af
-      .firestore.doc(docRef).get().then(docSnapshot => {
-        if (docSnapshot.exists)  {
-          console.log('paper already exists');
+    this._af.firestore
+      .doc(docRef)
+      .get()
+      .then(documentSnapshot => {
+        if (documentSnapshot.exists) {
+          console.log('document exists');
         } else {
-          this._af.doc(docRef).set({
-            questions: this.form.value,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            updatedAt: null
-          }).catch(console.log);
+          this.showCreatePaper = true;
         }
       });
+
+  }
+
+  openDialog(i) {
+
+    const dialogRef = this.dialog.open(UploaderComponent, {
+      width: '600px',
+      data: {
+        grade: this.formGroup.value.grade,
+        paperNumber: this.formGroup.value.paperNumber,
+        path: 'papers'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.formGroup.get('form')[i].picture = result.url ;
+    });
+  }
+
+  ch(v) {
+    console.log(v)
   }
 }
