@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output , Inject} from '@angular/core';
 import {AngularFireStorage, AngularFireUploadTask} from '@angular/fire/storage';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {Observable} from 'rxjs';
 import {finalize} from 'rxjs/operators';
+import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'app-uploader',
@@ -14,7 +15,7 @@ export class UploaderComponent implements OnInit , OnChanges {
 
   @Input() uploadPath: string;
   task: AngularFireUploadTask;
-  precentage: Observable<number>;
+  percentage: Observable<number>;
   snapshot: Observable<any>;
   data: any;
   downloadUrl: Observable<String>;
@@ -25,11 +26,15 @@ export class UploaderComponent implements OnInit , OnChanges {
 
   constructor(private _storage: AngularFireStorage,
               private _firestore: AngularFirestore,
+              public dialogRef: MatDialogRef<UploaderComponent>,
+              @Inject(MAT_DIALOG_DATA) public dataReceive
   ) {
   }
 
   ngOnInit(): void {
     this.getImages();
+    console.log('call me');
+    console.log(this.dataReceive);
   }
 
   ngOnChanges() {
@@ -37,7 +42,7 @@ export class UploaderComponent implements OnInit , OnChanges {
   }
 
   sendLink() {
-    this.linkEvent.emit(this.link);
+    this.dialogRef.close();
   }
 
 
@@ -67,30 +72,32 @@ export class UploaderComponent implements OnInit , OnChanges {
 
   }
 
+
+  generateRandom = () => Math.ceil(Date.now() + Math.random()).toString();
+
   Upload(event: FileList) {
     console.log(event);
     const file = event.item(0);
     if (file.type.split('/')[0] !== 'image') {
-      // this._message.showWarning('Invalid file type');
-      console.log('unspported file type');
+      console.log('unsupported file type');
       return;
     }
-    // const uid = this._auth.userId;
-    // const timeStamp = new Date().getTime();
-    // if (uid) {
-    //   const path = `${this.uploadPath}Pic/${uid}_${timeStamp}`;
-      const path = `test/01`;
-      const ref = this._storage.ref(path);
-      this.task = this._storage.upload(path, file);
-      this.precentage = this.task.percentageChanges();
+
+    let uploadPath = '';
+
+      if(this.dataReceive.path === 'papers'){
+          uploadPath = `papers/${this.dataReceive.grade}/${this.dataReceive.paperNumber}/${file.name.concat(this.generateRandom())}`;
+      }
+
+
+      const ref = this._storage.ref(uploadPath);
+      this.task = this._storage.upload(uploadPath, file);
+      this.percentage = this.task.percentageChanges();
       this.snapshot = this.task.snapshotChanges().pipe(
         finalize(() => {
           ref.getDownloadURL()
             .subscribe(link => {
-                this.link = link;
-                console.log(this.link);
-                // this._message.showSuccess('upload complete');
-                this.sendLink();
+                this.dialogRef.close({url: link});
               }
             );
 

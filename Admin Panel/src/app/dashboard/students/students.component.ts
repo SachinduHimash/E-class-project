@@ -68,13 +68,26 @@ export class StudentsComponent implements OnInit {
     const docId = (new Date().getFullYear()).toString()
       .concat('.').concat(formValue.class.value.trim())
       .concat('.').concat(formValue.name.trim())
-      .concat('.').concat(Math.ceil(Math.random() * (Math.pow(10, 9))).toString());
+      .concat('.').concat(Math.ceil(Date.now() + Math.random()).toString());
 
-    console.log(docId);
-
-    // this._af.collection('users')
-    //         .doc(docId)
-    //         .set();
+    this._af.doc(`users/${docId}`)
+      .set({
+        class: formValue.class.value,
+        name: formValue.name,
+        password: btoa(formValue.password),
+        role: 'student'
+      }).then(() => {
+      this._af.doc(`class/${formValue.class.value}/students/${docId}`)
+        .set({
+          name: formValue.name,
+          address: formValue.address,
+          telephone: formValue.telephone,
+          email: formValue.email,
+        }).then(() => {
+        console.log('here');
+      }).catch(console.log);
+    }).catch(console.log);
+    console.log('end')
   }
 
   fetchStudent() {
@@ -104,6 +117,7 @@ export class StudentsComponent implements OnInit {
         this.classTypes = docs.map((data) => {
           const grade = data.id.toString().split('.')[0];
           let name = '';
+          // @ts-ignore
           data?.name ? name = grade.concat(' - ').concat(data?.name) : name = grade;
           return {name, value: data.id, grade};
         });
