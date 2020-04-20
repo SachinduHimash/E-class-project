@@ -86,7 +86,7 @@ export class PapersComponent implements OnInit {
 
   submit() {
 
-    console.log(this.formGroup.value)
+    console.log(this.formGroup.value);
 
     // let paperNumber = this.formGroup.value.paperNumber;
     //
@@ -148,11 +148,8 @@ export class PapersComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.formGroup.get('form')[i].picture = result.url ;
+      (<FormArray>this.formGroup.controls['form']).at(i).patchValue({picture: result.url});
     });
   }
 
-  ch(v) {
-    console.log(v)
-  }
 }
