@@ -470,23 +470,42 @@ class _PaperPageState extends State<PaperPage> {
                     children: <Widget>[
                       Text(
                         '$qNumber',
-                        textAlign: TextAlign.center,
+                        
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Center(
+                        child: Image(
+                          image: AssetImage(
+                            'assets/logo.png'
+                          ),
+                          height: 200,
+                          width: 270,
+                          ),
                       )
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      RaisedButton(
-                        color: PaperPage.awnser[qNumber-1] == 1 ?  Colors.green[400] : Colors.amber,
-                        onPressed: () {
-                          setState(() {
-                            PaperPage.awnser[qNumber-1] = 1;
-                          });
-                        },
-                        child: Text(
-                          '1  i am sexy boy 11',
-                          textAlign: TextAlign.start,
+                      Expanded(
+                                              child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: RaisedButton(
+                            color: PaperPage.awnser[qNumber-1] == 1 ?  Colors.green[400] : Colors.amber,
+                            onPressed: () {
+                              setState(() {
+                                PaperPage.awnser[qNumber-1] = 1;
+                              });
+                            },
+                            child: Text(
+                              '1  xxxxxx',
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
                         ),
                       ),
                       RaisedButton(
@@ -497,7 +516,7 @@ class _PaperPageState extends State<PaperPage> {
                           });
                         },
                         child: Text(
-                          '2   i am ',
+                          '2  yyyyyy',
                           textAlign: TextAlign.start,
                       ),
                       ),
@@ -514,7 +533,7 @@ class _PaperPageState extends State<PaperPage> {
                           });
                         },
                         child: Text(
-                          '3  xxx',
+                          '3  zzzzzz',
                           textAlign: TextAlign.start,
                         ),
                       ),
@@ -526,7 +545,7 @@ class _PaperPageState extends State<PaperPage> {
                           });
                         },
                         child: Text(
-                          '4   i am',
+                          '4  wwwwwwww',
                           textAlign: TextAlign.start,
                         ),
                       ),
