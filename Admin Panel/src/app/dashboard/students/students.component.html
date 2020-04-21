@@ -68,12 +68,43 @@
           <form (ngSubmit)="submit()" [formGroup]="createStudent">
 
             <mat-form-field appearance="outline">
-              <mat-label>Name</mat-label>
-              <input formControlName="name" matInput type="text">
+              <mat-label>Student Id (Required) </mat-label>
+              <input formControlName="userId" matInput type="text">
               <mat-hint
-                *ngIf="createStudent.controls['name'].invalid && (createStudent.controls['name'].dirty || createStudent.controls['name'].touched)"
+                *ngIf="createStudent.controls['userId'].invalid && (createStudent.controls['userId'].dirty || createStudent.controls['userId'].touched)"
                 class="alert alert-danger">
-                <div *ngIf="createStudent.controls['name'].errors.required">Name is required</div>
+                <div *ngIf="createStudent.controls['userId'].errors.required">User id is required</div>
+              </mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Name (Required)</mat-label>
+              <input formControlName="fullName" matInput type="text">
+              <mat-hint
+                *ngIf="createStudent.controls['fullName'].invalid && (createStudent.controls['fullName'].dirty || createStudent.controls['fullName'].touched)"
+                class="alert alert-danger">
+                <div *ngIf="createStudent.controls['fullName'].errors.required">Name is required</div>
+              </mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>telephone</mat-label>
+              <input formControlName="teleNo" matInput type="number" min="0">
+              <mat-hint
+                *ngIf="createStudent.controls['teleNo'].invalid && (createStudent.controls['teleNo'].dirty || createStudent.controls['teleNo'].touched)"
+                class="alert alert-danger">
+                <div *ngIf="createStudent.controls['teleNo'].errors.required">telephone number is required</div>
+              </mat-hint>
+            </mat-form-field>
+
+
+            <mat-form-field appearance="outline">
+              <mat-label>School</mat-label>
+              <input formControlName="school" matInput type="text">
+              <mat-hint
+                *ngIf="createStudent.controls['school'].invalid && (createStudent.controls['school'].dirty || createStudent.controls['school'].touched)"
+                class="alert alert-danger">
+                <div *ngIf="createStudent.controls['school'].errors.email">Please enter a valid email.</div>
               </mat-hint>
             </mat-form-field>
 
@@ -87,15 +118,6 @@
               </mat-hint>
             </mat-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-label>telephone</mat-label>
-              <input formControlName="telephone" matInput type="number" min="0">
-              <mat-hint
-                *ngIf="createStudent.controls['telephone'].invalid && (createStudent.controls['telephone'].dirty || createStudent.controls['telephone'].touched)"
-                class="alert alert-danger">
-                <div *ngIf="createStudent.controls['telephone'].errors.required">address is required</div>
-              </mat-hint>
-            </mat-form-field>
 
             <mat-form-field appearance="outline">
               <mat-label>Email</mat-label>
@@ -104,7 +126,6 @@
                 *ngIf="createStudent.controls['email'].invalid && (createStudent.controls['email'].dirty || createStudent.controls['email'].touched)"
                 class="alert alert-danger">
                 <div *ngIf="createStudent.controls['email'].errors.email">Please enter a valid email.</div>
-                <div *ngIf="createStudent.controls['email'].errors.required">Email is required</div>
               </mat-hint>
             </mat-form-field>
 
@@ -121,7 +142,7 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline">
-              <mat-label>Password</mat-label>
+              <mat-label>Password (Required)</mat-label>
               <input formControlName="password" matInput type="{{passwordType}}">
               <mat-icon (click)="showPassword()" *ngIf="passwordType === 'text'" matSuffix>visibility_off</mat-icon>
               <mat-icon (click)="showPassword()" *ngIf="passwordType === 'password'" matSuffix>visibility</mat-icon>
