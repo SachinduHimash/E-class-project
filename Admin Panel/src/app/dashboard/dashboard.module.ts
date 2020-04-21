@@ -16,6 +16,9 @@ import {UserprofileComponent} from './userprofile/userprofile.component';
 import { PaymentsComponent } from './payments/payments.component';
 import {DropzoneDirective} from './dropzone.directive';
 import {UploaderComponent} from './uploader/uploader.component';
+import { ViewComponent } from './papers/view/view.component';
+import { UpdateComponent } from './papers/update/update.component';
+import { CreateComponent } from './papers/create/create.component';
 
 @NgModule({
   imports: [
@@ -37,6 +40,9 @@ import {UploaderComponent} from './uploader/uploader.component';
     PaymentsComponent,
     DropzoneDirective,
     UploaderComponent,
+    ViewComponent,
+    UpdateComponent,
+    CreateComponent,
   ]
 })
 export class DashboardModule {
