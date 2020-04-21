@@ -105,3 +105,55 @@ export class ClassesComponent implements OnInit {
 
   }
 }
+
+
+// v_01
+
+// submit() {
+//
+//   const formValue = this.createClass.value;
+//
+//   // crete_doc_id_format_'grade.name'
+//   const grade = formValue.grade.toString();
+//   const name = formValue.name.toString();
+//   const docId = grade.concat('.').concat(name);
+//
+//   // check_class_is_already_on_collection
+//   this._af.firestore.collection('class').doc(docId).get()
+//     .then(docSnapshot => {
+//       if (docSnapshot.exists) {
+//         console.log('exists');
+//       } else {
+//         this._af.collection('class').doc(docId).set({
+//           name,
+//           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+//           fees: formValue.fees,
+//           type: formValue.type
+//         }).catch((err) => console.log(err));
+//       }
+//     });
+//
+// }
+//
+// fetchClasses() {
+//
+//   this.classes = this._af.collection('class')
+//     .valueChanges({idField: 'id'});
+//
+//   const nm = this.classes;
+//
+//   nm.subscribe((docs) => {
+//     console.log(docs);
+//
+//     docs = docs.map((data) => {
+//       const grade = data.id.toString().split('.')[0];
+//       return {...data, grade};
+//     }).map((doc) => {
+//       const classFound = this.testClass.find(classes => classes['grade'] === doc.grade);
+//       classFound ? classFound.name.push(doc) : this.testClass.push({grade: doc.grade, name: [doc]});
+//     });
+//     console.log(this.testClass);
+//   });
+// }
+
+// eov_o1
