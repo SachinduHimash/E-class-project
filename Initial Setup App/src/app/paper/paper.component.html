@@ -1,1 +1,110 @@
-<p>paper works!</p>
+<form [formGroup]="updateFormGroup">
+    <mat-card>
+      <div class="p-20 bg-info position-relative">
+        <h4 class="card-title text-white m-0">
+          <ng-container *ngIf="!showViewForm">
+            View Paper
+          </ng-container>
+          <ng-container *ngIf="showViewForm">
+            View Grade {{updateFormGroup.value.grade}}  - Paper {{updateFormGroup.value.paperNumber}}
+          </ng-container>
+        </h4>
+      </div>
+      <ng-template [ngIf]="!showViewForm">
+        <mat-card-content>
+          <mat-form-field appearance="outline">
+            <mat-label>Grade</mat-label>
+            <input formControlName="grade" matInput type="number">
+            <mat-hint
+              *ngIf="updateFormGroup.controls['grade'].invalid && (updateFormGroup.controls['grade'].dirty || updateFormGroup.controls['grade'].touched)"
+              class="alert alert-danger">
+              <div *ngIf="updateFormGroup.controls['grade'].errors.required">Grade is required</div>
+            </mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Paper number</mat-label>
+            <input formControlName="paperNumber" matInput type="number">
+            <mat-hint
+              *ngIf="updateFormGroup.controls['paperNumber'].invalid && (updateFormGroup.controls['paperNumber'].dirty || updateFormGroup.controls['paperNumber'].touched)"
+              class="alert alert-danger">
+              <div *ngIf="updateFormGroup.controls['paperNumber'].errors.required">paper number is required</div>
+            </mat-hint>
+          </mat-form-field>
+  
+          <button (click)="getPaper()" [disabled]="updateFormGroup.invalid" color="primary" mat-raised-button
+                  style="margin:0 0 20px 30px" type="submit">View Paper
+          </button>
+  
+        </mat-card-content>
+      </ng-template>
+      <ng-template [ngIf]="showViewForm">
+        <mat-vertical-stepper>
+          <mat-step *ngFor="let  question of paper ; let i = index" [stepControl]="question.number">
+  
+            <ng-template matStepLabel>Question {{i + 1}}</ng-template>
+  
+            <ng-template [ngIf]="question.picture">
+              <img [src]="question.picture" mat-card-image>
+            </ng-template>
+  
+            <p>{{question.question}}</p>
+  
+            <mat-list>
+              <!--            <mat-list-item>-->
+              <!--              <mat-icon matListIcon>1</mat-icon>-->
+              <!--              <mat-icon matListIcon>looks_one</mat-icon>-->
+              <!--              <p matLine>-->
+              <!--                <small> {{question.answer1}} </small>-->
+              <!--              </p>-->
+              <!--            </mat-list-item>-->
+              <mat-divider></mat-divider>
+              <mat-list-item>
+                <mat-icon matListIcon>looks_one</mat-icon>
+                <p matLine>
+                  <small> {{question.answer1}} </small>
+                </p>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item>
+                <mat-icon matListIcon>looks_two</mat-icon>
+                <p matLine>
+                  <small>{{question.answer2}}</small>
+                </p>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item>
+                <mat-icon matListIcon>looks_3</mat-icon>
+                <p matLine>
+                  <small>{{question.answer3}}</small>
+                </p>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item>
+                <mat-icon matListIcon>looks_4</mat-icon>
+                <p matLine>
+                  <small>{{question.answer4}}</small>
+                </p>
+              </mat-list-item>
+            </mat-list>
+  
+            <div style="margin: 20px 0 20px 0;">
+              Correct answer :- {{question.correctAnswer}}
+            </div>
+  
+            <div class="nav-btn">
+              <button color="primary" mat-raised-button matStepperPrevious>
+                <mat-icon>chevron_left</mat-icon>
+                Back
+              </button>
+              <button color="primary" mat-raised-button matStepperNext style="margin-left: 10px">
+                Next
+                <mat-icon>chevron_right</mat-icon>
+              </button>
+            </div>
+          </mat-step>
+  
+        </mat-vertical-stepper>
+      </ng-template>
+    </mat-card>
+  </form>
+  

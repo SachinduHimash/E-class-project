@@ -1,0 +1,26 @@
+::ng-deep .mat-line {
+    word-wrap: break-word !important;
+    white-space: pre-wrap !important;
+  }
+  
+  
+  ::ng-deep .mat-list .mat-list-item {
+    height: initial !important;
+  }
+  
+  
+  .mat-card .mat-card-image {
+    width: calc(50% + 0px) !important;
+    margin: auto auto 30px auto !important;
+    display: block !important;
+  }
+  
+  
+  @media only screen and (max-width: 768px) {
+    .mat-card .mat-card-image {
+      width: calc(100% + 0px) !important;
+      margin: auto auto 30px auto !important;
+      display: block !important;
+    }
+  }
+  
