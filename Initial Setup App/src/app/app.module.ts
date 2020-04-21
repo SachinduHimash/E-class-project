@@ -12,7 +12,7 @@ import { AppComponent } from './app.component';
 import { SetupformComponent } from './setupform/setupform.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import {MatFormFieldModule} from '@angular/material/form-field'; 
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 
 
@@ -50,6 +50,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -104,7 +105,7 @@ import {MatTreeModule} from '@angular/material/tree';
     AngularFireAuthModule,
 
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
