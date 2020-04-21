@@ -1,0 +1,61 @@
+ *{
+     box-sizing: border-box;
+ }
+  body{
+      background-color: lightskyblue;
+  }
+  .container{
+      max-width: 1170px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 1em;
+  }
+  
+  .mail-contnet h5{
+    display: block;
+  }
+  
+  ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px !important;
+  }
+  
+  .button-add-student {
+    display: block;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 16px;
+    padding: 5px;
+  }
+  .mat-form-field {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    width: 397px;
+}
+ .mat-card .main-container{
+     align-content: center;
+ }
+
+ .mat-card{
+     height: auto;
+     width: fit-content;
+     align-self: center;
+     margin-left: 35%;
+     margin-top: 2%;
+     
+ }
+ h4{
+     text-align: center;
+     font-weight: 500;
+ }
+ .mat-raised-button{
+    margin-left: 166px;
+
+ }
