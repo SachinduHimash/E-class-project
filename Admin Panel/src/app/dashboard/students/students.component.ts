@@ -2,7 +2,14 @@ import {Component, OnInit} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
+// type_definition
+import {Users, Class} from '../interfaces/databaseInterfaces';
+
+// authentication_service_for_hashing password
+import {AuthenticationService} from '../services/authentication.service';
+
 import * as firebase from 'firebase';
+import 'firebase/firestore';
 
 @Component({
   selector: 'app-students',
@@ -28,33 +35,25 @@ export class StudentsComponent implements OnInit {
   passwordType = 'password';
 
   constructor(private _fb: FormBuilder,
-              private _af: AngularFirestore) {
+              private _af: AngularFirestore,
+              private _authService: AuthenticationService) {
   }
 
   ngOnInit(): void {
     this.fetchStudent();
     this.fetchClasses();
-    this.buildCreateClass();
     this.buildCreateStudent();
-  }
-
-  buildCreateClass() {
-    this.createClass = this._fb.group({
-        grade: new FormControl('', Validators.required),
-        name: new FormControl('', Validators.required),
-        fees: new FormControl('', Validators.required),
-        type: new FormControl('', Validators.required),
-      },
-    );
   }
 
   buildCreateStudent() {
     this.createStudent = this._fb.group({
-        name: new FormControl('', Validators.required),
-        address: new FormControl('', Validators.required),
-        telephone: new FormControl('', Validators.required),
-        email: new FormControl('', Validators.email),
-        class: new FormControl('', Validators.required),
+        userId: new FormControl('', Validators.required),
+        fullName: new FormControl('', Validators.required),
+        address: new FormControl('',),
+        teleNo: new FormControl('',),
+        email: new FormControl(''),
+        school: new FormControl('',),
+        class: new FormControl('',),
         password: new FormControl('', Validators.required),
       },
     );
@@ -63,64 +62,74 @@ export class StudentsComponent implements OnInit {
   submit() {
 
     const formValue = this.createStudent.value;
-    console.log(formValue);
-    // generate document id 'Year'_'class_name'_'student_name'_'random_number'
-    const docId = (new Date().getFullYear()).toString()
-      .concat('.').concat(formValue.class.value.trim())
-      .concat('.').concat(formValue.name.trim())
-      .concat('.').concat(Math.ceil(Date.now() + Math.random()).toString());
+    // hash_password_with_md5
+    formValue.password = this._authService.hashString(formValue.password);
 
-    this._af.doc(`users/${docId}`)
-      .set({
-        class: formValue.class.value,
-        name: formValue.name,
-        password: btoa(formValue.password),
-        role: 'student'
-      }).then(() => {
-      this._af.doc(`class/${formValue.class.value}/students/${docId}`)
-        .set({
-          name: formValue.name,
-          address: formValue.address,
-          telephone: formValue.telephone,
-          email: formValue.email,
-        }).then(() => {
-        console.log('here');
-      }).catch(console.log);
-    }).catch(console.log);
-    console.log('end')
+    const userObj = {
+      ...formValue,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      role: 'student'
+    };
+
+    // remove_user_id_&_class_field
+    delete userObj.userId;
+    // remove_nested_class_object_&_only_add_class_code
+    userObj.class = userObj.class.value;
+
+    // first_check_user_is_already_exists
+    this._af.firestore
+      .doc(`users/${formValue.userId}`)
+      .get()
+      .then((documentSnapshot) => {
+
+        // if_document_already_exists_return
+        // else_if_class_information_is_provided_then_update_users_and_class_collections
+        // otherwise_only_update_users_collection
+
+        if (documentSnapshot.exists) {
+          console.log('user already exists');
+        } else if (!documentSnapshot.exists && (!formValue.class.value || formValue.class === '')) {
+          this._af.doc(`users/${formValue.userId}`)
+            .set(userObj)
+            .catch(console.log);
+        } else if (!documentSnapshot.exists && formValue.class.value) {
+          this._af.doc(`users/${formValue.userId}`)
+            .set(userObj)
+            .then(() => {
+              this._af.doc(`class/${formValue.class.value}/students/${formValue.userId}`)
+                .set({
+                  fullName: formValue.fullName,
+                  year: null
+                })
+                .then(() => console.log('added'))
+                .catch(console.log);
+            })
+            .catch(console.log);
+
+        }
+      });
+
+
   }
 
   fetchStudent() {
-
     this.student = this.student = this._af.collection('users', ref => ref.where('role', '==', 'student'))
       .valueChanges({idField: 'id'});
-    // .subscribe(docs => {
-    //   docs.forEach((d) => console.log(d.class));
-    // docs = docs.map((data) => {
-    //   const grade = data.id.toString().split('.')[0];
-    //   return {...data, grade};
-    // }).map((doc) => {
-    //   const classFound = this.testClass.find(student => student['grade'] === doc.grade);
-    //   classFound ? classFound.name.push(doc) : this.testClass.push({grade: doc.grade, name: [doc]});
-    // });
-
-    //  tc
-    // console.log(this.testClass);
-    // });
-
   }
 
   fetchClasses() {
     this._af.collection('class')
       .valueChanges({idField: 'id'})
       .subscribe(docs => {
-        this.classTypes = docs.map((data) => {
-          const grade = data.id.toString().split('.')[0];
-          let name = '';
+
+        this.classTypes.push({name: 'Don\'t assign to class', value: null, grade: null});
+
+        this.classTypes = this.classTypes.concat(docs.map((data) => {
           // @ts-ignore
-          data?.name ? name = grade.concat(' - ').concat(data?.name) : name = grade;
-          return {name, value: data.id, grade};
-        });
+          return {name: data.grade.toString().concat(' - ').concat(data.name.toString()), value: data.id, grade: data.grade};
+        }));
+
+
       });
   }
 
