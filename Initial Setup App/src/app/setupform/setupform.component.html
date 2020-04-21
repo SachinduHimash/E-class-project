@@ -1,105 +1,108 @@
-<html><head>
- 
-</head>
-<body>
-<div class="container">
- <mat-card>
+<div class="row" style="margin: 0;background-image: url(../../assets/science-background-png-3.png);">
+  <div class="col-md-4 col-1"></div>
+  <div class="col-md-4 col-10">
+    <mat-card>
 
-  <div class="headtitle">
-    <h4 >Student Registration Form</h4>
+      <div class="headtitle">
+        <h4>Student Registration Form</h4>
+      </div>
+      <mat-card-content>
+        <form class="formbox" (ngSubmit)="submit()" [formGroup]="myform">
+
+          <mat-form-field appearance="outline">
+            <mat-label>User ID</mat-label>
+            <input formControlName="userID" matInput type="text">
+            <mat-error
+              *ngIf="myform.controls['userID'].invalid && (myform.controls['userID'].dirty || myform.controls['userID'].touched)"
+              >
+              <div *ngIf="myform.controls['userID'].errors.required">Please Contact Sir. User ID is required</div>
+            </mat-error>
+          </mat-form-field>
+          <br>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Full Name</mat-label>
+            <input formControlName="fullName" matInput type="text">
+            <mat-error
+              *ngIf="myform.controls['fullName'].invalid && (myform.controls['fullName'].dirty || myform.controls['fullName'].touched)"
+            >
+              <div *ngIf="myform.controls['fullName'].errors.required">Name is required</div>
+            </mat-error>
+          </mat-form-field>
+          <br>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Grade</mat-label>
+            <mat-select formControlName="grade">
+              <mat-option (click)="getclass(11)" [value]="11">11</mat-option>
+              <mat-option (click)="getclass(10)" [value]="10">10</mat-option>
+              <mat-option (click)="getclass(9)" [value]="9">9</mat-option>
+            </mat-select>
+            <mat-error *ngIf="myform.controls['grade'].hasError('required')">
+              Grade is required
+            </mat-error>
+
+          </mat-form-field>
+          <br>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Class </mat-label>
+            <mat-select formControlName="class">
+              <mat-option *ngFor="let class of selectClasses" [value]="class">
+                {{class.class}}
+              </mat-option>
+
+            </mat-select>
+            <mat-error *ngIf="myform.controls['class'].hasError('required')">
+              You must make a selection
+            </mat-error>
+          </mat-form-field>
+
+          <br>
+
+          <mat-form-field appearance="outline">
+            <mat-label>School</mat-label>
+            <input formControlName="school" matInput type="text">
+            <mat-error
+              *ngIf="myform.controls['school'].invalid && (myform.controls['school'].dirty || myform.controls['school'].touched)"
+              >
+              <div *ngIf="myform.controls['school'].errors.required">School is required</div>
+            </mat-error>
+          </mat-form-field>
+          <br>
+
+
+
+          <mat-form-field appearance="outline">
+            <mat-label>Address</mat-label>
+            <input formControlName="address" matInput type="text">
+            <mat-error
+              *ngIf="myform.controls['address'].invalid && (myform.controls['address'].dirty || myform.controls['address'].touched)"
+              >
+              <div *ngIf="myform.controls['address'].errors.required">Address is required</div>
+            </mat-error>
+          </mat-form-field>
+          <br>
+
+
+          <mat-form-field appearance="outline">
+            <mat-label>Telephone Number</mat-label>
+            <input formControlName="teleNo" matInput type="text">
+            <mat-error
+              *ngIf="myform.controls['teleNo'].invalid && (myform.controls['teleNo'].dirty || myform.controls['teleNo'].touched)"
+              >
+              <div *ngIf="myform.controls['teleNo'].errors.required">Telephone Number is required</div>
+              <div *ngIf="myform.controls['teleNo'].errors?.minLength">Please enter a valid number</div>
+            </mat-error>
+          </mat-form-field>
+          <br>
+
+
+          <button [disabled]="myform.invalid" class="button" mat-raised-button type="submit"
+            color="primary">Submit</button>
+        </form>
+      </mat-card-content>
+    </mat-card>
   </div>
-  <mat-card-content class="main-container">
-    <form (ngSubmit)="submit()" [formGroup]="myform">
-
-      <mat-form-field appearance="outline">
-        <mat-label>User ID</mat-label>
-        <input formControlName="userID" matInput type="text">
-        <mat-hint
-          *ngIf="myform.controls['userID'].invalid && (myform.controls['userID'].dirty || myform.controls['userID'].touched)"
-          class="alert alert-danger">
-          <div *ngIf="myform.controls['userID'].errors.required">Please Contact Sir. User ID is required</div>
-        </mat-hint>
-      </mat-form-field>
-      <br>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Full Name</mat-label>
-        <input formControlName="fullName" matInput type="text">
-        <mat-hint
-          *ngIf="myform.controls['fullName'].invalid && (myform.controls['fullName'].dirty || myform.controls['fullName'].touched)"
-          class="alert alert-danger">
-          <div *ngIf="myform.controls['fullName'].errors.required">Name is required</div>
-        </mat-hint>
-      </mat-form-field>
-      <br>
-    
-      <mat-form-field appearance="outline">
-        <mat-label>School</mat-label>
-        <input formControlName="school" matInput type="text">
-        <mat-hint
-          *ngIf="myform.controls['school'].invalid && (myform.controls['school'].dirty || myform.controls['school'].touched)"
-          class="alert alert-danger">
-          <div *ngIf="myform.controls['school'].errors.required">School is required</div>
-        </mat-hint>
-      </mat-form-field>
-      <br>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Address</mat-label>
-        <input formControlName="address" matInput type="text">
-        <mat-hint
-          *ngIf="myform.controls['address'].invalid && (myform.controls['address'].dirty || myform.controls['address'].touched)"
-          class="alert alert-danger">
-          <div *ngIf="myform.controls['address'].errors.required">Address is required</div>
-        </mat-hint>
-      </mat-form-field>
-      <br>
-
-      
-      <mat-form-field appearance="outline">
-        <mat-label>Telephone Number</mat-label>
-        <input formControlName="teleNo" matInput type="text">
-        <mat-hint
-          *ngIf="myform.controls['teleNo'].invalid && (myform.controls['teleNo'].dirty || myform.controls['teleNo'].touched)"
-          class="alert alert-danger">
-          <div *ngIf="myform.controls['teleNo'].errors.required">Telephone Number is required</div>
-          <div *ngIf="myform.controls['teleNo'].errors?.minLength">Please enter a valid number</div>
-        </mat-hint>
-      </mat-form-field>
-      <br>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Grade</mat-label>
-        <input formControlName="grade" matInput type="number" min="9" max="11">
-        <mat-hint
-          *ngIf="myform.controls['grade'].invalid && (myform.controls['grade'].dirty || myform.controls['grade'].touched)"
-          class="alert alert-danger">
-          <div *ngIf="myform.controls['grade'].errors.required">Grade is required</div>
-        </mat-hint>
-      </mat-form-field>
-      <br>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Class </mat-label>
-        <mat-select formControlName="class" >
-          <mat-option *ngFor="let class of classes" [value]="class">
-            {{class}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="myform.controls['class'].hasError('required')">
-          You must make a selection
-        </mat-error>
-      </mat-form-field>
-
-      <br>
-
-    
-      
-
-      <button [disabled]="myform.invalid" class="button" mat-raised-button type="submit" color="primary">Submit</button>
-    </form>
-  </mat-card-content>
-</mat-card>
+  <div class="col-md-4 col-1"></div>
 </div>
-</body>
-</html>

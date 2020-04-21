@@ -51,6 +51,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -107,7 +108,7 @@ import {MatTreeModule} from '@angular/material/tree';
     AngularFireAuthModule,
 
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

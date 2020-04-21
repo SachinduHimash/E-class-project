@@ -9,12 +9,14 @@ export interface TimeStamp {
 
 // Paper_collection
 export interface Papers {
+  id: String;
   createdAt: TimeStamp;
   updatedAt: TimeStamp;
   questions: PaperQuestion;
 }
 
 export interface PaperQuestion {
+  id: String;
   number: Number;
   question: String;
   correctAnswer: Number;
@@ -28,8 +30,23 @@ export interface PaperQuestion {
 
 // Users_collection
 export interface Users {
-  name: String;
+  id: String;
+  fullName: String;
   class: String;
   role: String;
+  password: String;
+  address: String;
+  school: String;
+  teleNo: String;
 }
 
+// Class_collection
+export interface Class {
+  id: String;
+  createdAt: TimeStamp;
+  fees: Number;
+  grade: Number;
+  name: String;
+  number: Number;
+  type: String;
+}

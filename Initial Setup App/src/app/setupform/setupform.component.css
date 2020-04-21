@@ -1,20 +1,18 @@
  *{
      box-sizing: border-box;
  }
-  body{
-      background-color: lightskyblue;
-  }
+
   .container{
       max-width: 1170px;
       margin-left: auto;
       margin-right: auto;
       padding: 1em;
   }
-  
+
   .mail-contnet h5{
     display: block;
   }
-  
+
   ul {
     display: block;
     list-style-type: disc;
@@ -24,38 +22,62 @@
     margin-inline-end: 0px;
     padding-inline-start: 0px !important;
   }
-  
-  .button-add-student {
-    display: block;
-    max-width: 300px;
+
+  .mat-form-field {
+    display: inline-block;
+    position: relative;
+    text-align: left;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 16px;
-    padding: 5px;
+    width: 94%;
+}
+
+ h4{
+     text-align: center;
+     font-weight: 500;
+     font-size: x-large;
+     color: rgb(10, 10, 65);
+ }
+ .formbox{
+  padding-left: 8%;
+ }
+  .mat-card {
+    margin-top: 10%;
+  }
+  .button{
+    margin-left: 35%;
+  }
+  .headtitle{
+    padding-top: 5%;
+    padding-bottom: 5%;
+  }
+
+@media only screen and (max-width: 768px) {
+  body {
+    background-color: lightblue;
+  }
+  .mat-card{
+    margin-top: 8%;
   }
   .mat-form-field {
     display: inline-block;
     position: relative;
     text-align: left;
-    width: 397px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 96%;
+  }
+  .formbox {
+    padding-left: 4%;
+  }
+  .col-1{
+    flex: 0 0 4%;
+    max-width: 4%;
+    padding: 0;
+  }
+  .col-10{
+    flex: 0 0 92%;
+    max-width: 92%;
+
+  }
 }
- .mat-card .main-container{
-     align-content: center;
- }
-
- .mat-card{
-     height: auto;
-     width: fit-content;
-     align-self: center;
-     margin-left: 35%;
-     margin-top: 2%;
-     
- }
- h4{
-     text-align: center;
-     font-weight: 500;
- }
- .mat-raised-button{
-    margin-left: 166px;
-
- }
