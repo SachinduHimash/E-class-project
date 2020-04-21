@@ -13,6 +13,7 @@ import { SetupformComponent } from './setupform/setupform.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import {MatFormFieldModule} from '@angular/material/form-field'; 
+import { PaperComponent } from './paper/paper.component';
 
 
 
@@ -52,10 +53,12 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
-    SetupformComponent
+    SetupformComponent,
+    PaperComponent
   ],
   imports: [
     BrowserModule,
