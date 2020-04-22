@@ -23,4 +23,14 @@
       display: block !important;
     }
   }
-  
+  .questionButton{
+    height:75%;
+    top:15%;
+    text-align: center;
+    
+  }
+  .matcard1{
+    margin-left: 20%;
+    margin-right: 20%;
+    
+  }

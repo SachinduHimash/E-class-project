@@ -52,6 +52,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import { DatePipe } from '@angular/common';
+import { DialogboxComponent } from './dialogbox/dialogbox.component';
+
 
 
 
@@ -59,7 +61,8 @@ import { DatePipe } from '@angular/common';
   declarations: [
     AppComponent,
     SetupformComponent,
-    PaperComponent
+    PaperComponent,
+    DialogboxComponent
   ],
   imports: [
     BrowserModule,

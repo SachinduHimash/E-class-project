@@ -16,7 +16,7 @@ import {MathsService} from '../maths.service';
 
 export class PaperComponent implements OnInit {
 
-
+  marks=0;
   // create_form
   updateFormGroup: FormGroup;
 
@@ -71,5 +71,12 @@ export class PaperComponent implements OnInit {
 
     this._af.doc(docPath).valueChanges().subscribe(console.log);
 
+  }
+
+  checkAnswer(choice:number,answer:number){
+    if(choice=answer){
+      this.marks++;
+      console.log(this.marks);
+    }
   }
 }
