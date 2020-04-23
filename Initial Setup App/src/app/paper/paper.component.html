@@ -1,121 +1,167 @@
-<form [formGroup]="updateFormGroup">
-    <mat-card>
-      <!-- <div class="p-20 bg-info position-relative">
-        <h4 class="card-title text-white m-0">
-          <ng-container *ngIf="!showViewForm">
-            View Paper
-          </ng-container>
-          <ng-container *ngIf="showViewForm">
-            View Grade {{updateFormGroup.value.grade}}  - Paper {{updateFormGroup.value.paperNumber}}
-          </ng-container>
-        </h4>
-      </div> -->
-      <ng-template [ngIf]="!showViewForm">
-        <mat-card-content class="matcard1">
-          <mat-form-field appearance="outline">
-            <mat-label>Grade</mat-label>
-            <mat-select formControlName="grade">
-              <mat-option (click)="getPaper()" [value]="11">11</mat-option>
-              <mat-option (click)="getPaper()" [value]="10">10</mat-option>
-              <mat-option (click)="getPaper()" [value]="9">9</mat-option>
-            </mat-select>
-            <mat-error *ngIf="updateFormGroup.controls['grade'].hasError('required')">
-              Grade is required
-            </mat-error>
-          </mat-form-field>
-          <br>
-          <mat-form-field appearance="outline">
-            <mat-label>Paper Number</mat-label>
-            <mat-select formControlName="paperNumber">
-              <mat-option (click)="getPaper()" [value]="1">1</mat-option>
-              
-            </mat-select>
-            <mat-error *ngIf="updateFormGroup.controls['paperNumber'].hasError('required')">
-              Paper Number is required
-            </mat-error>
-          </mat-form-field>
-           <br>
-          <!-- <button  (click)="getPaper()" [disabled]="updateFormGroup.invalid" color="primary" mat-raised-button
-                  style="margin:0 0 20px 30px; margin-left:25%; margin-right: 20%; " type="submit">View Paper
-          </button> -->
-  
-        </mat-card-content>
+<ng-template [ngIf]="!isMobileMenu()">
+  <mat-horizontal-stepper>
+    <mat-step *ngFor="let  question of paper ; let i = index" [stepControl]="question.number">
+
+      <!-- <ng-template matStepLabel></ng-template> -->
+
+      <h2>Question {{i + 1}}</h2>
+
+      <ng-template [ngIf]="question.picture">
+        <img [src]="question.picture" mat-card-image>
       </ng-template>
-      <ng-template [ngIf]="showViewForm">
-        <mat-vertical-stepper>
-          <mat-step *ngFor="let  question of paper ; let i = index" [stepControl]="question.number">
-  
-            <ng-template matStepLabel>Question {{i + 1}}</ng-template>
-  
-            <ng-template [ngIf]="question.picture">
-              <img [src]="question.picture" mat-card-image>
-            </ng-template>
-  
-            <p>{{question.question}}</p>
-  
-            <mat-list>
-              <!--            <mat-list-item>-->
-              <!--              <mat-icon matListIcon>1</mat-icon>-->
-              <!--              <mat-icon matListIcon>looks_one</mat-icon>-->
-              <!--              <p matLine>-->
-              <!--                <small> {{question.answer1}} </small>-->
-              <!--              </p>-->
-              <!--            </mat-list-item>-->
-              <mat-divider></mat-divider>
-              <mat-list-item>
-                <mat-icon matListIcon>looks_one</mat-icon>
-                <p matLine>
-                 <button mat-raised-button color="primary" class="questionButton" (click)="checkAnswer(question.number,1)" [ngClass]="{'green1' : toggle[0], 'red1': !toggle[0]}"><small> {{question.answer1}}</small></button>
-                </p>
-              </mat-list-item>
-              <mat-divider></mat-divider>
-              <mat-list-item>
-                <mat-icon matListIcon>looks_two</mat-icon>
-                <p matLine>
-                  <button mat-raised-button color="primary" class="questionButton" (click)="checkAnswer(question.number,2)" [ngClass]="{'green2' : toggle[1], 'red2': !toggle[1]}"><small> {{question.answer2}}</small></button>
-                </p>
-              </mat-list-item>
-              <mat-divider></mat-divider>
-              <mat-list-item>
-                <mat-icon matListIcon>looks_3</mat-icon>
-                <p matLine>
-                  <button mat-raised-button color="primary" class="questionButton" (click)="checkAnswer(question.number,3)" [ngClass]="{'green3' : toggle[2], 'red3': !toggle[2]}"><small> {{question.answer3}}</small></button>
-                </p>
-              </mat-list-item>
-              <mat-divider></mat-divider>
-              <mat-list-item>
-                <mat-icon matListIcon>looks_4</mat-icon>
-                <p matLine>
-                  <button mat-raised-button color="primary" class="questionButton" (click)="checkAnswer(question.number,4)"[ngClass]="{'green4' : toggle[3], 'red4': !toggle[3]}"><small> {{question.answer4}}</small></button>
-                </p>
-              </mat-list-item>
-            </mat-list>
-  
-            <div style="margin: 20px 0 20px 0;">
-              Correct answer :- {{question.correctAnswer}}
-            </div>
-  
-            <div class="nav-btn">
-              <button color="primary" mat-raised-button matStepperPrevious>
-                <mat-icon>chevron_left</mat-icon>
-                Back
-              </button>
-              <button color="primary" mat-raised-button matStepperNext style="margin-left: 10px">
-                Next
-                <mat-icon>chevron_right</mat-icon>
-              </button>
-            </div>
-          </mat-step>
-  
-        </mat-vertical-stepper>
-        <button mat-raised-button color="primary" (click)="submit()">Submit
+      <p></p>
+      <p class="writableTextArea">{{question.question}}</p>
+
+      <mat-list>
+
+        <mat-list-item style="margin-left: 2%;margin: 1%;">
+          <mat-icon matListIcon>looks_one</mat-icon>
+          <p matLine>
+            <button mat-raised-button color="primary" class="questionButton" (click)="checkAnswer(question.number,1)"
+              [ngClass]="{'green' : toggle[i] != 1, 'red':  toggle[i] == 1}"><small>
+                {{question.answer1}}</small></button>
+          </p>
+        </mat-list-item>
+
+        <mat-list-item style="margin-left: 2%;margin: 1%;">
+          <mat-icon matListIcon>looks_two</mat-icon>
+          <p matLine>
+            <button mat-raised-button color="primary" class="questionButton" (click)="checkAnswer(question.number,2)"
+              [ngClass]="{'green' :toggle[i] != 2, 'red':  toggle[i] == 2}"><small>
+                {{question.answer2}}</small></button>
+          </p>
+        </mat-list-item>
+
+        <mat-list-item style="margin-left: 2%;margin: 1%;">
+          <mat-icon matListIcon>looks_3</mat-icon>
+          <p matLine>
+            <button mat-raised-button color="primary" class="questionButton" (click)="checkAnswer(question.number,3)"
+              [ngClass]="{'green' :toggle[i] != 3, 'red':  toggle[i] == 3}"><small>
+                {{question.answer3}}</small></button>
+          </p>
+        </mat-list-item>
+
+        <mat-list-item style="margin-left: 2%;margin: 1%;">
+          <mat-icon matListIcon>looks_4</mat-icon>
+          <p matLine>
+            <button mat-raised-button color="primary" class="questionButton" (click)="checkAnswer(question.number,4)"
+              [ngClass]="{'green' : toggle[i] != 4, 'red': toggle[i] == 4}"><small>
+                {{question.answer4}}</small></button>
+          </p>
+        </mat-list-item>
+      </mat-list>
+
+      <div *ngIf="question.number == 1" class="nav-btn">
+        <button color="primary" mat-raised-button matStepperNext style="margin-left: 10px">
+          Next
           <mat-icon>chevron_right</mat-icon>
         </button>
+      </div>
+      <div *ngIf="question.number != 1 && question.number != 20" class="nav-btn">
+        <button color="primary" mat-raised-button matStepperPrevious>
+          <mat-icon>chevron_left</mat-icon>
+          Back
+        </button>
+        <button color="primary" mat-raised-button matStepperNext style="margin-left: 10px">
+          Next
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+      <div *ngIf="question.number == 20" class="nav-btn">
+        <button color="primary" mat-raised-button matStepperPrevious>
+          <mat-icon>chevron_left</mat-icon>
+          Back
+        </button>
+        <button mat-raised-button color="primary" [disabled] ="(toggle.indexOf(0) != -1)" style="margin-left: 10px" (click)="submit()">Submit
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+    </mat-step>
+
+  </mat-horizontal-stepper>
+
+</ng-template>
+
+<ng-template [ngIf]="isMobileMenu()">
+  <mat-vertical-stepper>
+    <mat-step *ngFor="let  question of paper ; let i = index" [stepControl]="question.number">
+
+      <ng-template matStepLabel>Question {{i + 1}}</ng-template>
+
+      <ng-template [ngIf]="question.picture">
+        <div style="overflow-x: scroll;">
+          <img [src]="question.picture" mat-card-image>
+        </div>
       </ng-template>
-    </mat-card>
-   
-  </form>
-  
+
+      <p>{{question.question}}</p>
+
+      <mat-list>
+
+        <mat-list-item>
+          <mat-icon matListIcon>looks_one</mat-icon>
+          <p >
+            <button mat-raised-button color="primary" class="btn questionButton" (click)="checkAnswer(question.number,1)"
+              [ngClass]="{'green' : toggle[i] != 1, 'red': toggle[i] == 1}"><small> {{question.answer1}}</small></button>
+          </p>
+        </mat-list-item>
+
+        <mat-list-item>
+          <mat-icon matListIcon>looks_two</mat-icon>
+          <p >
+            <button mat-raised-button color="primary" class="btn questionButton" (click)="checkAnswer(question.number,2)"
+              [ngClass]="{'green' : toggle[i] != 2, 'red': toggle[i] == 2}"><small> {{question.answer2}}</small></button>
+          </p>
+        </mat-list-item>
+
+        <mat-list-item>
+          <mat-icon matListIcon>looks_3</mat-icon>
+          <p >
+            <button mat-raised-button color="primary" class="btn questionButton" (click)="checkAnswer(question.number,3)"
+              [ngClass]="{'green' : toggle[i] != 3, 'red': toggle[i] == 3}"><small> {{question.answer3}}</small></button>
+          </p>
+        </mat-list-item>
+
+        <mat-list-item>
+          <mat-icon matListIcon>looks_4</mat-icon>
+          <p>
+            <button mat-raised-button color="primary" class="btn questionButton" (click)="checkAnswer(question.number,4)"
+              [ngClass]="{'green' : toggle[i] != 4, 'red': toggle[i] == 4}"><small> {{question.answer4}}</small></button>
+          </p>
+        </mat-list-item>
+      </mat-list>
+
+      <div *ngIf="question.number == 1" class="nav-btn">
+        <button color="primary" mat-raised-button matStepperNext style="margin-left: 10px">
+          Next
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+      <div *ngIf="question.number != 1 && question.number != 20" class="nav-btn">
+        <button color="primary" mat-raised-button matStepperPrevious>
+          <mat-icon>chevron_left</mat-icon>
+          Back
+        </button>
+        <button color="primary" mat-raised-button matStepperNext style="margin-left: 10px">
+          Next
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+      <div *ngIf="question.number == 20" class="nav-btn">
+        <button color="primary" mat-raised-button matStepperPrevious>
+          <mat-icon>chevron_left</mat-icon>
+          Back
+        </button>
+        <button mat-raised-button color="primary" [disabled] ="(toggle.indexOf(0) != -1)" style="margin-left: 10px" (click)="submit()">Submit
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+    </mat-step>
+
+  </mat-vertical-stepper>
+
+</ng-template>
+
   <ng-template [ngIf]="submitted">
     <mat-card-content class="matcard1">
       <h4>Do you want to finish the paper?</h4>
@@ -123,4 +169,6 @@
       <button mat-raised-button class="no" (click)="submit()">No</button>
   </mat-card-content>
   </ng-template>
-  
+
+
+

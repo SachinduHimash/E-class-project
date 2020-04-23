@@ -1,72 +1,67 @@
 ::ng-deep .mat-line {
-    word-wrap: break-word !important;
-    white-space: pre-wrap !important;
-  }
-  
-  
-  ::ng-deep .mat-list .mat-list-item {
-    height: initial !important;
-  }
-  
-  
+  word-wrap: break-word !important;
+  white-space: pre-wrap !important;
+}
+
+.btn {
+  line-height: 20px;
+  padding: 9px;
+  white-space: normal;
+}
+
+::ng-deep .mat-list-base .mat-list-item ::ng-deep .mat-list-item-content,
+.mat-list-base .mat-list-option .mat-list-item-content {
+  padding: 0 !important;
+}
+
+
+
+::ng-deep .mat-list .mat-list-item {
+  height: initial !important;
+}
+
+
+.mat-card .mat-card-image {
+  width: calc(50% + 0px) !important;
+  margin: auto auto 30px auto !important;
+  display: block !important;
+}
+
+
+@media only screen and (max-width: 768px) {
   .mat-card .mat-card-image {
-    width: calc(50% + 0px) !important;
+    width: calc(100% + 0px) !important;
     margin: auto auto 30px auto !important;
     display: block !important;
   }
-  
-  
-  @media only screen and (max-width: 768px) {
-    .mat-card .mat-card-image {
-      width: calc(100% + 0px) !important;
-      margin: auto auto 30px auto !important;
-      display: block !important;
-    }
-  }
-  .questionButton{
-    height:75%;
-    top:15%;
-    text-align: center;
-    
-  }
-  .matcard1{
-    margin-left: 20%;
-    margin-right: 20%;
-    
-  }
-
-  .green1 {
-    background-color:#8aaaff;
 }
 
-.red1 {
-    background-color: #3c5bab;
-}
-.green2 {
-  background-color: #8aaaff;
+.questionButton {
+  height: 75%;
+  top: 15%;
+  text-align: center;
+
 }
 
-.red2 {
-  background-color: #3c5bab;
-}
-.green3 {
-  background-color: #8aaaff;
+.matcard1 {
+  margin-left: 20%;
+  margin-right: 20%;
+
 }
 
-.red3 {
-  background-color: #3c5bab;
-}
-.green4 {
-  background-color: #8aaaff;
-}
-
-.red4 {
+.green {
   background-color: #3c5bab;
 }
 
-.no{
-  background-color: #f05454;
+.red {
+  background-color: #d64343;
 }
-.yes{
+
+
+.no {
+  background-color: rgb(58, 161, 58);
+}
+
+.yes {
   background-color: #62de7a;
 }

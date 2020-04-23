@@ -146,8 +146,15 @@ export class SetupformComponent implements OnInit {
     private fb: FormBuilder,
     public db: AngularFirestore,
     private datePipe: DatePipe,
-    public dialog: MatDialog
-  ) { }
+    public dialog: MatDialog,
+    private router: Router,
+  ) {
+    if (localStorage.getItem('first') === '1' && localStorage.getItem('second') === '1' ){
+      router.navigate(['markingsheet']);
+    } else if (localStorage.getItem('first') === '1') {
+      router.navigate(['paper']);
+    }
+  }
 
   ngOnInit() {
     this.myform = this.fb.group({
@@ -209,11 +216,11 @@ export class SetupformComponent implements OnInit {
                });
              }).catch(console.log);
            console.log('end');
+           localStorage.setItem('first', '1');
+           localStorage.setItem('grade', this.myform.value.grade);
            this.dialog.open(DialogboxComponent);
          }
 
     });
-    
   }
-   
 }
