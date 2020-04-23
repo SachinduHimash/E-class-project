@@ -14,6 +14,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import {MatFormFieldModule} from '@angular/material/form-field'; 
 import { PaperComponent } from './paper/paper.component';
+import { MarkingsheetComponent } from './markingsheet/markingsheet.component';
 
 
 
@@ -57,12 +58,14 @@ import { DialogboxComponent } from './dialogbox/dialogbox.component';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     SetupformComponent,
     PaperComponent,
-    DialogboxComponent
+    DialogboxComponent,
+    MarkingsheetComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AngularFirestore} from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 
 // typeDefinition
 import {Papers} from '../interfaces/databaseInterfaces';
@@ -16,7 +17,18 @@ import {MathsService} from '../maths.service';
 
 export class PaperComponent implements OnInit {
 
-  marks=0;
+  //correct answer array,choices array and marks array
+
+  correctansArray:Number[]=[];
+  choiceArray:Number[]=[];
+  marksArray:Number[]=[];
+
+ //toggles to color buttons
+
+  toggle:any []= [true,true,true,true];
+  status:any[] = ['Enable','Enable','Enable','Enable'];
+  
+
   // create_form
   updateFormGroup: FormGroup;
 
@@ -26,9 +38,13 @@ export class PaperComponent implements OnInit {
   // fetched_paper_data;
   paper;
 
+  //submitting the paper
+  submitted=false;
+
   constructor(private _fb: FormBuilder,
               private _af: AngularFirestore,
-              private _math: MathsService) {
+              private _math: MathsService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -71,12 +87,53 @@ export class PaperComponent implements OnInit {
 
     this._af.doc(docPath).valueChanges().subscribe(console.log);
 
+    for (let i in this.paper) {
+      this.correctansArray[i]=this.paper[i].correctAnswer;
+    }
+    console.log(this.correctansArray);
   }
 
-  checkAnswer(choice:number,answer:number){
-    if(choice=answer){
-      this.marks++;
-      console.log(this.marks);
+  //checking answers
+
+  checkAnswer(question:number,choice:number){
+
+    var EnabledAnswer; 
+    this.toggle[choice-1] = !this.toggle[choice-1];
+    this.status[choice-1] = this.toggle[choice-1] ? 'Enable' : 'Disable';
+    console.log(this.status);
+
+    for(let i in this.status){
+      if(this.status[i]=='Disable'){
+        EnabledAnswer=i;
+        EnabledAnswer++;
+      }
     }
+
+    this.choiceArray[question-1]=EnabledAnswer;
+    console.log('My answers are'+this.choiceArray)
+
+  }
+  
+ //submit
+
+  submit(){
+    this.submitted=!this.submitted;
+  }
+  submit2(markingsheet:String){
+
+
+    for(let i in this.correctansArray){
+      if(this.correctansArray[i]==this.choiceArray[i]){
+        this.marksArray[i]=1;
+      }else{
+        this.marksArray[i]=0;
+      }
+    }
+
+    this.router.navigate([`${markingsheet}`]);
+
+    localStorage.setItem("paperKey",JSON.stringify(this.paper));
+    localStorage.setItem("toggleKey",JSON.stringify(this.toggle));
+    localStorage.setItem("marksKey",JSON.stringify(this.marksArray));
   }
 }

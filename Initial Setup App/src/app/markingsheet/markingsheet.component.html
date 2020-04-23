@@ -1,0 +1,71 @@
+<form [formGroup]="myForm">
+    <mat-card>
+     
+      <ng-template [ngIf]="showViewForm">
+        <mat-vertical-stepper>
+          <mat-step *ngFor="let  question of paper ; let i = index" [stepControl]="question.number">
+  
+            <ng-template matStepLabel>Question {{i + 1}}</ng-template>
+  
+            <ng-template [ngIf]="question.picture">
+              <img [src]="question.picture" mat-card-image>
+            </ng-template>
+  
+            <p>{{question.question}}</p>
+  
+            <mat-list>
+             
+              <mat-divider></mat-divider>
+              <mat-list-item>
+                <mat-icon matListIcon>looks_one</mat-icon>
+                <p matLine>
+                 <button mat-raised-button color="primary" class="questionButton"  [ngClass]="{'green1' : toggle[0], 'red1': !toggle[0]}"><small> {{question.answer1}}</small></button>
+                </p>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item>
+                <mat-icon matListIcon>looks_two</mat-icon>
+                <p matLine>
+                  <button mat-raised-button color="primary" class="questionButton"  [ngClass]="{'green2' : toggle[1], 'red2': !toggle[1]}"><small> {{question.answer2}}</small></button>
+                </p>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item>
+                <mat-icon matListIcon>looks_3</mat-icon>
+                <p matLine>
+                  <button mat-raised-button color="primary" class="questionButton"  [ngClass]="{'green3' : toggle[2], 'red3': !toggle[2]}"><small> {{question.answer3}}</small></button>
+                </p>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item>
+                <mat-icon matListIcon>looks_4</mat-icon>
+                <p matLine>
+                  <button mat-raised-button color="primary" class="questionButton" [ngClass]="{'green4' : toggle[3], 'red4': !toggle[3]}"><small> {{question.answer4}}</small></button>
+                </p>
+              </mat-list-item>
+            </mat-list>
+  
+            <div style="margin: 20px 0 20px 0;">
+              Correct answer :- {{question.correctAnswer}}
+            </div>
+  
+            <div class="nav-btn">
+              <button color="primary" mat-raised-button matStepperPrevious>
+                <mat-icon>chevron_left</mat-icon>
+                Back
+              </button>
+              <button color="primary" mat-raised-button matStepperNext style="margin-left: 10px">
+                Next
+                <mat-icon>chevron_right</mat-icon>
+              </button>
+            </div>
+          </mat-step>
+  
+        </mat-vertical-stepper>
+        
+      </ng-template>
+    </mat-card>
+   
+  </form>
+  
+  
