@@ -1,6 +1,6 @@
 <form [formGroup]="updateFormGroup">
     <mat-card>
-      <div class="p-20 bg-info position-relative">
+      <!-- <div class="p-20 bg-info position-relative">
         <h4 class="card-title text-white m-0">
           <ng-container *ngIf="!showViewForm">
             View Paper
@@ -9,31 +9,35 @@
             View Grade {{updateFormGroup.value.grade}}  - Paper {{updateFormGroup.value.paperNumber}}
           </ng-container>
         </h4>
-      </div>
+      </div> -->
       <ng-template [ngIf]="!showViewForm">
-        <mat-card-content>
+        <mat-card-content class="matcard1">
           <mat-form-field appearance="outline">
             <mat-label>Grade</mat-label>
-            <input formControlName="grade" matInput type="number">
-            <mat-hint
-              *ngIf="updateFormGroup.controls['grade'].invalid && (updateFormGroup.controls['grade'].dirty || updateFormGroup.controls['grade'].touched)"
-              class="alert alert-danger">
-              <div *ngIf="updateFormGroup.controls['grade'].errors.required">Grade is required</div>
-            </mat-hint>
+            <mat-select formControlName="grade">
+              <mat-option (click)="getPaper()" [value]="11">11</mat-option>
+              <mat-option (click)="getPaper()" [value]="10">10</mat-option>
+              <mat-option (click)="getPaper()" [value]="9">9</mat-option>
+            </mat-select>
+            <mat-error *ngIf="updateFormGroup.controls['grade'].hasError('required')">
+              Grade is required
+            </mat-error>
           </mat-form-field>
+          <br>
           <mat-form-field appearance="outline">
-            <mat-label>Paper number</mat-label>
-            <input formControlName="paperNumber" matInput type="number">
-            <mat-hint
-              *ngIf="updateFormGroup.controls['paperNumber'].invalid && (updateFormGroup.controls['paperNumber'].dirty || updateFormGroup.controls['paperNumber'].touched)"
-              class="alert alert-danger">
-              <div *ngIf="updateFormGroup.controls['paperNumber'].errors.required">paper number is required</div>
-            </mat-hint>
+            <mat-label>Paper Number</mat-label>
+            <mat-select formControlName="paperNumber">
+              <mat-option (click)="getPaper()" [value]="1">1</mat-option>
+              
+            </mat-select>
+            <mat-error *ngIf="updateFormGroup.controls['paperNumber'].hasError('required')">
+              Paper Number is required
+            </mat-error>
           </mat-form-field>
-  
-          <button (click)="getPaper()" [disabled]="updateFormGroup.invalid" color="primary" mat-raised-button
-                  style="margin:0 0 20px 30px" type="submit">View Paper
-          </button>
+           <br>
+          <!-- <button  (click)="getPaper()" [disabled]="updateFormGroup.invalid" color="primary" mat-raised-button
+                  style="margin:0 0 20px 30px; margin-left:25%; margin-right: 20%; " type="submit">View Paper
+          </button> -->
   
         </mat-card-content>
       </ng-template>
@@ -61,28 +65,28 @@
               <mat-list-item>
                 <mat-icon matListIcon>looks_one</mat-icon>
                 <p matLine>
-                  <small> {{question.answer1}} </small>
+                 <button mat-raised-button color="primary" class="questionButton" (click)="checkAnswer(question.number,1)" [ngClass]="{'green1' : toggle[0], 'red1': !toggle[0]}"><small> {{question.answer1}}</small></button>
                 </p>
               </mat-list-item>
               <mat-divider></mat-divider>
               <mat-list-item>
                 <mat-icon matListIcon>looks_two</mat-icon>
                 <p matLine>
-                  <small>{{question.answer2}}</small>
+                  <button mat-raised-button color="primary" class="questionButton" (click)="checkAnswer(question.number,2)" [ngClass]="{'green2' : toggle[1], 'red2': !toggle[1]}"><small> {{question.answer2}}</small></button>
                 </p>
               </mat-list-item>
               <mat-divider></mat-divider>
               <mat-list-item>
                 <mat-icon matListIcon>looks_3</mat-icon>
                 <p matLine>
-                  <small>{{question.answer3}}</small>
+                  <button mat-raised-button color="primary" class="questionButton" (click)="checkAnswer(question.number,3)" [ngClass]="{'green3' : toggle[2], 'red3': !toggle[2]}"><small> {{question.answer3}}</small></button>
                 </p>
               </mat-list-item>
               <mat-divider></mat-divider>
               <mat-list-item>
                 <mat-icon matListIcon>looks_4</mat-icon>
                 <p matLine>
-                  <small>{{question.answer4}}</small>
+                  <button mat-raised-button color="primary" class="questionButton" (click)="checkAnswer(question.number,4)"[ngClass]="{'green4' : toggle[3], 'red4': !toggle[3]}"><small> {{question.answer4}}</small></button>
                 </p>
               </mat-list-item>
             </mat-list>
@@ -104,7 +108,19 @@
           </mat-step>
   
         </mat-vertical-stepper>
+        <button mat-raised-button color="primary" (click)="submit()">Submit
+          <mat-icon>chevron_right</mat-icon>
+        </button>
       </ng-template>
     </mat-card>
+   
   </form>
+  
+  <ng-template [ngIf]="submitted">
+    <mat-card-content class="matcard1">
+      <h4>Do you want to finish the paper?</h4>
+      <button mat-raised-button class="yes" (click)="submit2('markingsheet')">Yes</button><br><br>
+      <button mat-raised-button class="no" (click)="submit()">No</button>
+  </mat-card-content>
+  </ng-template>
   

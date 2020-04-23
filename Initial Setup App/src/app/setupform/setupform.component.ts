@@ -6,6 +6,9 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import * as firebase from 'firebase';
 import { Md5 } from 'ts-md5/dist/md5';
 import { DatePipe } from '@angular/common';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { DialogboxComponent } from '../dialogbox/dialogbox.component';
+
 
 
 @Component({
@@ -142,7 +145,8 @@ export class SetupformComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public db: AngularFirestore,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -205,8 +209,11 @@ export class SetupformComponent implements OnInit {
                });
              }).catch(console.log);
            console.log('end');
+           this.dialog.open(DialogboxComponent);
          }
-    });
 
-   }
+    });
+    
+  }
+   
 }
