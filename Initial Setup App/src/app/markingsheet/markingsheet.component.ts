@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -8,37 +9,54 @@ import { ReactiveFormsModule, FormControl, FormsModule, FormBuilder, FormGroup }
   styleUrls: ['./markingsheet.component.css']
 })
 export class MarkingsheetComponent implements OnInit {
-  
-  myForm:FormGroup;
-  showViewForm=true;
+
+  myForm: FormGroup;
+  showViewForm = true;
   toggle;
   paper;
-  marks;
-   
+  marks = 0;
 
-  constructor(private fb: FormBuilder) {
-    this.getData();
+
+  constructor(private fb: FormBuilder, private router: Router,) {
+    if (localStorage.getItem('first') === '1' && localStorage.getItem('second') === '1') {
+      this.getData();
+    } else if (localStorage.getItem('first') === '1') {
+      router.navigate(['paper']);
+    } else {
+      router.navigate(['']);
+    }
    }
 
   ngOnInit(): void {
-    this.myForm=this.fb.group({
+    this.myForm = this.fb.group({
 
     });
   }
   getData(){
 
-  var retrivedToggle=localStorage.getItem("toggleKey");
-  this.toggle=JSON.parse(retrivedToggle);
-   
-  var retrivedPaper=localStorage.getItem("paperKey");
-  this.paper=JSON.parse(retrivedPaper);
+  const retrivedToggle = localStorage.getItem('toggleKey');
+  this.toggle = JSON.parse(retrivedToggle);
 
-  var retrivedMarks=localStorage.getItem("marksKey");
-  this.marks=JSON.parse(retrivedMarks);
+  const retrivedPaper = localStorage.getItem('paperKey');
+  this.paper = JSON.parse(retrivedPaper);
+  this.checkMarks();
+  localStorage.removeItem('marksKey');
 
-  console.log(this.toggle);
-  console.log(this.paper);
-   
+  }
+
+  isMobileMenu() {
+    if (screen.width > 991) {
+      return false;
+    }
+    return true;
+  }
+
+  checkMarks(){
+    for (let index = 0; index < this.toggle.length; index++) {
+      if (this.toggle[index] === this.paper[index].correctAnswer){
+        this.marks += 5;
+      }
+    }
   }
 
 }

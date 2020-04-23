@@ -17,34 +17,37 @@ import {MathsService} from '../maths.service';
 
 export class PaperComponent implements OnInit {
 
-  //correct answer array,choices array and marks array
+  // correct answer array,choices array and marks array
 
-  correctansArray:Number[]=[];
-  choiceArray:Number[]=[];
-  marksArray:Number[]=[];
+  correctansArray: Number[] = [];
+  choiceArray: Number[] = [];
+  marksArray: Number[] = [];
 
- //toggles to color buttons
+ // toggles to color buttons
 
-  toggle:any []= [true,true,true,true];
-  status:any[] = ['Enable','Enable','Enable','Enable'];
-  
+  toggle: any[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
 
   // create_form
   updateFormGroup: FormGroup;
-
-  // show_hide_update_form
-  showViewForm = false;
-
   // fetched_paper_data;
   paper;
 
   //submitting the paper
-  submitted=false;
+  submitted = false;
 
   constructor(private _fb: FormBuilder,
               private _af: AngularFirestore,
               private _math: MathsService,
               private router: Router) {
+    if (localStorage.getItem('first') === '1' && localStorage.getItem('second') === '1') {
+      router.navigate(['markingsheet']);
+    } else if (localStorage.getItem('first') === '1') {
+      this.getPaper();
+    } else {
+      router.navigate(['']);
+    }
+
   }
 
   ngOnInit() {
@@ -67,73 +70,59 @@ export class PaperComponent implements OnInit {
     });
   }
 
+  isMobileMenu() {
+    if (screen.width > 991) {
+      return false;
+    }
+    return true;
+  }
+
   // get_old_paper_data
   getPaper() {
 
-    const formValue = this.updateFormGroup.value;
+    // const formValue = this.updateFormGroup.value;
 
     // tslint:disable-next-line:max-line-length
-    const docPath = `papers/${formValue.grade}/paperNumbers/${(new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(this.updateFormGroup.value.paperNumber))}`;
+    const docPath = `papers/${localStorage.getItem('grade')}/paperNumbers/${(new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))}`;
 
     this._af.doc(docPath)
       .valueChanges()
       .subscribe( (doc: Papers) => {
         this.paper =  doc.questions;
-        console.log(this.paper)
-        console.log(doc.createdAt)
-        console.log(doc.updatedAt)
-        this.showViewForm = true;
+        console.log(this.paper);
+        console.log(doc.createdAt);
+        console.log(doc.updatedAt);
       });
 
     this._af.doc(docPath).valueChanges().subscribe(console.log);
 
     for (let i in this.paper) {
-      this.correctansArray[i]=this.paper[i].correctAnswer;
+      this.correctansArray[i] = this.paper[i].correctAnswer;
     }
     console.log(this.correctansArray);
   }
 
-  //checking answers
+  // checking answers
 
-  checkAnswer(question:number,choice:number){
+  checkAnswer(question: number, choice: number){
 
-    var EnabledAnswer; 
-    this.toggle[choice-1] = !this.toggle[choice-1];
-    this.status[choice-1] = this.toggle[choice-1] ? 'Enable' : 'Disable';
-    console.log(this.status);
-
-    for(let i in this.status){
-      if(this.status[i]=='Disable'){
-        EnabledAnswer=i;
-        EnabledAnswer++;
-      }
-    }
-
-    this.choiceArray[question-1]=EnabledAnswer;
-    console.log('My answers are'+this.choiceArray)
+    this.toggle[question - 1] = choice;
 
   }
-  
- //submit
+
+  // submit
 
   submit(){
-    this.submitted=!this.submitted;
+    this.submitted = !this.submitted;
   }
-  submit2(markingsheet:String){
+  // tslint:disable-next-line: ban-types
+  submit2(markingsheet: String){
 
-
-    for(let i in this.correctansArray){
-      if(this.correctansArray[i]==this.choiceArray[i]){
-        this.marksArray[i]=1;
-      }else{
-        this.marksArray[i]=0;
-      }
-    }
+    localStorage.setItem('paperKey', JSON.stringify(this.paper));
+    localStorage.setItem('toggleKey', JSON.stringify(this.toggle));
+    localStorage.setItem('second', '1');
 
     this.router.navigate([`${markingsheet}`]);
 
-    localStorage.setItem("paperKey",JSON.stringify(this.paper));
-    localStorage.setItem("toggleKey",JSON.stringify(this.toggle));
-    localStorage.setItem("marksKey",JSON.stringify(this.marksArray));
   }
 }
