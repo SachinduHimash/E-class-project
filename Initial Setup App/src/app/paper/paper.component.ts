@@ -17,11 +17,6 @@ import {MathsService} from '../maths.service';
 
 export class PaperComponent implements OnInit {
 
-  // correct answer array,choices array and marks array
-
-  correctansArray: Number[] = [];
-  choiceArray: Number[] = [];
-  marksArray: Number[] = [];
 
  // toggles to color buttons
 
@@ -94,12 +89,6 @@ export class PaperComponent implements OnInit {
         console.log(doc.updatedAt);
       });
 
-    this._af.doc(docPath).valueChanges().subscribe(console.log);
-
-    for (let i in this.paper) {
-      this.correctansArray[i] = this.paper[i].correctAnswer;
-    }
-    console.log(this.correctansArray);
   }
 
   // checking answers
