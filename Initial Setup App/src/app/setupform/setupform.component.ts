@@ -20,6 +20,7 @@ export class SetupformComponent implements OnInit {
 
   myform: FormGroup;
   selectClasses = [];
+  isPaper;
   classes: any[] =
   [
     {
@@ -222,5 +223,7 @@ export class SetupformComponent implements OnInit {
          }
 
     });
+    this.isPaper=true;
+    localStorage.setItem('onKey', JSON.stringify(this.isPaper));
   }
 }

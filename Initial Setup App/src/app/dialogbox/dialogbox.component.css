@@ -1,0 +1,12 @@
+.yesButton{
+    background-color: rgb(58, 161, 58);
+    color: white;
+}
+.noButton{
+    background-color: #d64343;
+    color: white;
+}
+h3{
+    color:#d64343 ;
+    font-weight: bold;
+}
