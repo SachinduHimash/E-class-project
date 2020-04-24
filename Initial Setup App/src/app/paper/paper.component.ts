@@ -9,6 +9,8 @@ import {Papers} from '../interfaces/databaseInterfaces';
 import {MathsService} from '../maths.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogboxComponent } from '../dialogbox/dialogbox.component';
+import * as firebase from 'firebase';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-paper',
@@ -19,25 +21,28 @@ import { DialogboxComponent } from '../dialogbox/dialogbox.component';
 
 export class PaperComponent implements OnInit {
   isPaper;
+  classN;
+  userID;
 
  // toggles to color buttons
 
   toggle: any[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 
-  // create_form
-  updateFormGroup: FormGroup;
   // fetched_paper_data;
   paper;
 
-  //submitting the paper
+  // submitting the paper
   submitted = false;
+  marks = 0;
+  name: string;
 
   constructor(private _fb: FormBuilder,
               private _af: AngularFirestore,
               private _math: MathsService,
               private router: Router,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private datePipe: DatePipe) {
     if (localStorage.getItem('first') === '1' && localStorage.getItem('second') === '1') {
       router.navigate(['markingsheet']);
     } else if (localStorage.getItem('first') === '1') {
@@ -45,11 +50,20 @@ export class PaperComponent implements OnInit {
     } else {
       router.navigate(['']);
     }
+    if (localStorage.getItem('toggleKey')){
+      const retrivedToggle = localStorage.getItem('toggleKey');
+      this.toggle = JSON.parse(retrivedToggle);
+    }
+    this.classN = localStorage.getItem('class');
+    this.userID = localStorage.getItem('userID');
+    this.name = localStorage.getItem('name');
 
   }
 
   ngOnInit() {
-    this.buildViewForm();
+    setTimeout(() => {
+     this.submitTimeout();
+    }, 1800000);
   }
 
 
@@ -60,13 +74,6 @@ export class PaperComponent implements OnInit {
     return paperNumber;
   };
 
-  // Update_paper_section
-  buildViewForm() {
-    this.updateFormGroup = this._fb.group({
-      grade: new FormControl('', Validators.required),
-      paperNumber: new FormControl('', Validators.required),
-    });
-  }
 
   isMobileMenu() {
     if (screen.width > 991) {
@@ -87,9 +94,6 @@ export class PaperComponent implements OnInit {
       .valueChanges()
       .subscribe( (doc: Papers) => {
         this.paper =  doc.questions;
-        console.log(this.paper);
-        console.log(doc.createdAt);
-        console.log(doc.updatedAt);
       });
 
   }
@@ -99,6 +103,7 @@ export class PaperComponent implements OnInit {
   checkAnswer(question: number, choice: number){
 
     this.toggle[question - 1] = choice;
+    localStorage.setItem('toggleKey', JSON.stringify(this.toggle));
 
   }
 
@@ -111,7 +116,61 @@ export class PaperComponent implements OnInit {
     localStorage.setItem('toggleKey', JSON.stringify(this.toggle));
     localStorage.setItem('second', '1');
 
+
+
     this.dialog.open(DialogboxComponent);
+  }
+
+  submitTimeout() {
+    localStorage.setItem('paperKey', JSON.stringify(this.paper));
+    localStorage.setItem('toggleKey', JSON.stringify(this.toggle));
+    localStorage.setItem('second', '1');
+    alert('Time is over');
+    this.router.navigate(['markingsheet']);
+    this.checkMarks();
+    this._af.collection('class').doc(this.classN).collection('students').doc(this.userID).collection('marks')
+    .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).set({
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      mark: this.marks,
+      date: this.datePipe.transform(new Date(), 'yyyy.MM.dd'),
+      name: this.name,
+    });
+
+
+    this._af.collection('marks').doc(localStorage.getItem('grade')).ref.get().then((docSnapshot) => {
+      if (!docSnapshot.exists) {
+        this._af.collection('marks').doc(localStorage.getItem('grade')).set({}, { merge: true })
+      }
+    }).then(() => {
+      // tslint:disable-next-line: no-unused-expression
+      this._af.collection('marks').doc(localStorage.getItem('grade')).collection('paperNumbers')
+      .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1)))
+        .ref.get().then((docSnapshot) => {
+          if (!docSnapshot.exists) {
+            this._af.collection('marks').doc(localStorage.getItem('grade')).collection('paperNumbers')
+            .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).set({
+              date: this.datePipe.transform(new Date(), 'yyyy.MM.dd')
+            });
+          }
+        }).then(() => {
+          this._af.collection('marks').doc(localStorage.getItem('grade')).collection('paperNumbers')
+            .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).collection('students')
+            .doc(this.userID).set({
+              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              mark: this.marks,
+              date: this.datePipe.transform(new Date(), 'yyyy.MM.dd'),
+              name: this.name
+            });
+        });
+    });
+  }
+
+  checkMarks() {
+    for (let index = 0; index < this.toggle.length; index++) {
+      if (this.toggle[index] === this.paper[index].correctAnswer) {
+        this.marks += 5;
+      }
+    }
   }
 
 }

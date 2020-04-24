@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, FormGroupDirective, NgForm} from '@angular/forms';
 import { AngularFireDatabase} from '@angular/fire/database';
 import {AngularFirestore} from '@angular/fire/firestore';
 import * as firebase from 'firebase';
@@ -8,6 +8,7 @@ import { Md5 } from 'ts-md5/dist/md5';
 import { DatePipe } from '@angular/common';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { DialogboxComponent } from '../dialogbox/dialogbox.component';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 
 
@@ -21,15 +22,9 @@ export class SetupformComponent implements OnInit {
   myform: FormGroup;
   selectClasses = [];
   isPaper;
+  showDetails = true;
   classes: any[] =
   [
-    {
-      grade: 11,
-      class: 'Warana Mass Class',
-      number: 1,
-      type: 'Mass'
-
-    },
     {
       grade: 11,
       class: 'Warana Group Class',
@@ -128,6 +123,7 @@ export class SetupformComponent implements OnInit {
 
     },
   ];
+  matcher = new MyErrorStateMatcher();
 
     // [
     // 'Warana Mass Class',
@@ -166,9 +162,19 @@ export class SetupformComponent implements OnInit {
       grade: new FormControl('', Validators.required),
       teleNo: new FormControl('', [Validators.required, Validators.minLength(10)]),
       class: new FormControl('', Validators.required),
-    });
+      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      cpassword: new FormControl('' ),
+    }, { validator: this.checkPasswords });
     this.myform.valueChanges.subscribe(console.log);
     }
+
+  checkPasswords(group: FormGroup) { // here we have the 'passwords' group
+    const pass = group.get('password').value;
+    const confirmPass = group.get('cpassword').value;
+
+    return pass === confirmPass ? null : { notSame: true };
+  }
+
 
   getclass(x){
     this.myform.value.class = null;
@@ -182,20 +188,23 @@ export class SetupformComponent implements OnInit {
 
    submit(){
     const formValue = this.myform.value;
-    console.log(formValue);
     const userID = formValue.userID;
     const newClass = (formValue.grade.toString()).concat('.').concat(this.myform.value.class.number);
+    localStorage.setItem('class', newClass);
+    localStorage.setItem('userID', userID);
+    localStorage.setItem('name', formValue.fullName);
 
     this.db.collection('users').doc(userID).ref.get().then((docSnapshot) => {
          if (!docSnapshot.exists) {
            this.db.doc(`users/${userID}`)
              .set({
+               createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                fullName: formValue.fullName,
                school: formValue.school,
                address: formValue.address,
-               teleNo: +formValue.teleNo,
+               teleNo: formValue.teleNo,
                class: newClass,
-               password: Md5.hashStr('password'),
+               password: Md5.hashStr(formValue.password),
                role: 'student'
              }).then(() => {
                this.db.collection('class').doc(newClass).ref.get().then((docSnapshot1) => {
@@ -211,19 +220,36 @@ export class SetupformComponent implements OnInit {
                  }
                }).then(() => {
                  this.db.collection('class').doc(newClass).collection('students').doc(userID).set({
+                   createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                    fullName: formValue.fullName,
                    year: +this.datePipe.transform(new Date(), 'yyyy').toString() + 11 - this.myform.value.grade
                  });
                });
              }).catch(console.log);
-           console.log('end');
            localStorage.setItem('first', '1');
            localStorage.setItem('grade', this.myform.value.grade);
            this.dialog.open(DialogboxComponent);
+         } else {
+           this.isPaper = true;
+           localStorage.setItem('onKey', JSON.stringify(this.isPaper));
+           localStorage.setItem('first', '1');
+           this.db.collection('users').doc(userID).valueChanges().subscribe((doc) =>{
+             localStorage.setItem('grade', doc['class'].split('.')[0]);
+             this.router.navigate(['paper']);
+           });
          }
 
     });
-    this.isPaper=true;
+    this.isPaper = true;
     localStorage.setItem('onKey', JSON.stringify(this.isPaper));
+  }
+}
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const invalidCtrl = !!(control && control.invalid && control.parent.dirty);
+    const invalidParent = !!(control && control.parent && control.parent.invalid && control.parent.dirty);
+
+    return (invalidCtrl || invalidParent);
   }
 }

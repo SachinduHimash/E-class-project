@@ -65,3 +65,19 @@
 .yes {
   background-color: #62de7a;
 }
+
+.invalid:before {
+  position: relative;
+  left: 5px;
+  content: "❌";
+  font-size: large;
+  color: #d64343;
+}
+
+.valid:before {
+  position: relative;
+  left: 5px;
+  content: "✔";
+  font-size: xx-large;
+  color: #62de7a;
+}

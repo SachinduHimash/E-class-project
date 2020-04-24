@@ -12,7 +12,7 @@ import { AppComponent } from './app.component';
 import { SetupformComponent } from './setupform/setupform.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import {MatFormFieldModule} from '@angular/material/form-field'; 
+import {MatFormFieldModule} from '@angular/material/form-field';
 import { PaperComponent } from './paper/paper.component';
 import { MarkingsheetComponent } from './markingsheet/markingsheet.component';
 
@@ -54,9 +54,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import { DatePipe } from '@angular/common';
 import { DialogboxComponent } from './dialogbox/dialogbox.component';
-
-
-
+import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 
 
 @NgModule({
@@ -68,6 +66,7 @@ import { DialogboxComponent } from './dialogbox/dialogbox.component';
     MarkingsheetComponent
   ],
   imports: [
+    MatPasswordStrengthModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,

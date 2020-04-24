@@ -4,10 +4,11 @@
 
       <!-- <ng-template matStepLabel></ng-template> -->
       <h1 style="text-align: center;color: rgb(14, 110, 46);font-weight: bold;">Your Result is {{marks}}%</h1>
+      <div [ngClass]="{'valid' : toggle[i] == question.correctAnswer,'invalid': toggle[i] != question.correctAnswer }"></div>
       <h2>Question {{i + 1}}</h2>
 
       <ng-template [ngIf]="question.picture">
-        <img [src]="question.picture" mat-card-image>
+        <img [src]="question.picture" mat-card-image style="height: 15%;">
       </ng-template>
       <p></p>
       <p class="writableTextArea">{{question.question}}</p>
@@ -84,10 +85,10 @@
 </ng-template>
 
 <ng-template [ngIf]="isMobileMenu()">
-  <h1 style="text-align: center;color: rgb(14, 110, 46);font-weight: bold;">your result is {{marks}}%</h1>
+  <h1 style="text-align: center;color: rgb(14, 110, 46);font-weight: bold;">Your Result is {{marks}}%</h1>
   <mat-vertical-stepper>
     <mat-step *ngFor="let  question of paper ; let i = index" [stepControl]="question.number">
-
+      <div  [ngClass]="{'valid' : toggle[i] == question.correctAnswer,'invalid': toggle[i] != question.correctAnswer }" ></div>
       <ng-template matStepLabel>Question {{i + 1}}</ng-template>
 
       <ng-template [ngIf]="question.picture">
