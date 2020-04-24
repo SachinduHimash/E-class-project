@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import {Papers} from '../interfaces/databaseInterfaces';
 
 import {MathsService} from '../maths.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogboxComponent } from '../dialogbox/dialogbox.component';
 
 @Component({
   selector: 'app-paper',
@@ -22,6 +24,7 @@ export class PaperComponent implements OnInit {
   correctansArray: Number[] = [];
   choiceArray: Number[] = [];
   marksArray: Number[] = [];
+  isPaper;
 
  // toggles to color buttons
 
@@ -39,7 +42,8 @@ export class PaperComponent implements OnInit {
   constructor(private _fb: FormBuilder,
               private _af: AngularFirestore,
               private _math: MathsService,
-              private router: Router) {
+              private router: Router,
+              public dialog: MatDialog) {
     if (localStorage.getItem('first') === '1' && localStorage.getItem('second') === '1') {
       router.navigate(['markingsheet']);
     } else if (localStorage.getItem('first') === '1') {
@@ -113,16 +117,13 @@ export class PaperComponent implements OnInit {
   // submit
 
   submit(){
-    this.submitted = !this.submitted;
-  }
-  // tslint:disable-next-line: ban-types
-  submit2(markingsheet: String){
-
+    this.isPaper=false;
+    localStorage.setItem('onKey', JSON.stringify(this.isPaper));
     localStorage.setItem('paperKey', JSON.stringify(this.paper));
     localStorage.setItem('toggleKey', JSON.stringify(this.toggle));
     localStorage.setItem('second', '1');
 
-    this.router.navigate([`${markingsheet}`]);
-
+    this.dialog.open(DialogboxComponent);
   }
+  
 }

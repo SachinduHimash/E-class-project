@@ -1,5 +1,18 @@
+<ng-template [ngIf]="isPaper">
 <h2 mat-dialog-title>Your Sign up Form has been submitted</h2>
-<mat-dialog-content>You can now view your paper.Please press the button below.</mat-dialog-content>
+<mat-dialog-content>You can now view your paper. Please press the button below.</mat-dialog-content><br>
+<h3>You have 30 minutes to do the paper.</h3>
 <mat-dialog-actions>
 <button mat-raised-button color="primary" (click)="viewPaper('paper')" mat-dialog-close>Go to the paper</button>
 </mat-dialog-actions>
+</ng-template>
+
+<ng-template [ngIf]="!isPaper">
+    <h2 mat-dialog-title>Do you want to finish the paper?</h2>
+    <mat-dialog-actions>
+    <button mat-raised-button class="yesButton" (click)="viewPaper('markingsheet')" mat-dialog-close>Yes</button>
+    </mat-dialog-actions><br><br>
+    <mat-dialog-actions>
+    <button mat-raised-button class="noButton"  mat-dialog-close>No</button>
+   </mat-dialog-actions>
+</ng-template>
