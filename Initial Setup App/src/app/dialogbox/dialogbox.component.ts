@@ -10,13 +10,22 @@ import { Router } from '@angular/router';
 })
 export class DialogboxComponent implements OnInit {
 
+
+  isPaper;
   constructor(private router: Router
-     ) { }
+     ) { 
+       this.getData();
+     }
 
   ngOnInit(): void {
   }
   viewPaper(paper:string): void {
     this.router.navigate([`${paper}`]);
    
+  }
+  getData(){
+    const retrivedPaper = localStorage.getItem('onKey');
+    this.isPaper = JSON.parse(retrivedPaper);
+    
   }
 }

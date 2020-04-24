@@ -3,7 +3,7 @@
     <mat-step *ngFor="let  question of paper ; let i = index" [stepControl]="question.number">
 
       <!-- <ng-template matStepLabel></ng-template> -->
-      <h1 style="text-align: center;color: rgb(14, 110, 46);font-weight: bold;">your result is {{marks}}%</h1>
+      <h1 style="text-align: center;color: rgb(14, 110, 46);font-weight: bold;">Your Result is {{marks}}%</h1>
       <h2>Question {{i + 1}}</h2>
 
       <ng-template [ngIf]="question.picture">
