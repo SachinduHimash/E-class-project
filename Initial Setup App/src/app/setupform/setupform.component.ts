@@ -165,7 +165,6 @@ export class SetupformComponent implements OnInit {
       password: new FormControl('', [Validators.required, Validators.minLength(8)]),
       cpassword: new FormControl('' ),
     }, { validator: this.checkPasswords });
-    this.myform.valueChanges.subscribe(console.log);
     }
 
   checkPasswords(group: FormGroup) { // here we have the 'passwords' group

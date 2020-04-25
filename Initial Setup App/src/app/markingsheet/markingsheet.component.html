@@ -8,7 +8,7 @@
       <h2>Question {{i + 1}}</h2>
 
       <ng-template [ngIf]="question.picture">
-        <img [src]="question.picture" mat-card-image style="height: 15%;">
+        <img [src]="question.picture" mat-card-image style="height: 15%;width: unset;">
       </ng-template>
       <p></p>
       <p class="writableTextArea">{{question.question}}</p>
