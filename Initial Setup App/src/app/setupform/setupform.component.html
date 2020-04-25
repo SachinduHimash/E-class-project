@@ -127,8 +127,8 @@
 
           <mat-form-field appearance="outline" [color]="passwordComponent.color">
             <mat-label>Confirm Password</mat-label>
-            <mat-pass-toggle-visibility #toggle matSuffix></mat-pass-toggle-visibility>
-            <input formControlName="cpassword" matInput #cpassword [type]="toggle.type" required placeholder="Confirm Password" [errorStateMatcher]="matcher">
+            <mat-pass-toggle-visibility #toggle1 matSuffix></mat-pass-toggle-visibility>
+            <input formControlName="cpassword" matInput #cpassword [type]="toggle1.type" required placeholder="Confirm Password" [errorStateMatcher]="matcher">
             <mat-hint align="end" aria-live="polite">
               {{cpassword.value.length}} / {{password.value.length}}
             </mat-hint>

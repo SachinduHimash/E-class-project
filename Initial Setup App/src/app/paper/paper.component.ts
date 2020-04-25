@@ -36,6 +36,7 @@ export class PaperComponent implements OnInit {
   submitted = false;
   marks = 0;
   name: string;
+  timeOutIDs: any[] = [];
 
   constructor(private _fb: FormBuilder,
               private _af: AngularFirestore,
@@ -61,9 +62,9 @@ export class PaperComponent implements OnInit {
   }
 
   ngOnInit() {
-    setTimeout(() => {
-     this.submitTimeout();
-    }, 1800000);
+    this.timeOutIDs.push(
+      setTimeout(() => this.submitTimeout(), 120000)
+    );
   }
 
 
@@ -72,7 +73,7 @@ export class PaperComponent implements OnInit {
       paperNumber = '0'.concat(paperNumber.toString());
     }
     return paperNumber;
-  };
+  }
 
 
   isMobileMenu() {
@@ -110,6 +111,7 @@ export class PaperComponent implements OnInit {
   // submit
 
   submit(){
+    this.timeOutIDs.forEach(id => clearTimeout(id));
     this.isPaper=false;
     localStorage.setItem('onKey', JSON.stringify(this.isPaper));
     localStorage.setItem('paperKey', JSON.stringify(this.paper));
@@ -122,6 +124,7 @@ export class PaperComponent implements OnInit {
   }
 
   submitTimeout() {
+    this.timeOutIDs.forEach(id => clearTimeout(id));
     localStorage.setItem('paperKey', JSON.stringify(this.paper));
     localStorage.setItem('toggleKey', JSON.stringify(this.toggle));
     localStorage.setItem('second', '1');
@@ -139,7 +142,7 @@ export class PaperComponent implements OnInit {
 
     this._af.collection('marks').doc(localStorage.getItem('grade')).ref.get().then((docSnapshot) => {
       if (!docSnapshot.exists) {
-        this._af.collection('marks').doc(localStorage.getItem('grade')).set({}, { merge: true })
+        this._af.collection('marks').doc(localStorage.getItem('grade')).set({}, { merge: true });
       }
     }).then(() => {
       // tslint:disable-next-line: no-unused-expression
