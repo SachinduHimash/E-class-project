@@ -41,44 +41,55 @@ export class DialogboxComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  viewPaper(paper:string): void {
+  viewPaper(paper:string){
     if (paper === 'markingsheet'){
       this.checkMarks();
       this.af.collection('class').doc(this.classN).collection('students').doc(this.userID).collection('marks')
         .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).set({
-          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          // createdAt: firebase.firestore.FieldValue.serverTimestamp(),
           mark: this.marks,
           date: this.datePipe.transform(new Date(), 'yyyy.MM.dd'),
           name: this.name,
         });
 
 
-      this.af.collection('marks').doc(localStorage.getItem('grade')).ref.get().then((docSnapshot) => {
-        if (!docSnapshot.exists) {
-          this.af.collection('marks').doc(localStorage.getItem('grade')).set({}, { merge: true })
-        }
-      }).then(() => {
-        // tslint:disable-next-line: no-unused-expression
-        this.af.collection('marks').doc(localStorage.getItem('grade')).collection('paperNumbers')
-          .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1)))
-          .ref.get().then((docSnapshot) => {
-            if (!docSnapshot.exists) {
+      try {
+        this.af.firestore.collection('marks').doc(localStorage.getItem('grade')).get().then((docSnapshot) => {
+          if (!docSnapshot.exists) {
+            this.af.collection('marks').doc(localStorage.getItem('grade')).set({}, { merge: true })
+          }
+        }).then(() => {
+          // tslint:disable-next-line: no-unused-expression
+          this.af.firestore.collection('marks').doc(localStorage.getItem('grade')).collection('paperNumbers')
+            .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1)))
+            .get().then(docSnapshot => {
+              if (!docSnapshot.exists) {
+                this.af.collection('marks').doc(localStorage.getItem('grade')).collection('paperNumbers')
+                  .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).set({
+                    date: this.datePipe.transform(new Date(), 'yyyy.MM.dd')
+                  });
+              }
+            }).then(() => {
               this.af.collection('marks').doc(localStorage.getItem('grade')).collection('paperNumbers')
-                .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).set({
-                  date: this.datePipe.transform(new Date(), 'yyyy.MM.dd')
+                .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).collection('students')
+                .doc(this.userID).set({
+                  // createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                  mark: this.marks,
+                  date: this.datePipe.transform(new Date(), 'yyyy.MM.dd'),
+                  name: this.name
                 });
-            }
-          }).then(() => {
-            this.af.collection('marks').doc(localStorage.getItem('grade')).collection('paperNumbers')
-              .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).collection('students')
-              .doc(this.userID).set({
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                mark: this.marks,
-                date: this.datePipe.transform(new Date(), 'yyyy.MM.dd'),
-                name: this.name
-              });
+            });
+        });
+      } catch (error) {
+        this.af.collection('marks').doc(localStorage.getItem('grade')).collection('paperNumbers')
+          .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).collection('students')
+          .doc(this.userID).set({
+            // createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            mark: this.marks,
+            date: this.datePipe.transform(new Date(), 'yyyy.MM.dd'),
+            name: this.name
           });
-      });
+      }
     }
     this.router.navigate([`${paper}`]);
 

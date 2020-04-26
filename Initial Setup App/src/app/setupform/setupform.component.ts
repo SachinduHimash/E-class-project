@@ -124,6 +124,16 @@ export class SetupformComponent implements OnInit {
     },
   ];
   matcher = new MyErrorStateMatcher();
+  test1: string;
+  test2: string;
+  error1: any;
+  error2: any;
+  test3: string;
+  test4: string;
+  test5: string;
+  test6: string;
+  error3: any;
+  error4: any;
 
     // [
     // 'Warana Mass Class',
@@ -141,7 +151,7 @@ export class SetupformComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public db: AngularFirestore,
+    public af: AngularFirestore,
     private datePipe: DatePipe,
     public dialog: MatDialog,
     private router: Router,
@@ -185,19 +195,22 @@ export class SetupformComponent implements OnInit {
     });
   }
 
-   submit(){
+    submit(){
     const formValue = this.myform.value;
     const userID = formValue.userID;
     const newClass = (formValue.grade.toString()).concat('.').concat(this.myform.value.class.number);
     localStorage.setItem('class', newClass);
     localStorage.setItem('userID', userID);
     localStorage.setItem('name', formValue.fullName);
-
-    this.db.collection('users').doc(userID).ref.get().then((docSnapshot) => {
+    this.test1 = 'test1';
+    try {
+      this.af.firestore.collection('users').doc(userID).get().then(docSnapshot => {
+         this.test2 = 'test2';
          if (!docSnapshot.exists) {
-           this.db.doc(`users/${userID}`)
+           this.test3 = 'test3';
+           this.af.doc(`users/${userID}`)
              .set({
-               createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              //  createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                fullName: formValue.fullName,
                school: formValue.school,
                address: formValue.address,
@@ -206,41 +219,71 @@ export class SetupformComponent implements OnInit {
                password: Md5.hashStr(formValue.password),
                role: 'student'
              }).then(() => {
-               this.db.collection('class').doc(newClass).ref.get().then((docSnapshot1) => {
+               this.af.firestore.collection('class').doc(newClass).get().then(docSnapshot1 => {
                  if (!docSnapshot1.exists) {
-                   this.db.collection('class').doc(newClass).set({
+                   this.af.collection('class').doc(newClass).set({
                      name: this.myform.value.class.class,
                      number: +this.myform.value.class.number,
                      grade: +this.myform.value.grade,
-                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    //  createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                      fees: 1500,
                      type: this.myform.value.class.type
-                   }).catch((err) => console.log(err));
+                   }).catch((err) => this.error1 = err);
                  }
                }).then(() => {
-                 this.db.collection('class').doc(newClass).collection('students').doc(userID).set({
-                   createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                  this.af.collection('class').doc(newClass).collection('students').doc(userID).set({
+                  //  createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                    fullName: formValue.fullName,
                    year: +this.datePipe.transform(new Date(), 'yyyy').toString() + 11 - this.myform.value.grade
                  });
                });
-             }).catch(console.log);
+             }).catch((err) => this.error2 = err);
            localStorage.setItem('first', '1');
            localStorage.setItem('grade', this.myform.value.grade);
-           this.dialog.open(DialogboxComponent);
-         } else {
            this.isPaper = true;
            localStorage.setItem('onKey', JSON.stringify(this.isPaper));
-           localStorage.setItem('first', '1');
-           this.db.collection('users').doc(userID).valueChanges().subscribe((doc) =>{
+           this.dialog.open(DialogboxComponent);
+         } else {
+           this.test4 = 'test4';
+           this.isPaper = true;
+           localStorage.setItem('onKey', JSON.stringify(this.isPaper));
+           localStorage.ssetItem('first', '1');
+           this.af.collection('users').doc(userID).valueChanges().subscribe((doc) => {
              localStorage.setItem('grade', doc['class'].split('.')[0]);
              this.router.navigate(['paper']);
            });
          }
+         this.test5 = 'test5';
+    }).catch((err) => this.error3 = err);
+    } catch (error) {
+      this.error4 = error;
+      this.af.doc(`users/${userID}`)
+       .set({
+        //  createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+         fullName: formValue.fullName,
+         school: formValue.school,
+         address: formValue.address,
+         teleNo: formValue.teleNo,
+         class: newClass,
+         password: Md5.hashStr(formValue.password),
+         role: 'student'
+       });
+      this.af.collection('class').doc(newClass).collection('students').doc(userID).set({
+      //  createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+       fullName: formValue.fullName,
+       year: +this.datePipe.transform(new Date(), 'yyyy').toString() + 11 - this.myform.value.grade
+     });
+      localStorage.setItem('first', '1');
+      localStorage.setItem('grade', this.myform.value.grade);
+      this.dialog.open(DialogboxComponent);
+    }
 
-    });
+
+
+
     this.isPaper = true;
     localStorage.setItem('onKey', JSON.stringify(this.isPaper));
+    this.test6 = 'test6';
   }
 }
 
