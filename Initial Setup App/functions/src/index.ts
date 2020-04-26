@@ -1,6 +1,5 @@
 import * as functions from 'firebase-functions';
-// endPoint
-// https://us-central1-e-class-13f92.cloudfunctions.net/helloWorld
+
 
 export const helloWorld = functions.https.onRequest((request, response) => {
   response.send("Hello from Firebase!");
@@ -14,6 +13,12 @@ import {firestore, TimeStamp} from './config';
 const app = express();
 app.use(cors({origin: true}));
 app.use(bodyParser.json());
+
+// endPoint Original
+// https://us-central1-e-class-13f92.cloudfunctions.net/login/registration
+
+// function_deploy_link_of_test_database
+// https://us-central1-e-class01.cloudfunctions.net/login/registration
 
 app.post('/registration', (req, res) => {
   // res.send(req.body);
@@ -64,6 +69,11 @@ app.post('/registration', (req, res) => {
                     fullName: reqData.fullName,
                     // year: +this.datePipe.transform(new Date(), 'yyyy').toString() + 11 - this.myform.value.grade
                     year: Number(currentDate.getFullYear()) + 11 - Number(reqData.grade)
+                  }).then(() =>{
+                      res.send({
+                        msg : 'success'
+                      });
+                      return;
                   }).catch((err) => {
                       res.send({
                         err: err,
