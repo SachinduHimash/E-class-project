@@ -63,7 +63,7 @@ export class PaperComponent implements OnInit {
 
   ngOnInit() {
     this.timeOutIDs.push(
-      setTimeout(() => this.submitTimeout(), 120000)
+      setTimeout(() => this.submitTimeout(), 1800000)
     );
   }
 
@@ -131,41 +131,64 @@ export class PaperComponent implements OnInit {
     alert('Time is over');
     this.router.navigate(['markingsheet']);
     this.checkMarks();
+
+    // this._af.collection('class').doc(this.classN).collection('students').doc(this.userID).collection('marks')
+    //   .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).set({
+    //     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    //     mark: this.marks,
+    //     date: this.datePipe.transform(new Date(), 'yyyy.MM.dd'),
+    //     name: this.name,
+    //   });
+
+
+
     this._af.collection('class').doc(this.classN).collection('students').doc(this.userID).collection('marks')
     .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).set({
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      // createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       mark: this.marks,
       date: this.datePipe.transform(new Date(), 'yyyy.MM.dd'),
       name: this.name,
     });
 
-
-    this._af.collection('marks').doc(localStorage.getItem('grade')).ref.get().then((docSnapshot) => {
-      if (!docSnapshot.exists) {
-        this._af.collection('marks').doc(localStorage.getItem('grade')).set({}, { merge: true });
-      }
-    }).then(() => {
-      // tslint:disable-next-line: no-unused-expression
-      this._af.collection('marks').doc(localStorage.getItem('grade')).collection('paperNumbers')
-      .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1)))
-        .ref.get().then((docSnapshot) => {
-          if (!docSnapshot.exists) {
+    try {
+      this._af.firestore.collection('marks').doc(localStorage.getItem('grade')).get().then(docSnapshot => {
+        if (!docSnapshot.exists) {
+          this._af.collection('marks').doc(localStorage.getItem('grade')).set({}, { merge: true });
+        }
+      }).then(() => {
+        // tslint:disable-next-line: no-unused-expression
+        this._af.firestore.collection('marks').doc(localStorage.getItem('grade')).collection('paperNumbers')
+          .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1)))
+          .get().then(docSnapshot => {
+            if (!docSnapshot.exists) {
+              this._af.collection('marks').doc(localStorage.getItem('grade')).collection('paperNumbers')
+                .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).set({
+                  date: this.datePipe.transform(new Date(), 'yyyy.MM.dd')
+                });
+            }
+          }).then(() => {
             this._af.collection('marks').doc(localStorage.getItem('grade')).collection('paperNumbers')
-            .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).set({
-              date: this.datePipe.transform(new Date(), 'yyyy.MM.dd')
-            });
-          }
-        }).then(() => {
-          this._af.collection('marks').doc(localStorage.getItem('grade')).collection('paperNumbers')
-            .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).collection('students')
-            .doc(this.userID).set({
-              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-              mark: this.marks,
-              date: this.datePipe.transform(new Date(), 'yyyy.MM.dd'),
-              name: this.name
-            });
+              .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).collection('students')
+              .doc(this.userID).set({
+                // createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                mark: this.marks,
+                date: this.datePipe.transform(new Date(), 'yyyy.MM.dd'),
+                name: this.name
+              });
+          });
+      });
+    } catch (error) {
+      this._af.collection('marks').doc(localStorage.getItem('grade')).collection('paperNumbers')
+        .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).collection('students')
+        .doc(this.userID).set({
+          // createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          mark: this.marks,
+          date: this.datePipe.transform(new Date(), 'yyyy.MM.dd'),
+          name: this.name
         });
-    });
+    }
+
+
   }
 
   checkMarks() {

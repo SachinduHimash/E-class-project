@@ -7,7 +7,7 @@
         <h4>Student Registration Form</h4>
       </div>
       <mat-card-content>
-        <form class="formbox" (ngSubmit)="submit()" [formGroup]="myform">
+        <form class="formbox"  [formGroup]="myform">
 
           <mat-form-field appearance="outline">
             <mat-label>User ID</mat-label>
@@ -109,7 +109,7 @@
           </mat-form-field>
           <br>
 
-          <mat-form-field appearance="outline" [color]="passwordComponent.color">
+          <mat-form-field appearance="outline" >
             <mat-label>Password</mat-label>
             <mat-pass-toggle-visibility #toggle matSuffix></mat-pass-toggle-visibility>
             <input formControlName="password" matInput #password [type]="toggle.type" required placeholder="Password">
@@ -125,7 +125,7 @@
           </mat-password-strength-info>
           <br>
 
-          <mat-form-field appearance="outline" [color]="passwordComponent.color">
+          <mat-form-field appearance="outline" >
             <mat-label>Confirm Password</mat-label>
             <mat-pass-toggle-visibility #toggle1 matSuffix></mat-pass-toggle-visibility>
             <input formControlName="cpassword" matInput #cpassword [type]="toggle1.type" required placeholder="Confirm Password" [errorStateMatcher]="matcher">
@@ -140,9 +140,17 @@
           </mat-form-field>
 
           <br>
-
-
-          <button [disabled]="myform.invalid" class="button" mat-raised-button type="submit"
+          <h4>{{error1}}</h4>
+          <h4>{{error2}}</h4>
+          <h4>{{error3}}</h4>
+          <h4>{{error4}}</h4>
+          <h4>{{test1}}</h4>
+          <h4>{{test2}}</h4>
+          <h4>{{test3}}</h4>
+          <h4>{{test4}}</h4>
+          <h4>{{test5}}</h4>
+          <h4>{{test6}}</h4>
+          <button [disabled]="myform.invalid" class="button" (click)="submit()"  mat-raised-button
             color="primary">Submit</button>
         </form>
       </mat-card-content>
