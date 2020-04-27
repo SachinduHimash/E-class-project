@@ -5,14 +5,24 @@
 
 export const environment = {
   production: false,
+  // firebaseConfig : {
+  //   apiKey: 'AIzaSyCUWdcw3fa3s_kdhEQLK9yolpzE6bkyxbw',
+  //   authDomain: 'e-class-13f92.firebaseapp.com',
+  //   databaseURL: 'https://e-class-13f92.firebaseio.com',
+  //   projectId: 'e-class-13f92',
+  //   storageBucket: 'e-class-13f92.appspot.com',
+  //   messagingSenderId: '116853320881',
+  //   appId: '1:116853320881:web:24d7a8bd216dcb8d6b8690',
+  //   measurementId: 'G-7ND1GP4SJ5'
+  // }
   firebaseConfig : {
-    apiKey: 'AIzaSyCUWdcw3fa3s_kdhEQLK9yolpzE6bkyxbw',
-    authDomain: 'e-class-13f92.firebaseapp.com',
-    databaseURL: 'https://e-class-13f92.firebaseio.com',
-    projectId: 'e-class-13f92',
-    storageBucket: 'e-class-13f92.appspot.com',
-    messagingSenderId: '116853320881',
-    appId: '1:116853320881:web:24d7a8bd216dcb8d6b8690',
-    measurementId: 'G-7ND1GP4SJ5'
+    apiKey: 'AIzaSyBDmBFKGp0H4ceIM7NF_cjfDDVOvlBcNjI',
+    authDomain: 'e-class01.firebaseapp.com',
+    databaseURL: 'https://e-class01.firebaseio.com',
+    projectId: 'e-class01',
+    storageBucket: 'e-class01.appspot.com',
+    messagingSenderId: '596696754055',
+    appId: '1:596696754055:web:4f8655185359a841efd522',
+    measurementId: 'G-1SZBH8M85R'
   }
 };

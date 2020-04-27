@@ -2,10 +2,15 @@
   <!--  change_'fxFlex.gt-md=50'-->
   <div fxFlex="100" fxFlex.gt-lg="25" fxFlex.gt-md="40" fxFlex.gt-xs="100">
     <mat-card class="oh text-center little-profile">
-      <img alt="Photo of a Shiba Inu" mat-card-image src="assets/images/background/login.jpg">
+      <img alt="background" mat-card-image src="assets/images/background/login.jpg">
       <mat-card-content>
         <div class="pro-img">
-          <img alt="user" class="img-circle" src="assets/images/users/4.jpg" width="100">
+          <ng-template [ngIf]="userData?.dp">
+            <img alt="user" class="img-circle" [src]="userData?.dp" width="100">
+          </ng-template>
+          <ng-template [ngIf]="!userData?.dp">
+            <img alt="user" class="img-circle" src="assets/images/users/profile.png" width="100">
+          </ng-template>
         </div>
         <h3 class="m-b-0">{{userData?.name}}</h3>
         <h6 class="m-t-0 ">{{user?.email}}</h6>
@@ -69,9 +74,8 @@
                   <div *ngIf="userProfile.controls['userName'].errors.required">Password is required</div>
                 </mat-hint>
               </mat-form-field>
-
-              <button [disabled]="userProfile.invalid" class="button" mat-raised-button type="submit">Update Username
-              </button>
+              <button class="button" mat-raised-button type="submit"  color="warn"  (click)="openDialog()">Upload profile picture</button>
+              <button [disabled]="userProfile.invalid" class="button" mat-raised-button type="submit">Update Username</button>
             </form>
           </mat-card-content>
         </mat-tab>

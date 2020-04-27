@@ -10,6 +10,7 @@ import {AuthenticationService} from '../services/authentication.service';
 
 import * as firebase from 'firebase';
 import 'firebase/firestore';
+import {NotificationService} from '../services/notification.service';
 
 @Component({
   selector: 'app-students',
@@ -36,7 +37,8 @@ export class StudentsComponent implements OnInit {
 
   constructor(private _fb: FormBuilder,
               private _af: AngularFirestore,
-              private _authService: AuthenticationService) {
+              private _authService: AuthenticationService,
+              private _notification: NotificationService) {
   }
 
   ngOnInit(): void {
@@ -51,7 +53,7 @@ export class StudentsComponent implements OnInit {
         fullName: new FormControl('', Validators.required),
         address: new FormControl('',),
         teleNo: new FormControl('',),
-        email: new FormControl(''),
+        email: new FormControl('', Validators.email),
         school: new FormControl('',),
         class: new FormControl('',),
         password: new FormControl('', Validators.required),
@@ -91,7 +93,7 @@ export class StudentsComponent implements OnInit {
         } else if (!documentSnapshot.exists && (!formValue.class.value || formValue.class === '')) {
           this._af.doc(`users/${formValue.userId}`)
             .set(userObj)
-            .catch(console.log);
+            .catch(() => this._notification.ErrorMessage('failed to add user'));
         } else if (!documentSnapshot.exists && formValue.class.value) {
           this._af.doc(`users/${formValue.userId}`)
             .set(userObj)
@@ -99,12 +101,12 @@ export class StudentsComponent implements OnInit {
               this._af.doc(`class/${formValue.class.value}/students/${formValue.userId}`)
                 .set({
                   fullName: formValue.fullName,
-                  year: null
+                  year: Number(new Date().getFullYear()) + 11 - formValue.grade,
                 })
-                .then(() => console.log('added'))
-                .catch(console.log);
+                .then(() => this._notification.NotificationMessage('successfully added user'))
+                .catch(() => this._notification.ErrorMessage('failed to add user to class'));
             })
-            .catch(console.log);
+            .catch(() => this._notification.ErrorMessage('failed to add user'));
 
         }
       });

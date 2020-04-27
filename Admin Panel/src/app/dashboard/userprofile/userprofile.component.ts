@@ -2,8 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {first} from 'rxjs/operators';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import * as firebase from 'firebase';
+
+import {NotificationService} from '../services/notification.service';
+import {MatDialog} from '@angular/material';
+import {UploaderComponent} from '../uploader/uploader.component';
 
 @Component({
   selector: 'app-userprofile',
@@ -28,9 +32,14 @@ export class UserprofileComponent implements OnInit {
   // if_password_and_confirm_password_mismatch
   passwordError = false;
 
+  // url_of_uploaded_profile_pic
+  profileUrl = null;
+
   constructor(private _af: AngularFirestore,
               private _auth: AngularFireAuth,
-              private _fb: FormBuilder) {
+              private _fb: FormBuilder,
+              private _notification: NotificationService,
+              public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -63,7 +72,7 @@ export class UserprofileComponent implements OnInit {
           this.userProfile.controls['userName'].patchValue(doc.name);
         });
     } else {
-      console.log('not login');
+      this._notification.ErrorMessage('please reauthenticate');
     }
   } // eo getUserData
 
@@ -97,14 +106,27 @@ export class UserprofileComponent implements OnInit {
 
   // form_submit
   submit() {
+
+    let obj;
+    if (this.profileUrl) {
+      obj = {
+        name: this.userProfile.value.userName,
+        dp: this.profileUrl
+      };
+    } else {
+      obj = {
+        name: this.userProfile.value.userName,
+        dp: this.profileUrl
+      };
+    }
     this._af.collection('users')
       // @ts-ignore
       .doc(this.uid)
-      .update({
-        name: this.userProfile.value.userName,
+      .update(obj)
+      .then((doc) => {
+        this._notification.NotificationMessage('username updated');
       })
-      .then((doc) => console.log(doc))
-      .catch(err => console.log(err));
+      .catch(err => this._notification.ErrorMessage(err));
   }
 
   // create_credential_for_reauthentication
@@ -124,27 +146,24 @@ export class UserprofileComponent implements OnInit {
 
     cred.userLogged.reauthenticateWithCredential(cred.credential)
       .then(() => {
-        console.log('here1');
         cred.userLogged.updatePassword(formValue.password)
-          .then(() => console.log('update password'))
-          .catch(() => console.log('failed to update password'));
-        console.log('here2');
+          .then(() => this._notification.NotificationMessage('update password'))
+          .catch(() => this._notification.ErrorMessage('failed to update password'));
       })
-      .catch(() => 'old password is incorrect');
+      .catch(() => this._notification.ErrorMessage('old password is incorrect'));
   }
 
   submitUpdateEmail() {
-    console.log(this.updateEmail.value);
     const formValue = this.updateEmail.value;
     const cred = this.updateUser(formValue.password);
 
     cred.userLogged.reauthenticateWithCredential(cred.credential)
       .then(() => {
         cred.userLogged.updateEmail(formValue.email)
-          .then(() => console.log('update email'))
-          .catch(() => console.log('update fail'));
+          .then(() => this._notification.NotificationMessage('update email'))
+          .catch(() => this._notification.ErrorMessage('update fail'));
       })
-      .catch(() => 'old password is incorrect');
+      .catch(() => this._notification.ErrorMessage('old password is incorrect'));
 
   }
 
@@ -157,5 +176,22 @@ export class UserprofileComponent implements OnInit {
   watchPassword() {
     // tslint:disable-next-line:max-line-length
     this.updatePassword.value.password !== this.updatePassword.value.confirmPassword ? this.passwordError = true : this.passwordError = false;
+  }
+
+  // image_uploader
+  openDialog() {
+
+    const dialogRef = this.dialog.open(UploaderComponent, {
+      width: '600px',
+      data: {
+        userId: this.uid,
+        path: 'adminProfile'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.profileUrl = result.url;
+      this._notification.NotificationMessage('image upload successfully');
+    });
   }
 }

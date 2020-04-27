@@ -32,3 +32,11 @@ dropzone.file-label {
 progress::-webkit-progress-value {
   transition: width 0.1s ease;
 }
+
+.blue-snackbar{
+  background: #2196F3;
+}
+
+.red-snackbar{
+  background: #F44336;
+}

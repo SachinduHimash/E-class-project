@@ -86,6 +86,9 @@ export class UploaderComponent implements OnInit , OnChanges {
       if(this.dataReceive.path === 'papers'){
           uploadPath = `papers/${this.dataReceive.grade}/${this.dataReceive.paperNumber}/${file.name.concat(this.generateRandom())}`;
       }
+      if(this.dataReceive.path === 'adminProfile'){
+          uploadPath = `users/admins/${this.dataReceive.userId}/${file.name.concat(this.generateRandom())}`;
+      }
 
 
       const ref = this._storage.ref(uploadPath);
