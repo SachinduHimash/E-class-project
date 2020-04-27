@@ -8,6 +8,9 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 
+// notifications
+import {NotificationService} from '../services/notification.service';
+
 @Component({
   selector: 'app-admins',
   templateUrl: './admins.component.html',
@@ -27,7 +30,8 @@ export class AdminsComponent implements OnInit {
 
   constructor(private _af: AngularFirestore,
               private _auth: AngularFireAuth,
-              private _fb: FormBuilder) {
+              private _fb: FormBuilder,
+              private _notification: NotificationService) {
   }
 
   ngOnInit(): void {
@@ -97,10 +101,12 @@ export class AdminsComponent implements OnInit {
             .collection('users')
             .doc(credential.user.uid)
             .set(docData)
-            .then(doc => console.log(doc))
-            .catch(err => console.log(err));
+            .then(doc => {
+              this._notification.NotificationMessage('successfully added user');
+            })
+            .catch(err => this._notification.ErrorMessage(err));
         })
-        .catch(err => console.log(err.message));
+        .catch(err => this._notification.ErrorMessage(err));
 
     } // eo_if
   }// eo_submit

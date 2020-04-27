@@ -12,9 +12,9 @@
           <div class="message-widget contact-widget">
             <ul>
               <!-- Message -->
-              <a *ngFor="let doc of class?.name">
+              <a *ngFor="let doc of class?.name" >
                 <!--            <div class="user-img"> <img src="../assets/images/users/1.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>-->
-                <div class="mail-contnet">
+                <div class="mail-contnet" (click)="showClassData(doc, class)">
                   <h5>{{doc.name}}</h5>
                 </div>
               </a>
@@ -98,10 +98,10 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline">
-              <mat-label>Class type</mat-label>
+              <mat-label>Class Type</mat-label>
               <mat-select formControlName="type" >
-                <mat-option *ngFor="let type of classTypes" [value]="type">
-                  {{type}}
+                <mat-option *ngFor="let type of classTypes" [value]="type.type">
+                  {{type.name}}
                 </mat-option>
               </mat-select>
               <mat-error *ngIf="createClass.controls['type'].hasError('required')">
@@ -114,5 +114,13 @@
         </mat-card-content>
       </mat-card>
     </ng-template>
+
+
+    <ng-template [ngIf]="!addClassShow && showClassDetail">
+      <app-view-class [classNumber]="classNumber"></app-view-class>
+    </ng-template>
+
   </div>
 </div>
+
+

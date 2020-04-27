@@ -19,6 +19,7 @@ import {UploaderComponent} from './uploader/uploader.component';
 import { ViewComponent } from './papers/view/view.component';
 import { UpdateComponent } from './papers/update/update.component';
 import { CreateComponent } from './papers/create/create.component';
+import { ViewClassComponent } from './classes/view-class/view-class.component';
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import { CreateComponent } from './papers/create/create.component';
     ViewComponent,
     UpdateComponent,
     CreateComponent,
+    ViewClassComponent,
   ]
 })
 export class DashboardModule {

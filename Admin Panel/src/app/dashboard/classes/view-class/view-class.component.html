@@ -1,0 +1,89 @@
+<div>
+    <ul>
+      <mat-card>
+        <div class="p-20 bg-info position-relative">
+          <h4 class="card-title text-white m-0">Grade {{(classData | async)?.grade}} {{(classData|async)?.name}}</h4>
+          <!--        <h6 class="card-subtitle text-white m-0 op-5">Checkout my contacts here</h6>-->
+          <!--        <button mat-mini-fab color="accent" class="add-contact">+</button>-->
+        </div>
+        <div class="message-box contact-box p-20">
+          <div class="message-widget contact-widget">
+            <ul>
+              <a>
+                <!--            <div class="user-img"> <img src="../assets/images/users/1.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>-->
+                <div class="mail-contnet">
+                  <h5>Total Number of student : {{totalStudent}}</h5>
+                </div>
+              </a>
+              <!-- Message -->
+              <a>
+                <!--            <div class="user-img"> <img src="../assets/images/users/1.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>-->
+                <div class="mail-contnet">
+                  <h5>Fees : Rs {{(classData | async)?.fees}}</h5>
+                </div>
+              </a>
+
+              <!-- Message -->
+            </ul>
+          </div>
+        </div>
+        <div class="example-container">
+
+          <div class="example-header">
+            <mat-form-field>
+              <input (keyup)="applyFilter($event.target?.value)" matInput placeholder="Filter">
+            </mat-form-field>
+          </div>
+
+          <mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="Id">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> ID</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.Id}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="fullName">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Full Name</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.fullName}}</mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+      </mat-card>
+    </ul>
+
+    <!-- <mat-card>-->
+    <!--      <div class="p-20 bg-info position-relative">-->
+    <!--        <h4 class="card-title text-white m-0">Grade 09</h4>-->
+    <!--        &lt;!&ndash;        <h6 class="card-subtitle text-white m-0 op-5">Checkout my contacts here</h6>&ndash;&gt;-->
+    <!--        &lt;!&ndash;        <button mat-mini-fab color="accent" class="add-contact">+</button>&ndash;&gt;-->
+    <!--      </div>-->
+    <!--      <div class="message-box contact-box p-20">-->
+    <!--        <div class="message-widget contact-widget">-->
+    <!--          <ul>-->
+    <!--            <li *ngFor="let class of testClass">-->
+    <!--              {{ class }}-->
+    <!--            </li>-->
+    <!--          </ul>-->
+    <!--          &lt;!&ndash; Message &ndash;&gt;-->
+    <!--          <a href="#">-->
+    <!--            &lt;!&ndash;            <div class="user-img"> <img src="../assets/images/users/1.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>&ndash;&gt;-->
+    <!--            <div class="mail-contnet">-->
+    <!--              <h5>Pavan kumar</h5>-->
+    <!--            </div>-->
+    <!--          </a>-->
+    <!--          &lt;!&ndash; Message &ndash;&gt;-->
+    <!--          <a href="#">-->
+    <!--            &lt;!&ndash;            <div class="user-img"> <img src="../assets/images/users/1.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>&ndash;&gt;-->
+    <!--            <div class="mail-contnet">-->
+    <!--              <h5>Pavan kumar</h5>-->
+    <!--            </div>-->
+    <!--          </a>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </mat-card>-->
+</div>
