@@ -20,6 +20,8 @@ import { ViewComponent } from './papers/view/view.component';
 import { UpdateComponent } from './papers/update/update.component';
 import { CreateComponent } from './papers/create/create.component';
 import { ViewClassComponent } from './classes/view-class/view-class.component';
+import { LeaderboardComponent } from './leaderboard/leaderboard.component';
+import { StudentListComponent } from './students/student-list/student-list.component';
 
 @NgModule({
   imports: [
@@ -45,6 +47,8 @@ import { ViewClassComponent } from './classes/view-class/view-class.component';
     UpdateComponent,
     CreateComponent,
     ViewClassComponent,
+    LeaderboardComponent,
+    StudentListComponent,
   ]
 })
 export class DashboardModule {

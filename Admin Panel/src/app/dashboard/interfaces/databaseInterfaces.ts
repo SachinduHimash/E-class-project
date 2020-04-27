@@ -42,11 +42,11 @@ export interface Users {
 
 // Class_collection
 export interface Class {
-  id: String;
+  id: string;
   createdAt: TimeStamp;
   fees: Number;
   grade: Number;
-  name: String;
+  name: string;
   number: Number;
-  type: String;
+  type: string;
 }

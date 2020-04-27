@@ -25,8 +25,7 @@ export class StudentsComponent implements OnInit {
   // class_type
   classTypes: any[] = [];
 
-  // list_of_student
-  student: any;
+
 
   // show_hide_add_class
   addStudentShow = false;
@@ -42,7 +41,7 @@ export class StudentsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchStudent();
+
     this.fetchClasses();
     this.buildCreateStudent();
   }
@@ -112,11 +111,6 @@ export class StudentsComponent implements OnInit {
       });
 
 
-  }
-
-  fetchStudent() {
-    this.student = this.student = this._af.collection('users', ref => ref.where('role', '==', 'student'))
-      .valueChanges({idField: 'id'});
   }
 
   fetchClasses() {
