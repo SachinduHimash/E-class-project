@@ -112,7 +112,7 @@ export class PaperComponent implements OnInit {
 
   submit(){
     this.timeOutIDs.forEach(id => clearTimeout(id));
-    this.isPaper=false;
+    this.isPaper = false;
     localStorage.setItem('onKey', JSON.stringify(this.isPaper));
     localStorage.setItem('paperKey', JSON.stringify(this.paper));
     localStorage.setItem('toggleKey', JSON.stringify(this.toggle));
@@ -144,7 +144,7 @@ export class PaperComponent implements OnInit {
 
     this._af.collection('class').doc(this.classN).collection('students').doc(this.userID).collection('marks')
     .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).set({
-      // createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       mark: this.marks,
       date: this.datePipe.transform(new Date(), 'yyyy.MM.dd'),
       name: this.name,
@@ -170,7 +170,7 @@ export class PaperComponent implements OnInit {
             this._af.collection('marks').doc(localStorage.getItem('grade')).collection('paperNumbers')
               .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).collection('students')
               .doc(this.userID).set({
-                // createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 mark: this.marks,
                 date: this.datePipe.transform(new Date(), 'yyyy.MM.dd'),
                 name: this.name
@@ -181,7 +181,7 @@ export class PaperComponent implements OnInit {
       this._af.collection('marks').doc(localStorage.getItem('grade')).collection('paperNumbers')
         .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).collection('students')
         .doc(this.userID).set({
-          // createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
           mark: this.marks,
           date: this.datePipe.transform(new Date(), 'yyyy.MM.dd'),
           name: this.name

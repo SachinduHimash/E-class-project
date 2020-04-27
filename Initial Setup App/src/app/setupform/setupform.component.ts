@@ -210,7 +210,7 @@ export class SetupformComponent implements OnInit {
            this.test3 = 'test3';
            this.af.doc(`users/${userID}`)
              .set({
-              //  createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+               createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                fullName: formValue.fullName,
                school: formValue.school,
                address: formValue.address,
@@ -225,14 +225,14 @@ export class SetupformComponent implements OnInit {
                      name: this.myform.value.class.class,
                      number: +this.myform.value.class.number,
                      grade: +this.myform.value.grade,
-                    //  createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                      fees: 1500,
                      type: this.myform.value.class.type
                    }).catch((err) => this.error1 = err);
                  }
                }).then(() => {
                   this.af.collection('class').doc(newClass).collection('students').doc(userID).set({
-                  //  createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                   createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                    fullName: formValue.fullName,
                    year: +this.datePipe.transform(new Date(), 'yyyy').toString() + 11 - this.myform.value.grade
                  });
@@ -259,7 +259,7 @@ export class SetupformComponent implements OnInit {
       this.error4 = error;
       this.af.doc(`users/${userID}`)
        .set({
-        //  createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
          fullName: formValue.fullName,
          school: formValue.school,
          address: formValue.address,
@@ -269,7 +269,7 @@ export class SetupformComponent implements OnInit {
          role: 'student'
        });
       this.af.collection('class').doc(newClass).collection('students').doc(userID).set({
-      //  createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
        fullName: formValue.fullName,
        year: +this.datePipe.transform(new Date(), 'yyyy').toString() + 11 - this.myform.value.grade
      });

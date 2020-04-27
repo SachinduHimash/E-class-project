@@ -46,7 +46,7 @@ export class DialogboxComponent implements OnInit {
       this.checkMarks();
       this.af.collection('class').doc(this.classN).collection('students').doc(this.userID).collection('marks')
         .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).set({
-          // createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
           mark: this.marks,
           date: this.datePipe.transform(new Date(), 'yyyy.MM.dd'),
           name: this.name,
@@ -73,7 +73,7 @@ export class DialogboxComponent implements OnInit {
               this.af.collection('marks').doc(localStorage.getItem('grade')).collection('paperNumbers')
                 .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).collection('students')
                 .doc(this.userID).set({
-                  // createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                  createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                   mark: this.marks,
                   date: this.datePipe.transform(new Date(), 'yyyy.MM.dd'),
                   name: this.name
@@ -84,7 +84,7 @@ export class DialogboxComponent implements OnInit {
         this.af.collection('marks').doc(localStorage.getItem('grade')).collection('paperNumbers')
           .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).collection('students')
           .doc(this.userID).set({
-            // createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             mark: this.marks,
             date: this.datePipe.transform(new Date(), 'yyyy.MM.dd'),
             name: this.name
