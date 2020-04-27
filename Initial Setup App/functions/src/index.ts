@@ -64,37 +64,37 @@ app.post('/registration', (req, res) => {
                   });
                 }
               }).then(() => {
-                  firestore.collection('class').doc(newClass).collection('students').doc(userID).set({
-                    createdAt: TimeStamp,
-                    fullName: reqData.fullName,
-                    // year: +this.datePipe.transform(new Date(), 'yyyy').toString() + 11 - this.myform.value.grade
-                    year: Number(currentDate.getFullYear()) + 11 - Number(reqData.grade)
-                  }).then(() =>{
-                      res.send({
-                        msg : 'success'
-                      });
-                      return;
-                  }).catch((err) => {
-                      res.send({
-                        err: err,
-                        location: 'add student to  class'
-                      });
-                      return;
-                  });
-              }).catch(err => {
-                  res.send({
-                    err: err,
-                    location: 'class existence'
-                  });
-                  return;
+              firestore.collection('class').doc(newClass).collection('students').doc(userID).set({
+                createdAt: TimeStamp,
+                fullName: reqData.fullName,
+                // year: +this.datePipe.transform(new Date(), 'yyyy').toString() + 11 - this.myform.value.grade
+                year: Number(currentDate.getFullYear()) + 11 - Number(reqData.grade)
+              }).then(() => {
+                res.send({
+                  msg: 'success'
+                });
+                return;
+              }).catch((err) => {
+                res.send({
+                  err: err,
+                  location: 'add student to  class'
+                });
+                return;
               });
-          }).catch((err) => {
+            }).catch(err => {
               res.send({
                 err: err,
-                location: 'add user to users collection'
+                location: 'class existence'
               });
               return;
+            });
+          }).catch((err) => {
+          res.send({
+            err: err,
+            location: 'add user to users collection'
           });
+          return;
+        });
       } else {
         res.send({
           err: 'user already exists',
@@ -110,5 +110,137 @@ app.post('/registration', (req, res) => {
     return;
   });
 });
+
+
+function formatPaperNumber(paperNumber: Number) {
+
+  let num = paperNumber;
+
+  if (paperNumber < 10) {
+    num = Number('0'.concat(paperNumber.toString()));
+  }
+  return num.toString();
+}
+
+
+app.post('/marks', (req, res) => {
+  // res.send(req.body);
+  const reqData = req.body;
+  const userID = reqData.userID;
+  const currentDate = new Date();
+  const date = currentDate.getFullYear().toString().concat('.')
+    .concat(currentDate.getMonth().toString()).concat('.')
+    .concat(currentDate.getDate().toString());
+
+  const fullPaperNumber = (new Date().getFullYear()).toString().concat(formatPaperNumber(reqData.paperNumber));
+
+
+  firestore.collection('class').doc(reqData.class)
+    .collection('students').doc(userID)
+    .collection('marks').doc(fullPaperNumber)
+    .set({
+      createdAt: TimeStamp,
+      mark: reqData.marks,
+      // date: this.datePipe.transform(new Date(), 'yyyy.MM.dd'),
+      date: date,
+      name: reqData.name,
+    }).catch((err) => {
+    res.send({
+      err: err,
+      location: 'marks add to class/student/marks'
+    });
+    return;
+  });
+
+
+  try {
+    firestore.collection('marks').doc(reqData.grade).get().then(docSnapshot => {
+
+      if (!docSnapshot.exists) {
+        firestore.collection('marks').doc(reqData.grade)
+          .set({}, {merge: true})
+          .catch((err) => {
+            res.send({
+              err: err,
+              location: 'check marks/grade existence'
+            });
+            return;
+          });
+
+      }
+
+    }).then(() => {
+      firestore.collection('marks').doc(reqData.grade).collection('paperNumbers').doc().get()
+        .then(docSnapshot => {
+
+          if (!docSnapshot.exists) {
+            firestore.collection('marks').doc(reqData.grade).collection('paperNumbers')
+              .doc(fullPaperNumber)
+              .set({
+                date: date
+              })
+              .catch((err) => {
+                res.send({
+                  err: err,
+                  location: 'check marks/paperNumber existence'
+                });
+                return;
+              });
+          }
+
+        }).then(() => {
+        firestore.collection('marks').doc(reqData.grade).collection('paperNumbers')
+          .doc(fullPaperNumber).collection('students')
+          .doc(userID)
+          .set({
+            createdAt: TimeStamp,
+            mark: reqData.marks,
+            date: date,
+            name: reqData.name
+          }).catch((err) => {
+          res.send({
+            err: err,
+            location: 'check marks paperNumber user marks add'
+          });
+          return;
+        });
+      }).then(() => {
+        res.send({
+          msg: 'success, try block'
+        })
+      }).catch((err) => {
+        res.send({
+          err: err,
+          location: 'check marks reqData grade paperNumber'
+        });
+        return;
+      });
+    }).catch((err) => {
+      res.send({
+        err: err,
+        location: 'check marks grade existence'
+      });
+      return;
+    });
+  } catch (error) {
+    firestore.collection('marks').doc(reqData.grade).collection('paperNumbers')
+      .doc(fullPaperNumber).collection('students')
+      .doc(userID).set({
+      createdAt: TimeStamp,
+      mark: reqData.marks,
+      date: date,
+      name: reqData.name
+    }).then(() => {
+      res.send({msg: 'success, catch block'})
+    }).catch((err) => {
+      res.send({
+        err: err,
+        location: 'check marks grade existence'
+      });
+      return;
+    });
+  }
+});
+
 
 export const login = functions.https.onRequest(app);
