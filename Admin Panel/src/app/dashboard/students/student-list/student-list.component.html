@@ -1,0 +1,43 @@
+<ul>
+  <mat-card>
+    <div class="p-20 bg-info position-relative">
+      <h4 class="card-title text-white m-0">Students</h4>
+      <!--        <h6 class="card-subtitle text-white m-0 op-5">Checkout my contacts here</h6>-->
+      <!--        <button mat-mini-fab color="accent" class="add-contact">+</button>-->
+    </div>
+
+    <div class="example-container">
+
+      <div class="example-header">
+        <mat-form-field>
+          <input (keyup)="applyFilter($event.target?.value)" matInput placeholder="Filter">
+        </mat-form-field>
+      </div>
+
+      <mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="uid">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> ID</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.uid}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="fullName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Full Name</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.fullName}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="className">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Class Name</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.className}}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+
+
+  </mat-card>
+</ul>
