@@ -294,8 +294,7 @@ export class SetupformComponent implements OnInit {
     });
 
     await this.data$.subscribe(res => {
-      console.log('test1');
-      if(!res.err){
+      if (!res.err){
         localStorage.setItem('first', '1');
         localStorage.setItem('grade', this.myform.value.grade);
         this.isPaper = true;
@@ -306,7 +305,7 @@ export class SetupformComponent implements OnInit {
           this.test4 = 'test4';
           this.isPaper = true;
           localStorage.setItem('onKey', JSON.stringify(this.isPaper));
-          localStorage.ssetItem('first', '1');
+          localStorage.setItem('first', '1');
           this.af.collection('users').doc(userID).valueChanges().subscribe((doc) => {
             localStorage.setItem('grade', doc['class'].split('.')[0]);
             this.router.navigate(['paper']);
