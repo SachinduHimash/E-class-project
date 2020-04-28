@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 
 app.post('/registration', (req, res) => {
   // res.send(req.body);
-  const reqData = req.body;
+  const reqData = req.body.data;
   const userID = reqData.userID;
   const newClass = (reqData.grade.toString()).concat('.').concat(reqData.class.number);
   const currentDate = new Date();
@@ -125,7 +125,7 @@ function formatPaperNumber(paperNumber: Number) {
 
 app.post('/marks', (req, res) => {
   // res.send(req.body);
-  const reqData = req.body;
+  const reqData = req.body.data;
   const userID = reqData.userID;
   const currentDate = new Date();
   const date = currentDate.getFullYear().toString().concat('.')
