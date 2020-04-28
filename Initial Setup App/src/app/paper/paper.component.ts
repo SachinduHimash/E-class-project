@@ -183,7 +183,7 @@ export class PaperComponent implements OnInit {
     //     });
     // }
 
-    const callable = this.fns.httpsCallable('marks');
+    const callable = this.fns.httpsCallable('login/marks');
     this.data$ = callable({
       userID: this.userID,
       marks: this.marks,

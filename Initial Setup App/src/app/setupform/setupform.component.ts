@@ -198,7 +198,7 @@ export class SetupformComponent implements OnInit {
     });
   }
 
-    submit(){
+    async submit(){
     const formValue = this.myform.value;
     const userID = formValue.userID;
     const newClass = (formValue.grade.toString()).concat('.').concat(this.myform.value.class.number);
@@ -281,7 +281,7 @@ export class SetupformComponent implements OnInit {
     //   localStorage.setItem('grade', this.myform.value.grade);
     //   this.dialog.open(DialogboxComponent);
     // }
-    const callable = this.fns.httpsCallable('registration');
+    const callable = this.fns.httpsCallable('login/registration');
     this.data$ = callable({
       userID: formValue.userID,
       class: formValue.class,
@@ -293,22 +293,25 @@ export class SetupformComponent implements OnInit {
       grade: formValue.grade
     });
 
-    this.data$.subscribe(async res => {
-      if (res.err !== 'user already exists') {
+    await this.data$.subscribe(res => {
+      console.log('test1');
+      if(!res.err){
         localStorage.setItem('first', '1');
         localStorage.setItem('grade', this.myform.value.grade);
         this.isPaper = true;
         localStorage.setItem('onKey', JSON.stringify(this.isPaper));
         this.dialog.open(DialogboxComponent);
       } else {
-        this.test4 = 'test4';
-        this.isPaper = true;
-        localStorage.setItem('onKey', JSON.stringify(this.isPaper));
-        localStorage.ssetItem('first', '1');
-        this.af.collection('users').doc(userID).valueChanges().subscribe((doc) => {
-        localStorage.setItem('grade', doc['class'].split('.')[0]);
-        this.router.navigate(['paper']);
-        });
+        if (res.err === 'user already exists') {
+          this.test4 = 'test4';
+          this.isPaper = true;
+          localStorage.setItem('onKey', JSON.stringify(this.isPaper));
+          localStorage.ssetItem('first', '1');
+          this.af.collection('users').doc(userID).valueChanges().subscribe((doc) => {
+            localStorage.setItem('grade', doc['class'].split('.')[0]);
+            this.router.navigate(['paper']);
+          });
+        }
       }
     });
 
