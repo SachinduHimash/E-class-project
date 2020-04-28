@@ -189,12 +189,15 @@ export class PaperComponent implements OnInit {
       marks: this.marks,
       name: this.name,
       class: this.classN,
-      grade: localStorage.getItem('grade')
+      grade: localStorage.getItem('grade'),
+      paperNumber: (new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1)),
     });
     this.data$.subscribe(async res => {
-      this.router.navigate(['markingsheet']);
+      if (res){
+        console.log('su')
+      }
     });
-
+    this.router.navigate(['markingsheet']);
 
   }
 
