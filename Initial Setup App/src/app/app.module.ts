@@ -55,6 +55,7 @@ import {MatTreeModule} from '@angular/material/tree';
 import { DatePipe } from '@angular/common';
 import { DialogboxComponent } from './dialogbox/dialogbox.component';
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
+import { AngularFireFunctionsModule, REGION } from '@angular/fire/functions';
 
 
 @NgModule({
@@ -108,12 +109,16 @@ import { MatPasswordStrengthModule } from '@angular-material-extensions/password
     MatTooltipModule,
     MatTreeModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireFunctionsModule,
     AngularFireDatabaseModule,
     AngularFirestoreModule,
     AngularFireAuthModule,
 
   ],
-  providers: [DatePipe],
+  providers: [
+    DatePipe,
+    { provide: REGION, useValue: 'us-central1' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

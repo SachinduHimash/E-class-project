@@ -151,44 +151,41 @@ app.post('/marks', (req, res) => {
     });
     return;
   });
+  firestore.collection('marks').doc(reqData.grade).get().then(docSnapshot => {
 
-
-  try {
-    firestore.collection('marks').doc(reqData.grade).get().then(docSnapshot => {
-
-      if (!docSnapshot.exists) {
-        firestore.collection('marks').doc(reqData.grade)
-          .set({}, {merge: true})
-          .catch((err) => {
-            res.send({
-              err: err,
-              location: 'check marks/grade existence'
-            });
-            return;
+    if (!docSnapshot.exists) {
+      firestore.collection('marks').doc(reqData.grade)
+        .set({}, { merge: true })
+        .catch((err) => {
+          res.send({
+            err: err,
+            location: 'check marks/grade existence'
           });
+          return;
+        });
 
-      }
+    }
 
-    }).then(() => {
-      firestore.collection('marks').doc(reqData.grade).collection('paperNumbers').doc().get()
-        .then(docSnapshot => {
+  }).then(() => {
+    firestore.collection('marks').doc(reqData.grade).collection('paperNumbers').doc().get()
+      .then(docSnapshot => {
 
-          if (!docSnapshot.exists) {
-            firestore.collection('marks').doc(reqData.grade).collection('paperNumbers')
-              .doc(fullPaperNumber)
-              .set({
-                date: date
-              })
-              .catch((err) => {
-                res.send({
-                  err: err,
-                  location: 'check marks/paperNumber existence'
-                });
-                return;
+        if (!docSnapshot.exists) {
+          firestore.collection('marks').doc(reqData.grade).collection('paperNumbers')
+            .doc(fullPaperNumber)
+            .set({
+              date: date
+            })
+            .catch((err) => {
+              res.send({
+                err: err,
+                location: 'check marks/paperNumber existence'
               });
-          }
+              return;
+            });
+        }
 
-        }).then(() => {
+      }).then(() => {
         firestore.collection('marks').doc(reqData.grade).collection('paperNumbers')
           .doc(fullPaperNumber).collection('students')
           .doc(userID)
@@ -198,12 +195,12 @@ app.post('/marks', (req, res) => {
             date: date,
             name: reqData.name
           }).catch((err) => {
-          res.send({
-            err: err,
-            location: 'check marks paperNumber user marks add'
+            res.send({
+              err: err,
+              location: 'check marks paperNumber user marks add'
+            });
+            return;
           });
-          return;
-        });
       }).then(() => {
         res.send({
           msg: 'success, try block'
@@ -215,31 +212,17 @@ app.post('/marks', (req, res) => {
         });
         return;
       });
-    }).catch((err) => {
-      res.send({
-        err: err,
-        location: 'check marks grade existence'
-      });
-      return;
+  }).catch((err) => {
+    res.send({
+      err: err,
+      location: 'check marks grade existence'
     });
-  } catch (error) {
-    firestore.collection('marks').doc(reqData.grade).collection('paperNumbers')
-      .doc(fullPaperNumber).collection('students')
-      .doc(userID).set({
-      createdAt: TimeStamp,
-      mark: reqData.marks,
-      date: date,
-      name: reqData.name
-    }).then(() => {
-      res.send({msg: 'success, catch block'})
-    }).catch((err) => {
-      res.send({
-        err: err,
-        location: 'check marks grade existence'
-      });
-      return;
-    });
-  }
+    return;
+  });
+
+
+
+
 });
 
 
