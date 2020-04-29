@@ -1,7 +1,7 @@
 import * as functions from 'firebase-functions';
 
 export const helloWorld = functions.https.onRequest((request, response) => {
-  response.send("Hello from Firebase!");
+  response.json("Hello from Firebase!");
 });
 
 import * as express from 'express';
@@ -20,8 +20,8 @@ app.use(bodyParser.json());
 // https://us-central1-e-class01.cloudfunctions.net/login/registration
 
 app.post('/registration', (req, res) => {
-  // res.send(req.body);
-  const reqData = req.body;
+  // res.json(req.body);
+  const reqData = req.body.data;
   const userID = reqData.userID;
   const newClass = (reqData.grade.toString()).concat('.').concat(reqData.class.number);
   const currentDate = new Date();
@@ -55,10 +55,14 @@ app.post('/registration', (req, res) => {
                     fees: 1500,
                     type: reqData.class.type
                   }).catch((err) => {
-                    res.send({
-                      err: err,
-                      location: 'add new class'
-                    });
+                    res.json(
+                      {
+                        data: {
+                          err: err,
+                          location: 'add new class'
+                        }
+                      }
+                    );
                     return;
                   });
                 }
@@ -69,42 +73,60 @@ app.post('/registration', (req, res) => {
                 // year: +this.datePipe.transform(new Date(), 'yyyy').toString() + 11 - this.myform.value.grade
                 year: Number(currentDate.getFullYear()) + 11 - Number(reqData.grade)
               }).then(() => {
-                res.send({
-                  msg: 'success'
+                res.json(
+                  {
+                    data:{
+                      msg: 'success'
+                    }
                 });
                 return;
               }).catch((err) => {
-                res.send({
-                  err: err,
-                  location: 'add student to  class'
+                res.json(
+                  {
+                    data:{
+                      err: err,
+                      location: 'add student to  class'
+                    }
                 });
                 return;
               });
             }).catch(err => {
-              res.send({
-                err: err,
-                location: 'class existence'
+              res.json(
+                {
+                  data:{
+                    err: err,
+                    location: 'class existence'
+                  }
               });
               return;
             });
           }).catch((err) => {
-          res.send({
-            err: err,
-            location: 'add user to users collection'
+            res.json(
+              {
+                data:{
+                  err: err,
+                  location: 'add user to users collection'
+                }
           });
           return;
         });
       } else {
-        res.send({
-          err: 'user already exists',
-          location: 'user existence'
+        res.json(
+          {
+            data:{
+              err: 'user already exists',
+              location: 'user existence'
+            }
         });
         return;
       }
     }).catch((err) => {
-    res.send({
-      err: err,
-      location: 'get user'
+      res.json(
+        {
+          data:{
+            err: err,
+            location: 'get user'
+          }
     });
     return;
   });
@@ -123,8 +145,8 @@ function formatPaperNumber(paperNumber: Number) {
 
 
 app.post('/marks', (req, res) => {
-  // res.send(req.body);
-  const reqData = req.body;
+  // res.json(req.body);
+  const reqData = req.body.data;
   const userID = reqData.userID;
   const currentDate = new Date();
   const date = currentDate.getFullYear().toString().concat('.')
@@ -144,9 +166,12 @@ app.post('/marks', (req, res) => {
       date: date,
       name: reqData.name,
     }).catch((err) => {
-    res.send({
-      err: err,
-      location: 'marks add to class/student/marks'
+      res.json(
+        {
+          data:{
+            err: err,
+            location: 'marks add to class/student/marks'
+          }
     });
     return;
   });
@@ -156,9 +181,12 @@ app.post('/marks', (req, res) => {
       firestore.collection('marks').doc(reqData.grade)
         .set({}, { merge: true })
         .catch((err) => {
-          res.send({
-            err: err,
-            location: 'check marks/grade existence'
+          res.json(
+            {
+              data:{
+                err: err,
+                location: 'check marks/grade existence'
+              }
           });
           return;
         });
@@ -176,9 +204,12 @@ app.post('/marks', (req, res) => {
               date: date
             })
             .catch((err) => {
-              res.send({
-                err: err,
-                location: 'check marks/paperNumber existence'
+              res.json(
+                {
+                  data:{
+                    err: err,
+                    location: 'check marks/paperNumber existence'
+                  }
               });
               return;
             });
@@ -194,27 +225,39 @@ app.post('/marks', (req, res) => {
             date: date,
             name: reqData.name
           }).catch((err) => {
-            res.send({
-              err: err,
-              location: 'check marks paperNumber user marks add'
+            res.json(
+              {
+                data:{
+                  err: err,
+                  location: 'check marks paperNumber user marks add'
+                }
             });
             return;
           });
       }).then(() => {
-        res.send({
-          msg: 'success, try block'
+        res.json(
+          {
+            data:{
+              msg: 'success, try block'
+            }
         })
       }).catch((err) => {
-        res.send({
-          err: err,
-          location: 'check marks reqData grade paperNumber'
+        res.json(
+          {
+            data:{
+              err: err,
+              location: 'check marks reqData grade paperNumber'
+            }
         });
         return;
       });
   }).catch((err) => {
-    res.send({
-      err: err,
-      location: 'check marks grade existence'
+    res.json(
+      {
+        data:{
+          err: err,
+          location: 'check marks grade existence'
+        }
     });
     return;
   });
