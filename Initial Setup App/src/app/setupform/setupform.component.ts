@@ -292,28 +292,36 @@ export class SetupformComponent implements OnInit {
       password: Md5.hashStr(formValue.password),
       grade: formValue.grade
     });
-
-    await this.data$.subscribe(res => {
-      if (!res.err){
-        localStorage.setItem('first', '1');
-        localStorage.setItem('grade', this.myform.value.grade);
-        this.isPaper = true;
-        localStorage.setItem('onKey', JSON.stringify(this.isPaper));
-        this.dialog.open(DialogboxComponent);
-      } else {
-        if (res.err === 'user already exists') {
-          this.test4 = 'test4';
+    this.test1 = 'test1';
+    try {
+      await this.data$.subscribe(res => {
+        this.test2 = 'test2';
+        if (!res.err) {
+          this.test3 = 'test3';
+          localStorage.setItem('first', '1');
+          localStorage.setItem('grade', this.myform.value.grade);
           this.isPaper = true;
           localStorage.setItem('onKey', JSON.stringify(this.isPaper));
-          localStorage.setItem('first', '1');
-          this.af.collection('users').doc(userID).valueChanges().subscribe((doc) => {
-            localStorage.setItem('grade', doc['class'].split('.')[0]);
-            this.router.navigate(['paper']);
-          });
+          this.dialog.open(DialogboxComponent);
+        } else {
+          if (res.err === 'user already exists') {
+            this.test4 = 'test4';
+            this.isPaper = true;
+            localStorage.setItem('onKey', JSON.stringify(this.isPaper));
+            localStorage.setItem('first', '1');
+            this.af.collection('users').doc(userID).valueChanges().subscribe((doc) => {
+              localStorage.setItem('grade', doc['class'].split('.')[0]);
+              this.router.navigate(['paper']);
+            });
+          }
         }
-      }
-    });
+        this.test5 = 'test5';
+      });
+    } catch (error) {
+      this.error1 =error;
+    }
 
+    this.test6 = 'test6';
 
 
     this.isPaper = true;
