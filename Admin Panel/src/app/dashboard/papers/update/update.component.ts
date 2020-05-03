@@ -82,7 +82,6 @@ export class UpdateComponent implements OnInit {
 
         if (documentSnapshot.exists) {
           const docs = documentSnapshot.data();
-          console.log(docs);
           this.updateForm = this.updateFormGroup.get('form') as FormArray;
           // @ts-ignore
           await docs.questions.map(doc => {
@@ -97,7 +96,6 @@ export class UpdateComponent implements OnInit {
               picture: new FormControl(doc.picture || '', []),
             }));
           });
-          console.log(this.updateFormGroup.value);
           this.showUpdateForm = true;
         } else {
           console.log('paper not found');

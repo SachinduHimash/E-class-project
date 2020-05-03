@@ -74,7 +74,6 @@ export class UploaderComponent implements OnInit , OnChanges {
   generateRandom = () => Math.ceil(Date.now() + Math.random()).toString();
 
   Upload(event: FileList) {
-    console.log(event);
     const file = event.item(0);
     if (file.type.split('/')[0] !== 'image') {
       console.log('unsupported file type');

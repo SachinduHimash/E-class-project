@@ -76,7 +76,9 @@ export class StudentListComponent implements OnInit, AfterViewInit , OnDestroy{
   }
 
 
-
+  getRecord(row: any) {
+    console.table(row)
+  }
 }
 
 

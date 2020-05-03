@@ -1,9 +1,12 @@
 import {Component, OnInit, AfterViewInit, ViewChild, Input, SimpleChanges, OnChanges} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Observable} from 'rxjs';
 
 import {AuthenticationService} from '../../services/authentication.service';
+import {ReportComponent} from '../report/report.component';
+
+import {User} from '../../interfaces/databaseInterfaces';
 
 @Component({
   selector: 'app-view-class',
@@ -16,7 +19,7 @@ export class ViewClassComponent implements OnInit, AfterViewInit, OnChanges {
 
   // classNumber = '11.1';
   // table_column
-  displayedColumns = ['Id', 'fullName'];
+  displayedColumns = ['id', 'fullName'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -25,9 +28,9 @@ export class ViewClassComponent implements OnInit, AfterViewInit, OnChanges {
   classData: Observable<unknown>;
   totalStudent: Number;
 
-
   constructor(private _af: AngularFirestore,
-              private _authService: AuthenticationService) {
+              private _authService: AuthenticationService,
+              public dialog: MatDialog) {
   }
 
   ngAfterViewInit() {
@@ -36,7 +39,6 @@ export class ViewClassComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit(): void {
     this.fetchClassData();
-    console.log(this.classNumber);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -59,13 +61,25 @@ export class ViewClassComponent implements OnInit, AfterViewInit, OnChanges {
 
   fetchClassStudent() {
     this._af.collection(`class/${this.classNumber}/students`)
-      .valueChanges({idField: 'Id'})
+      .valueChanges({idField: 'id'})
       .subscribe((docs) => {
+        const grade = this.classNumber;
+        docs = docs.map((r: User) => {
+          return {...r, grade};
+        });
+
         this.totalStudent = docs.length;
         this.dataSource = new MatTableDataSource(docs);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });
+  }
+
+  getRecords(row: any) {
+    this.dialog.open(ReportComponent, {
+      width: '600px',
+      data: row
+    });
   }
 
 }
