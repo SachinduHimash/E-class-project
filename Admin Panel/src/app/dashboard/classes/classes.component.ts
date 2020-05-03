@@ -80,10 +80,8 @@ export class ClassesComponent implements OnInit {
               throw new Error('class name already exists');
             }
           });
-          console.log(docs);
           // @ts-ignore
           const number = Number(docs.reduce((max, p) => p.number > max ? p.number : max, 0)) + 1;
-          console.log(number);
           const docId = formValue.grade.toString().concat('.').concat(number.toString());
           this._af.collection('class').doc(docId).set({
             name: formValue.name,
@@ -111,7 +109,6 @@ export class ClassesComponent implements OnInit {
     const nm = this.classes;
 
     nm.subscribe((docs) => {
-      console.log(docs);
       this.testClass = [];
       docs = docs.map((data) => {
         const grade = data.id.toString().split('.')[0];

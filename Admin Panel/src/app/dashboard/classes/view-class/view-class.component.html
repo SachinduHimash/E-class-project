@@ -37,9 +37,9 @@
 
           <mat-table [dataSource]="dataSource" matSort>
 
-            <ng-container matColumnDef="Id">
+            <ng-container matColumnDef="id">
               <mat-header-cell *matHeaderCellDef mat-sort-header> ID</mat-header-cell>
-              <mat-cell *matCellDef="let row"> {{row.Id}} </mat-cell>
+              <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="fullName">
@@ -48,7 +48,7 @@
             </ng-container>
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getRecords(row)"></mat-row>
           </mat-table>
 
           <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>

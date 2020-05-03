@@ -63,13 +63,7 @@ export class ViewComponent implements OnInit {
       .valueChanges()
       .subscribe((doc: Papers) => {
         this.paper = doc.questions;
-        console.log(this.paper);
-        console.log(doc.createdAt);
-        console.log(doc.updatedAt);
         this.showViewForm = true;
       });
-
-    this._af.doc(docPath).valueChanges().subscribe(console.log);
-
   }
 }
