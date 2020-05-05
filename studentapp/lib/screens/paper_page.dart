@@ -2,12 +2,13 @@ import 'package:flip_panel/flip_panel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:kf_drawer/kf_drawer.dart';
+// import 'package:kf_drawer/kf_drawer.dart';
 import 'package:scrolling_page_indicator/scrolling_page_indicator.dart';
+import 'package:studentapp/screens/qustionSelcet.dart';
 
 import '../main.dart';
 
-class PaperPage extends KFDrawerContent {
+class PaperPage extends  MyApp{
   static double qNumber;
   static List<int> awnser= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
   @override
@@ -138,8 +139,8 @@ class _PaperPageState extends State<PaperPage> {
                                     builder: (BuildContext context) {
                                       PaperPage.qNumber = _controller.page;
                                       print(PaperPage.qNumber);
-                                      MainWidget.page = 'QustionSelect';
-                                      return MainWidget();
+                                      MyApp.page = 'QustionSelect';
+                                      return QustionSelect();
                                     },
                                   ));
                                   },
@@ -150,7 +151,16 @@ class _PaperPageState extends State<PaperPage> {
                                   ),
                                   onPressed: () { 
                                     PaperPage.qNumber = null;
-                                    print('finsh');},
+                                    print('finsh');
+                                    Navigator.of(context).push(CupertinoPageRoute(
+                                          fullscreenDialog: true,
+                                          builder: (BuildContext context) {
+                                            MyApp.page = 'myapp';
+                                            return MyApp();
+                                          },
+                                        ),
+                                      );
+                                    },
                                 ),
                               ],
                             )
@@ -228,8 +238,8 @@ class _PaperPageState extends State<PaperPage> {
                                     builder: (BuildContext context) {
                                       PaperPage.qNumber = _controller.page;
                                       print(PaperPage.qNumber);
-                                      MainWidget.page = 'QustionSelect';
-                                      return MainWidget();
+                                      MyApp.page = 'QustionSelect';
+                                      return QustionSelect();
                                     },
                                   ));
                                   },
@@ -332,8 +342,8 @@ class _PaperPageState extends State<PaperPage> {
                                     builder: (BuildContext context) {
                                       PaperPage.qNumber = _controller.page;
                                       print(PaperPage.qNumber);
-                                      MainWidget.page = 'QustionSelect';
-                                      return MainWidget();
+                                      MyApp.page = 'QustionSelect';
+                                      return QustionSelect();
                                     },
                                   ));
                                   },
