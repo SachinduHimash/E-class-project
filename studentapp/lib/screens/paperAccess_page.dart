@@ -40,10 +40,12 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
             // ),
             RaisedButton(
               onPressed: () {
+                PaperPage.qNumber = 0;
                 Navigator.of(context).push(CupertinoPageRoute(
                     fullscreenDialog: true,
                     builder: (BuildContext context) {
                       MyApp.page = 'PaperPage';
+                      PaperPage.awnser= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
                       return PaperPage();
                     },
                   ),

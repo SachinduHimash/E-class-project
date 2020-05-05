@@ -113,7 +113,7 @@ class _State extends State<DefaultAppBarDemo>
       options.addAll(
           Data.curves.map((c) => RadioItem<Curve>(c, _curve, _onCurveChanged)));
     }
-
+    
     return Scaffold(
       // appBar: AppBar(
       //   title: const Text('Default ConvexAppBar'),
