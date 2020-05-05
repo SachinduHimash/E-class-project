@@ -65,7 +65,9 @@ class _PaperPageState extends State<PaperPage> {
     ];
 
     if( PaperPage.qNumber == 19){
-      return MaterialApp(
+      return new WillPopScope(
+        onWillPop: () async => false,
+        child: MaterialApp(
         home: Scaffold(
           body: SafeArea(
               child: Container(
@@ -156,6 +158,7 @@ class _PaperPageState extends State<PaperPage> {
                                           fullscreenDialog: true,
                                           builder: (BuildContext context) {
                                             MyApp.page = 'myapp';
+                                            PaperPage.qNumber = 0;
                                             return MyApp();
                                           },
                                         ),
@@ -173,9 +176,11 @@ class _PaperPageState extends State<PaperPage> {
               ),
             ),
         ),
-      );
+      ));
     } else if(PaperPage.qNumber == 0 ) {
-      return MaterialApp(
+      return new WillPopScope(
+        onWillPop: () async => false,
+        child:MaterialApp(
         home: Scaffold(
           body: SafeArea(
               child: Container(
@@ -266,9 +271,11 @@ class _PaperPageState extends State<PaperPage> {
               ),
             ),
         ),
-      );
+      ));
     } else {
-      return MaterialApp(
+      return new WillPopScope(
+        onWillPop: () async => false,
+        child:MaterialApp(
         home: Scaffold(
           body: SafeArea(
               child: Container(
@@ -370,7 +377,7 @@ class _PaperPageState extends State<PaperPage> {
               ),
             ),
         ),
-      );
+      ));
     }
 
 
