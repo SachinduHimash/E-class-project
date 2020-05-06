@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "116853320881",
+    "firebase_url": "https://e-class-13f92.firebaseio.com",
+    "project_id": "e-class-13f92",
+    "storage_bucket": "e-class-13f92.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:116853320881:android:4c3e5c83c5aadfa06b8690",
+        "android_client_info": {
+          "package_name": "com.EClass.studentApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "116853320881-0798721man5sqa7a4cl7p79n2rvvps3k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXlHN4WIXn9Z8RfPA2V-3_wF_MoFKSfRA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "116853320881-0798721man5sqa7a4cl7p79n2rvvps3k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
