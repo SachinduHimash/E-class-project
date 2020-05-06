@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:studentapp/service/database.dart';
 // import 'package:kf_drawer/kf_drawer.dart';
 
 import '../main.dart';
@@ -45,8 +47,18 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                     fullscreenDialog: true,
                     builder: (BuildContext context) {
                       MyApp.page = 'PaperPage';
-                      PaperPage.awnser= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-                      return PaperPage();
+                      PaperPage.answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+                      return new StreamBuilder(
+                          stream: Firestore.instance.collection('papers').document('11').collection('paperNumbers').document('202001').snapshots(),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return new Text("Loading");
+                            }
+                            print(snapshot.data['questions']);
+                            PaperPage.questions = snapshot.data['questions'];
+                            return PaperPage();
+                          }
+                      );
                     },
                   ),
                 );

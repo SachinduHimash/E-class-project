@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flip_panel/flip_panel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -5,15 +6,17 @@ import 'package:flutter/material.dart';
 // import 'package:kf_drawer/kf_drawer.dart';
 import 'package:scrolling_page_indicator/scrolling_page_indicator.dart';
 import 'package:studentapp/screens/qustionSelcet.dart';
+import 'package:studentapp/service/database.dart';
 
 import '../main.dart';
 
 class PaperPage extends  MyApp{
   static double qNumber;
-  static List<int> awnser= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-  @override
-  _PaperPageState createState() => _PaperPageState();
-}
+    static dynamic questions;
+    static List<int> answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    @override
+    _PaperPageState createState() => _PaperPageState();
+  }
 
 class _PaperPageState extends State<PaperPage> {
    
@@ -42,27 +45,29 @@ class _PaperPageState extends State<PaperPage> {
     });
   });
     List<Widget> items = [
-      buildPage(1, Colors.blue),
-      buildPage(2, Colors.green),
-      buildPage(3, Colors.amber),
-      buildPage(4, Colors.deepPurple),
-      buildPage(5, Colors.teal),
-      buildPage(6, Colors.pink),
-      buildPage(7, Colors.brown),
-      buildPage(8, Colors.red),
-      buildPage(9, Colors.blue),
-      buildPage(10, Colors.green),
-      buildPage(11, Colors.amber),
-      buildPage(12, Colors.deepPurple),
-      buildPage(13, Colors.teal),
-      buildPage(14, Colors.pink),
-      buildPage(15, Colors.brown),
-      buildPage(16, Colors.red),
-      buildPage(17, Colors.blue),
-      buildPage(18, Colors.green),
-      buildPage(19, Colors.amber),
-      buildPage(20, Colors.deepPurple),
+      buildPage(1,PaperPage.questions[0], Colors.blue),
+      buildPage(2,PaperPage.questions[1], Colors.green),
+      buildPage(3,PaperPage.questions[2], Colors.amber),
+      buildPage(4,PaperPage.questions[3], Colors.deepPurple),
+      buildPage(5,PaperPage.questions[4], Colors.teal),
+      buildPage(6,PaperPage.questions[5], Colors.pink),
+      buildPage(7,PaperPage.questions[6], Colors.brown),
+      buildPage(8,PaperPage.questions[7], Colors.red),
+      buildPage(9,PaperPage.questions[8], Colors.blue),
+      buildPage(10,PaperPage.questions[9], Colors.green),
+      buildPage(11,PaperPage.questions[10], Colors.amber),
+      buildPage(12,PaperPage.questions[11], Colors.deepPurple),
+      buildPage(13,PaperPage.questions[12], Colors.teal),
+      buildPage(14,PaperPage.questions[13], Colors.pink),
+      buildPage(15,PaperPage.questions[14], Colors.brown),
+      buildPage(16,PaperPage.questions[15], Colors.red),
+      buildPage(17,PaperPage.questions[16], Colors.blue),
+      buildPage(18,PaperPage.questions[17], Colors.green),
+      buildPage(19,PaperPage.questions[18], Colors.amber),
+      buildPage(20,PaperPage.questions[19], Colors.deepPurple),
     ];
+
+    
 
     if( PaperPage.qNumber == 19){
       return new WillPopScope(
@@ -467,115 +472,257 @@ class _PaperPageState extends State<PaperPage> {
     // }
   }
 
-  Widget buildPage(int qNumber, Color color) {
-    return Padding(
-      padding: EdgeInsets.all(12),
-      child: Container(
-        color: color,
-        child: DraggableScrollableSheet(
-          expand: true,
-          initialChildSize: 1,
-          minChildSize: 1,
-          maxChildSize: 1,
-          builder: (BuildContext context, ScrollController scrollController) {
-            return Container(
-              color: color,
-              child: Column(
-                children: <Widget>[ 
-                  Row(
+  Widget buildPage(int qNumber,dynamic qContent, Color color) {
+    if(qContent['picture'] == ''){
+      return Padding(
+        padding: EdgeInsets.all(12),
+        child: Container(
+          color: color,
+          child: DraggableScrollableSheet(
+            expand: true,
+            initialChildSize: 1,
+            minChildSize: 1,
+            maxChildSize: 1,
+            builder: (BuildContext context, ScrollController scrollController) {
+              return Container(
+                color: color,
+                child: Column(
+                  children: <Widget>[ 
+                    Row(
 
-                    children: <Widget>[
-                      Text(
-                        '$qNumber',
-                        
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Center(
-                        child: Image(
-                          image: AssetImage(
-                            'assets/logo.png'
-                          ),
-                          height: 200,
-                          width: 270,
-                          ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Expanded(
-                                              child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                      children: <Widget>[
+                        Text(
+                          qContent['question'],
+                          
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
                           child: RaisedButton(
-                            color: PaperPage.awnser[qNumber-1] == 1 ?  Colors.green[400] : Colors.amber,
-                            onPressed: () {
-                              setState(() {
-                                PaperPage.awnser[qNumber-1] = 1;
-                              });
-                            },
-                            child: Text(
-                              '1  xxxxxx',
-                              textAlign: TextAlign.start,
+                              color: PaperPage.answer[qNumber-1] == 1 ?  Colors.green[400] : Colors.amber,
+                              onPressed: () {
+                                setState(() {
+                                  PaperPage.answer[qNumber-1] = 1;
+                                });
+                              },
+                              child: Text(
+                                '1  '+qContent['answer1'],
+                                textAlign: TextAlign.start,
+                              ),
                             ),
                           ),
                         ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
+                          child:RaisedButton(
+                              color: PaperPage.answer[qNumber-1] == 2 ?  Colors.green[400] : Colors.amber,
+                              onPressed: () {
+                                setState(() {
+                                  PaperPage.answer[qNumber-1] = 2;
+                                });
+                              },
+                                child: Text(
+                                  '2  '+qContent['answer2'],
+                                  textAlign: TextAlign.start,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      RaisedButton(
-                        color: PaperPage.awnser[qNumber-1] == 2 ?  Colors.green[400] : Colors.amber,
-                        onPressed: () {
-                          setState(() {
-                            PaperPage.awnser[qNumber-1] = 2;
-                          });
-                        },
-                        child: Text(
-                          '2  yyyyyy',
-                          textAlign: TextAlign.start,
-                      ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      RaisedButton(
-                        color: PaperPage.awnser[qNumber-1] == 3 ?  Colors.green[400] : Colors.amber,
-                        onPressed: () {
-                          setState(() {
-                            PaperPage.awnser[qNumber-1] = 3;
-                          });
-                        },
-                        child: Text(
-                          '3  zzzzzz',
-                          textAlign: TextAlign.start,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
+                          child:RaisedButton(
+                          color: PaperPage.answer[qNumber-1] == 3 ?  Colors.green[400] : Colors.amber,
+                          onPressed: () {
+                            setState(() {
+                              PaperPage.answer[qNumber-1] = 3;
+                            });
+                          },
+                          child: Text(
+                            '3  '+qContent['answer3'],
+                            textAlign: TextAlign.start,
+                          ),
                         ),
                       ),
-                      RaisedButton(
-                        color: PaperPage.awnser[qNumber-1] == 4 ?  Colors.green[400] : Colors.amber,
-                        onPressed: () {
-                          setState(() {
-                            PaperPage.awnser[qNumber-1] = 4;
-                          });
-                        },
-                        child: Text(
-                          '4  wwwwwwww',
-                          textAlign: TextAlign.start,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              
-            );
-          },
+                    ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
+                          child: RaisedButton(
+                          color: PaperPage.answer[qNumber-1] == 4 ?  Colors.green[400] : Colors.amber,
+                          onPressed: () {
+                            setState(() {
+                              PaperPage.answer[qNumber-1] = 4;
+                            });
+                          },
+                          child: Text(
+                            '4  ' +qContent['answer4'],
+                            textAlign: TextAlign.start,
+                          ),
+                        ),),),
+                      ],
+                    ),
+                  ],
+                ),
+                
+              );
+            },
+          ),
+          //Center(child: Text(text, style: TextStyle(fontSize: 42, color: Colors.white),),),
         ),
-        //Center(child: Text(text, style: TextStyle(fontSize: 42, color: Colors.white),),),
-      ),
-    );
+      );
+    } else {
+      return Padding(
+        padding: EdgeInsets.all(12),
+        child: Container(
+          color: color,
+          child: DraggableScrollableSheet(
+            expand: true,
+            initialChildSize: 1,
+            minChildSize: 1,
+            maxChildSize: 1,
+            builder: (BuildContext context, ScrollController scrollController) {
+              return Container(
+                color: color,
+                child: Column(
+                  children: <Widget>[ 
+                    Row(
+
+                      children: <Widget>[
+                        Text(
+                          qContent['question'],
+                          
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Center(
+                          child: Image(
+                            image: NetworkImage(qContent['picture']),
+                            height: 200,
+                            width: 270,
+                            ),
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
+                          child: RaisedButton(
+                              color: PaperPage.answer[qNumber-1] == 1 ?  Colors.green[400] : Colors.amber,
+                              onPressed: () {
+                                setState(() {
+                                  PaperPage.answer[qNumber-1] = 1;
+                                });
+                              },
+                              child: Text(
+                                '1  '+qContent['answer1'],
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
+                          child:RaisedButton(
+                              color: PaperPage.answer[qNumber-1] == 2 ?  Colors.green[400] : Colors.amber,
+                              onPressed: () {
+                                setState(() {
+                                  PaperPage.answer[qNumber-1] = 2;
+                                });
+                              },
+                                child: Text(
+                                  '2  '+qContent['answer2'],
+                                  textAlign: TextAlign.start,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
+                          child:RaisedButton(
+                          color: PaperPage.answer[qNumber-1] == 3 ?  Colors.green[400] : Colors.amber,
+                          onPressed: () {
+                            setState(() {
+                              PaperPage.answer[qNumber-1] = 3;
+                            });
+                          },
+                          child: Text(
+                            '3  '+qContent['answer3'],
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                      ),
+                    ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
+                          child: RaisedButton(
+                          color: PaperPage.answer[qNumber-1] == 4 ?  Colors.green[400] : Colors.amber,
+                          onPressed: () {
+                            setState(() {
+                              PaperPage.answer[qNumber-1] = 4;
+                            });
+                          },
+                          child: Text(
+                            '4  ' +qContent['answer4'],
+                            textAlign: TextAlign.start,
+                          ),
+                        ),),),
+                      ],
+                    ),
+                  ],
+                ),
+                
+              );
+            },
+          ),
+          //Center(child: Text(text, style: TextStyle(fontSize: 42, color: Colors.white),),),
+        ),
+      );
+    }
   }
 }
