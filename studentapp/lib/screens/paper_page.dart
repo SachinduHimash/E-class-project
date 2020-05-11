@@ -45,7 +45,7 @@ class _PaperPageState extends State<PaperPage> {
     });
   });
     List<Widget> items = [
-      buildPage(1,PaperPage.questions[0], Colors.blue),
+      buildPage(1,PaperPage.questions[0], Color.fromRGBO(10, 10, 10,0.1)),
       buildPage(2,PaperPage.questions[1], Colors.green),
       buildPage(3,PaperPage.questions[2], Colors.amber),
       buildPage(4,PaperPage.questions[3], Colors.deepPurple),
@@ -491,9 +491,12 @@ class _PaperPageState extends State<PaperPage> {
                     Row(
 
                       children: <Widget>[
-                        Text(
-                          qContent['question'],
-                          
+                        Container(
+                          padding: EdgeInsets.symmetric(vertical: 30,horizontal: 20),
+                          child: Text(
+                            qContent['question'],
+                            textAlign: TextAlign.start,                          
+                          ),
                         )
                       ],
                     ),
@@ -510,8 +513,9 @@ class _PaperPageState extends State<PaperPage> {
                                   PaperPage.answer[qNumber-1] = 1;
                                 });
                               },
+                              padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
                               child: Text(
-                                '1  '+qContent['answer1'],
+                                '1   '+qContent['answer1'],
                                 textAlign: TextAlign.start,
                               ),
                             ),
@@ -532,8 +536,9 @@ class _PaperPageState extends State<PaperPage> {
                                   PaperPage.answer[qNumber-1] = 2;
                                 });
                               },
+                              padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
                                 child: Text(
-                                  '2  '+qContent['answer2'],
+                                  '2   '+qContent['answer2'],
                                   textAlign: TextAlign.start,
                                 ),
                               ),
@@ -554,8 +559,9 @@ class _PaperPageState extends State<PaperPage> {
                               PaperPage.answer[qNumber-1] = 3;
                             });
                           },
+                          padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
                           child: Text(
-                            '3  '+qContent['answer3'],
+                            '3   '+qContent['answer3'],
                             textAlign: TextAlign.start,
                           ),
                         ),
@@ -576,8 +582,9 @@ class _PaperPageState extends State<PaperPage> {
                               PaperPage.answer[qNumber-1] = 4;
                             });
                           },
+                          padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
                           child: Text(
-                            '4  ' +qContent['answer4'],
+                            '4   ' +qContent['answer4'],
                             textAlign: TextAlign.start,
                           ),
                         ),),),
@@ -622,7 +629,7 @@ class _PaperPageState extends State<PaperPage> {
                         Center(
                           child: Image(
                             image: NetworkImage(qContent['picture']),
-                            height: 200,
+                            height: 250,
                             width: 270,
                             ),
                         )
@@ -641,8 +648,9 @@ class _PaperPageState extends State<PaperPage> {
                                   PaperPage.answer[qNumber-1] = 1;
                                 });
                               },
+                              padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
                               child: Text(
-                                '1  '+qContent['answer1'],
+                                '1   '+qContent['answer1'],
                                 textAlign: TextAlign.start,
                               ),
                             ),
@@ -663,8 +671,9 @@ class _PaperPageState extends State<PaperPage> {
                                   PaperPage.answer[qNumber-1] = 2;
                                 });
                               },
+                              padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
                                 child: Text(
-                                  '2  '+qContent['answer2'],
+                                  '2   '+qContent['answer2'],
                                   textAlign: TextAlign.start,
                                 ),
                               ),
@@ -685,8 +694,9 @@ class _PaperPageState extends State<PaperPage> {
                               PaperPage.answer[qNumber-1] = 3;
                             });
                           },
+                          padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
                           child: Text(
-                            '3  '+qContent['answer3'],
+                            '3   '+qContent['answer3'],
                             textAlign: TextAlign.start,
                           ),
                         ),
@@ -707,8 +717,9 @@ class _PaperPageState extends State<PaperPage> {
                               PaperPage.answer[qNumber-1] = 4;
                             });
                           },
+                          padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
                           child: Text(
-                            '4  ' +qContent['answer4'],
+                            '4   ' +qContent['answer4'],
                             textAlign: TextAlign.start,
                           ),
                         ),),),
