@@ -30,7 +30,7 @@ class Data {
   ];
 
   static const namedColors = [
-    NamedColor(Colors.blue, 'Blue'),
+    NamedColor(Color(0xFF673AB7), 'Blue'),
     NamedColor(Color(0xFFf44336), 'Read'),
     NamedColor(Color(0xFF673AB7), 'Purple'),
     NamedColor(Color(0xFF009688), 'Green'),
@@ -99,9 +99,9 @@ class Data {
     }
     return [
       TabItem<IconData>(icon: Icons.home, title: 'Home'),
-      TabItem<IconData>(icon: Icons.map, title: "Discovery"),
-      TabItem<IconData>(icon: Icons.publish, title: "Publish"),
-      TabItem<IconData>(icon: Icons.message, title: 'Message'),
+      TabItem<IconData>(icon: Icons.edit, title: 'Paper'),
+      TabItem<IconData>(icon: Icons.poll, title: 'Rank'),
+      TabItem<IconData>(icon: Icons.assignment, title: 'Past Paper'),
       TabItem<IconData>(icon: Icons.people, title: 'Profile'),
     ];
   }

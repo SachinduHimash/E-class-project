@@ -14,10 +14,10 @@ class _State extends State<CustomAppBarDemo>
     with SingleTickerProviderStateMixin {
   List<TabItem> items = <TabItem>[
     TabItem(icon: Icons.home, title: 'Home'),
-    TabItem(icon: Icons.map, title: 'Discovery'),
-    TabItem(icon: Icons.plus_one, title: 'Add'),
-//    TabItem(icon: Icons.message, title: 'Message'),
-//    TabItem(icon: Icons.people, title: 'Profile'),
+    TabItem(icon: Icons.edit, title: 'Paper'),
+    TabItem(icon: Icons.poll, title: 'Leader board'),
+    TabItem(icon: Icons.assignment, title: 'Past Paper'),
+    TabItem(icon: Icons.people, title: 'Profile'),
 //    TabItem(icon: Icons.description, title: 'Plus 1'),
 //    TabItem(icon: Icons.new_releases, title: 'Plus 2'),
   ];
@@ -37,12 +37,13 @@ class _State extends State<CustomAppBarDemo>
     Color(0xFFFFEB3B),
     Color(0xFFFFC107),
     Color(0xFFFF9800),
+    Color(0xFFFF9800),
     Color(0xFFFF5722),
     Color(0xFF795548),
     Color(0xFF9E9E9E),
     Color(0xFF607D8B),
   ];
-  Color _tabBackgroundColor = paletteColors[5];
+  Color _tabBackgroundColor = paletteColors[3];
 
   @override
   Widget build(BuildContext context) {
