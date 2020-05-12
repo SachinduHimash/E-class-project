@@ -3,8 +3,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:studentapp/screens/home.dart';
 import 'package:studentapp/screens/paperAccess_page.dart';
 import 'package:studentapp/screens/paper_page.dart';
+import 'package:studentapp/screens/pastPaper.dart';
+import 'package:studentapp/screens/profile.dart';
+import 'package:studentapp/screens/rank.dart';
 
 import 'components/chip_item.dart';
 import 'components/choose_tab_item.dart';
@@ -92,6 +96,8 @@ class _State extends State<DefaultAppBarDemo>
     _tabController = TabController(length: _tabItems.value.length, vsync: this);
   }
 
+  List<Widget> navItems= [Home(),PaperAccessPage(),Home(),PaperAccessPage(),Home()];
+
   @override
   Widget build(BuildContext context) {
     var options = <Widget>[
@@ -115,28 +121,13 @@ class _State extends State<DefaultAppBarDemo>
     }
     
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Default ConvexAppBar'),
-      //   backgroundColor: _barColor,
-      //   actions: <Widget>[
-      //     IconButton(
-      //       icon: Icon(Icons.style),
-      //       color: Colors.white,
-      //       tooltip: "Custom style example",
-      //       onPressed: () => Navigator.of(context).pushNamed('/paper'),
-      //     )
-      //   ],
-      // ),
       body: TabBarView(
           controller: _tabController,
           children: _tabItems.value
               .map((i) => i.title == 'Home' || i.title == 'Happy'
-                  ? PaperAccessPage()
-                  : Center(
-                      child: Text(
-                      '${i.title}',
-                      style: Theme.of(context).textTheme.display1,
-                    )))
+                  ? Home()
+                  : ( i.title == 'Paper' ?  PaperAccessPage() : ( i.title == 'Profile' ?  Profile() : (i.title == 'Rank' ?  Rank() : PastPaper())))
+                  )
               .toList(growable: false)),
       bottomNavigationBar: _badge == null
           ? ConvexAppBar(

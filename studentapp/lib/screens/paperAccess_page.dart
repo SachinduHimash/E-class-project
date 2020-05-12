@@ -1,16 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:studentapp/service/database.dart';
-// import 'package:kf_drawer/kf_drawer.dart';
 
 import '../main.dart';
 import 'paper_page.dart';
+import 'paper_page40.dart';
 
 class PaperAccessPage extends MyApp {
 
   @override
   _PaperAccessPageState createState() => _PaperAccessPageState();
+
 }
 
 class _PaperAccessPageState extends State<PaperAccessPage> {
@@ -18,61 +18,155 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Center(
-        child: Column(
-          children: <Widget>[
-            // Row(
-            //   crossAxisAlignment: CrossAxisAlignment.start,
-            //   children: <Widget>[
-            //     ClipRRect(
-            //       borderRadius: BorderRadius.all(Radius.circular(32.0)),
-            //       child: Material(
-            //         shadowColor: Colors.transparent,
-            //         color: Colors.transparent,
-            //         child: IconButton(
-            //           icon: Icon(
-            //             Icons.menu,
-            //             color: Colors.black,
-            //           ),
-            //           // onPressed: widget.onMenuPressed,
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // ),
-            RaisedButton(
-              onPressed: () {
-                PaperPage.qNumber = 0;
-                Navigator.of(context).push(CupertinoPageRoute(
-                    fullscreenDialog: true,
-                    builder: (BuildContext context) {
-                      MyApp.page = 'PaperPage';
-                      PaperPage.answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-                      return new StreamBuilder(
-                          stream: Firestore.instance.collection('papers').document('11').collection('paperNumbers').document('202001').snapshots(),
-                          builder: (context, snapshot) {
-                            if (!snapshot.hasData) {
-                              return new Text("Loading");
-                            }
-                            print(snapshot.data['questions']);
-                            PaperPage.questions = snapshot.data['questions'];
-                            return PaperPage();
-                          }
-                      );
-                    },
-                  ),
-                );
-              },
-              padding: EdgeInsets.all(30),
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.access_alarm),
-                  Text('hi')
-                ],
-              )
+      child: Container(
+        padding: EdgeInsets.all(40),
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              RaisedButton(
+                onPressed: () async{
+                  await Firestore.instance.collection('paperAccess').document('9.1').collection('day').document('20200414')
+                  .get().then((x) async=> {
+                      if(x.data["access"]){
+                      await Firestore.instance.collection('paperAccess').document('9.1').collection('day').document('20200414').collection('student').document('202020001')
+                      .get().then((y) => {
+                        if(y.data["access"]){
+                          PaperPage.qNumber = 0,
+                          Navigator.of(context).push(CupertinoPageRoute(
+                              fullscreenDialog: true,
+                              builder: (BuildContext context) {
+                                if(x.data["questions"] == 40) {
+                                  MyApp.page = 'PaperPage40';
+                                  PaperPage40.answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+                                  return new StreamBuilder(
+                                    stream: Firestore.instance.collection('papers').document('11').collection('paperNumbers').document('202001').snapshots(),
+                                    builder: (context, snapshot) {
+                                    if (!snapshot.hasData) {
+                                        return new Text("Loading");
+                                      }
+                                                
+                                    PaperPage40.questions = snapshot.data['questions'];
+                                    return PaperPage40();
+                                    }
+                                  );
+                                } else {
+                                  MyApp.page = 'PaperPage';
+                                  PaperPage.answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+                                  return new StreamBuilder(
+                                    stream: Firestore.instance.collection('papers').document('11').collection('paperNumbers').document('202001').snapshots(),
+                                    builder: (context, snapshot) {
+                                    if (!snapshot.hasData) {
+                                        return new Text("Loading");
+                                      }
+                                                
+                                    PaperPage.questions = snapshot.data['questions'];
+                                    return PaperPage();
+                                    }
+                                  );
+                                }
+                                          
+                              },
+                            ),
+                          ),
+                       
+                        } else{
+                          showDialog<void>(
+                          context: context,
+                          barrierDismissible: false, // user must tap button!
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('your not in a class'),
+                              content: SingleChildScrollView(
+                              child: ListBody(
+                                children: <Widget>[
+                                  Text('pleass mark your attendance'),
+                                  ],
+                                ),
+                              ),
+                              actions: <Widget>[
+                                FlatButton(
+                                  child: Text('Ok'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        )
+                        
+                        }                 
 
-            ),
-          ],
+                      }).catchError((e)=>{
+                        showDialog<void>(
+                          context: context,
+                          barrierDismissible: false, // user must tap button!
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('your not in a class'),
+                              content: SingleChildScrollView(
+                              child: ListBody(
+                                children: <Widget>[
+                                  Text('pleass mark your attendance'),
+                                  ],
+                                ),
+                              ),
+                              actions: <Widget>[
+                                FlatButton(
+                                  child: Text('Ok'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        )
+                      }),
+                         
+                    } else {
+                        showDialog<void>(
+                          context: context,
+                          barrierDismissible: false, // user must tap button!
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Paper not distributed'),
+                              content: SingleChildScrollView(
+                              child: ListBody(
+                                children: <Widget>[
+                                  Text('wait for sir ccommand'),
+                                  ],
+                                ),
+                              ),
+                              actions: <Widget>[
+                                FlatButton(
+                                  child: Text('Ok'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        )
+                                    
+                    }
+                    });
+                     
+                
+                },
+                padding: EdgeInsets.all(30),
+                child: Row(
+                  children: <Widget>[
+                    Text('2020.05.12    Waruna    11',
+                    style: TextStyle(fontWeight:FontWeight.bold,fontSize: 18),)
+                    
+                  ],
+                )
+
+              ),
+            ],
+          ),
         ),
       ),
     );

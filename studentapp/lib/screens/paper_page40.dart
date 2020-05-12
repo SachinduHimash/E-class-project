@@ -5,20 +5,20 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 // import 'package:kf_drawer/kf_drawer.dart';
 import 'package:scrolling_page_indicator/scrolling_page_indicator.dart';
-import 'package:studentapp/screens/qustionSelcet.dart';
+import 'package:studentapp/screens/qustionSelcet40.dart';
 import 'package:studentapp/service/database.dart';
 
 import '../main.dart';
 
-class PaperPage extends  MyApp{
+class PaperPage40 extends  MyApp{
   static double qNumber;
     static dynamic questions;
-    static List<int> answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    static List<int> answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
     @override
-    _PaperPageState createState() => _PaperPageState();
+    _PaperPage40State createState() => _PaperPage40State();
   }
 
-class _PaperPageState extends State<PaperPage> {
+class _PaperPage40State extends State<PaperPage40> {
    
   PageController _controller;
   
@@ -26,9 +26,9 @@ class _PaperPageState extends State<PaperPage> {
   @override
   void initState() {
    
-    if(PaperPage.qNumber != null){
+    if(PaperPage40.qNumber != null){
 
-       _controller = PageController(initialPage: PaperPage.qNumber.round());
+       _controller = PageController(initialPage: PaperPage40.qNumber.round());
     
     } else {
       _controller = PageController();
@@ -41,35 +41,55 @@ class _PaperPageState extends State<PaperPage> {
   Widget build(BuildContext context) {
     _controller.addListener(() {
     setState(() {
-      PaperPage.qNumber = _controller.page;
+      PaperPage40.qNumber = _controller.page;
     });
   });
     List<Widget> items = [
-      buildPage(1,PaperPage.questions[0], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(2,PaperPage.questions[1], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(3,PaperPage.questions[2], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(4,PaperPage.questions[3], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(5,PaperPage.questions[4], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(6,PaperPage.questions[5], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(7,PaperPage.questions[6], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(8,PaperPage.questions[7], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(9,PaperPage.questions[8], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(10,PaperPage.questions[9], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(11,PaperPage.questions[10], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(12,PaperPage.questions[11], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(13,PaperPage.questions[12], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(14,PaperPage.questions[13], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(15,PaperPage.questions[14], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(16,PaperPage.questions[15], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(17,PaperPage.questions[16], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(18,PaperPage.questions[17], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(19,PaperPage.questions[18], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(20,PaperPage.questions[19], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(1,PaperPage40.questions[0], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(2,PaperPage40.questions[1], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(3,PaperPage40.questions[2], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(4,PaperPage40.questions[3], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(5,PaperPage40.questions[4], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(6,PaperPage40.questions[5], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(7,PaperPage40.questions[6], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(8,PaperPage40.questions[7], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(9,PaperPage40.questions[8], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(10,PaperPage40.questions[9], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(11,PaperPage40.questions[10], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(12,PaperPage40.questions[11], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(13,PaperPage40.questions[12], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(14,PaperPage40.questions[13], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(15,PaperPage40.questions[14], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(16,PaperPage40.questions[15], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(17,PaperPage40.questions[16], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(18,PaperPage40.questions[17], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(19,PaperPage40.questions[18], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(20,PaperPage40.questions[19], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(21,PaperPage40.questions[0], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(22,PaperPage40.questions[1], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(23,PaperPage40.questions[2], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(24,PaperPage40.questions[3], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(25,PaperPage40.questions[4], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(26,PaperPage40.questions[5], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(27,PaperPage40.questions[6], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(28,PaperPage40.questions[7], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(29,PaperPage40.questions[8], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(30,PaperPage40.questions[9], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(31,PaperPage40.questions[10], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(32,PaperPage40.questions[11], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(33,PaperPage40.questions[12], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(34,PaperPage40.questions[13], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(35,PaperPage40.questions[14], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(36,PaperPage40.questions[15], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(37,PaperPage40.questions[16], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(38,PaperPage40.questions[17], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(39,PaperPage40.questions[18], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(40,PaperPage40.questions[19], Color.fromRGBO(10, 10, 10,0.1)),
     ];
 
     
 
-    if( PaperPage.qNumber == 19){
+    if( PaperPage40.qNumber == 39){
       return new WillPopScope(
         onWillPop: () async => false,
         child: MaterialApp(
@@ -129,7 +149,7 @@ class _PaperPageState extends State<PaperPage> {
                                     'Back'
                                   ),
                                   onPressed: () { 
-                                    PaperPage.qNumber = _controller.page - 1;
+                                    PaperPage40.qNumber = _controller.page - 1;
                                     setState(() {
                                       _controller.previousPage(duration: Duration(microseconds: 150), curve: Curves.ease);
                                     });
@@ -143,10 +163,10 @@ class _PaperPageState extends State<PaperPage> {
                                     Navigator.of(context).push(CupertinoPageRoute(
                                     fullscreenDialog: true,
                                     builder: (BuildContext context) {
-                                      PaperPage.qNumber = _controller.page;
-                                      print(PaperPage.qNumber);
+                                      PaperPage40.qNumber = _controller.page;
+                                      print(PaperPage40.qNumber);
                                       MyApp.page = 'QustionSelect';
-                                      return QustionSelect();
+                                      return QustionSelect40();
                                     },
                                   ));
                                   },
@@ -157,12 +177,14 @@ class _PaperPageState extends State<PaperPage> {
                                   ),
                                   onPressed: () { 
                                     var marks =0;
-                                    if(PaperPage.answer.indexOf(0) == -1){
-                                      PaperPage.qNumber = null;
-                                      for (var i = 0; i < PaperPage.answer.length; i++) {
-                                        if(PaperPage.answer[i] == PaperPage.questions[i]['correctAnswer']){
+                                    if(PaperPage40.answer.indexOf(0) == -1){
+                                      PaperPage40.qNumber = null;
+                                      for (var i = 0; i < PaperPage40.answer.length; i++) {
+                                        if(PaperPage40.answer[i] == PaperPage40.questions[i]['correctAnswer']){
                                           marks+=5;
+                                         
                                         }
+                                        
                                       }
                                       
                                       showDialog<void>(
@@ -186,7 +208,7 @@ class _PaperPageState extends State<PaperPage> {
                                                         fullscreenDialog: true,
                                                         builder: (BuildContext context) {
                                                           MyApp.page = 'myapp';
-                                                          PaperPage.qNumber = 0;
+                                                          PaperPage40.qNumber = 0;
                                                           return MyApp();
                                                         },
                                                     ),
@@ -239,7 +261,7 @@ class _PaperPageState extends State<PaperPage> {
             ),
         ),
       ));
-    } else if(PaperPage.qNumber == 0 ) {
+    } else if(PaperPage40.qNumber == 0 ) {
       return new WillPopScope(
         onWillPop: () async => false,
         child:MaterialApp(
@@ -303,10 +325,10 @@ class _PaperPageState extends State<PaperPage> {
                                     Navigator.of(context).push(CupertinoPageRoute(
                                     fullscreenDialog: true,
                                     builder: (BuildContext context) {
-                                      PaperPage.qNumber = _controller.page;
-                                      print(PaperPage.qNumber);
+                                      PaperPage40.qNumber = _controller.page;
+                                      print(PaperPage40.qNumber);
                                       MyApp.page = 'QustionSelect';
-                                      return QustionSelect();
+                                      return QustionSelect40();
                                     },
                                   ));
                                   },
@@ -316,7 +338,7 @@ class _PaperPageState extends State<PaperPage> {
                                     'Next'
                                   ),
                                   onPressed: () {
-                                    PaperPage.qNumber = _controller.page + 1;
+                                    PaperPage40.qNumber = _controller.page + 1;
                                     setState(() {
                                       _controller.nextPage(duration: Duration(microseconds: 1), curve: Curves.ease);
                                     });
@@ -394,7 +416,7 @@ class _PaperPageState extends State<PaperPage> {
                                     'Back'
                                   ),
                                   onPressed: () { 
-                                    PaperPage.qNumber = _controller.page - 1;
+                                    PaperPage40.qNumber = _controller.page - 1;
                                     setState(() {
                                       _controller.previousPage(duration: Duration(microseconds: 150), curve: Curves.ease);
                                     });
@@ -408,10 +430,10 @@ class _PaperPageState extends State<PaperPage> {
                                     Navigator.of(context).push(CupertinoPageRoute(
                                     fullscreenDialog: true,
                                     builder: (BuildContext context) {
-                                      PaperPage.qNumber = _controller.page;
-                                      print(PaperPage.qNumber);
+                                      PaperPage40.qNumber = _controller.page;
+                                      print(PaperPage40.qNumber);
                                       MyApp.page = 'QustionSelect';
-                                      return QustionSelect();
+                                      return QustionSelect40();
                                     },
                                   ));
                                   },
@@ -421,7 +443,7 @@ class _PaperPageState extends State<PaperPage> {
                                     'Next'
                                   ),
                                   onPressed: () { 
-                                    PaperPage.qNumber = _controller.page + 1;
+                                    PaperPage40.qNumber = _controller.page + 1;
                                     setState(() {
                                       _controller.nextPage(duration: Duration(microseconds: 1), curve: Curves.ease);
                                     });
@@ -474,7 +496,7 @@ class _PaperPageState extends State<PaperPage> {
     //           child: Column(
     //             mainAxisAlignment: MainAxisAlignment.center,
     //             children: <Widget>[
-    //                Text('PaperPage is over')
+    //                Text('PaperPage40 is over')
     //             ],
     //           ),
     //         ),
@@ -564,10 +586,10 @@ class _PaperPageState extends State<PaperPage> {
                               child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
                               child: RaisedButton(
-                                  color: PaperPage.answer[qNumber-1] == 1 ?  Colors.green[400] : Colors.amber,
+                                  color: PaperPage40.answer[qNumber-1] == 1 ?  Colors.green[400] : Colors.amber,
                                   onPressed: () {
                                     setState(() {
-                                      PaperPage.answer[qNumber-1] = 1;
+                                      PaperPage40.answer[qNumber-1] = 1;
                                     });
                                   },
                                   padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
@@ -587,10 +609,10 @@ class _PaperPageState extends State<PaperPage> {
                               child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
                               child:RaisedButton(
-                                  color: PaperPage.answer[qNumber-1] == 2 ?  Colors.green[400] : Colors.amber,
+                                  color: PaperPage40.answer[qNumber-1] == 2 ?  Colors.green[400] : Colors.amber,
                                   onPressed: () {
                                     setState(() {
-                                      PaperPage.answer[qNumber-1] = 2;
+                                      PaperPage40.answer[qNumber-1] = 2;
                                     });
                                   },
                                   padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
@@ -610,10 +632,10 @@ class _PaperPageState extends State<PaperPage> {
                               child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
                               child:RaisedButton(
-                              color: PaperPage.answer[qNumber-1] == 3 ?  Colors.green[400] : Colors.amber,
+                              color: PaperPage40.answer[qNumber-1] == 3 ?  Colors.green[400] : Colors.amber,
                               onPressed: () {
                                 setState(() {
-                                  PaperPage.answer[qNumber-1] = 3;
+                                  PaperPage40.answer[qNumber-1] = 3;
                                 });
                               },
                               padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
@@ -633,10 +655,10 @@ class _PaperPageState extends State<PaperPage> {
                               child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
                               child: RaisedButton(
-                              color: PaperPage.answer[qNumber-1] == 4 ?  Colors.green[400] : Colors.amber,
+                              color: PaperPage40.answer[qNumber-1] == 4 ?  Colors.green[400] : Colors.amber,
                               onPressed: () {
                                 setState(() {
-                                  PaperPage.answer[qNumber-1] = 4;
+                                  PaperPage40.answer[qNumber-1] = 4;
                                 });
                               },
                               padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
@@ -704,10 +726,10 @@ class _PaperPageState extends State<PaperPage> {
                               child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
                               child: RaisedButton(
-                                  color: PaperPage.answer[qNumber-1] == 1 ?  Colors.green[400] : Colors.amber,
+                                  color: PaperPage40.answer[qNumber-1] == 1 ?  Colors.green[400] : Colors.amber,
                                   onPressed: () {
                                     setState(() {
-                                      PaperPage.answer[qNumber-1] = 1;
+                                      PaperPage40.answer[qNumber-1] = 1;
                                     });
                                   },
                                   padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
@@ -727,10 +749,10 @@ class _PaperPageState extends State<PaperPage> {
                               child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
                               child:RaisedButton(
-                                  color: PaperPage.answer[qNumber-1] == 2 ?  Colors.green[400] : Colors.amber,
+                                  color: PaperPage40.answer[qNumber-1] == 2 ?  Colors.green[400] : Colors.amber,
                                   onPressed: () {
                                     setState(() {
-                                      PaperPage.answer[qNumber-1] = 2;
+                                      PaperPage40.answer[qNumber-1] = 2;
                                     });
                                   },
                                   padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
@@ -750,10 +772,10 @@ class _PaperPageState extends State<PaperPage> {
                               child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
                               child:RaisedButton(
-                              color: PaperPage.answer[qNumber-1] == 3 ?  Colors.green[400] : Colors.amber,
+                              color: PaperPage40.answer[qNumber-1] == 3 ?  Colors.green[400] : Colors.amber,
                               onPressed: () {
                                 setState(() {
-                                  PaperPage.answer[qNumber-1] = 3;
+                                  PaperPage40.answer[qNumber-1] = 3;
                                 });
                               },
                               padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
@@ -773,10 +795,10 @@ class _PaperPageState extends State<PaperPage> {
                               child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
                               child: RaisedButton(
-                              color: PaperPage.answer[qNumber-1] == 4 ?  Colors.green[400] : Colors.amber,
+                              color: PaperPage40.answer[qNumber-1] == 4 ?  Colors.green[400] : Colors.amber,
                               onPressed: () {
                                 setState(() {
-                                  PaperPage.answer[qNumber-1] = 4;
+                                  PaperPage40.answer[qNumber-1] = 4;
                                 });
                               },
                               padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
