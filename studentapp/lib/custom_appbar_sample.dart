@@ -43,7 +43,6 @@ class _State extends State<CustomAppBarDemo>
     Color(0xFF9E9E9E),
     Color(0xFF607D8B),
   ];
-  Color _tabBackgroundColor = paletteColors[3];
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +103,6 @@ class _State extends State<CustomAppBarDemo>
 
   void _onColorChanged(Color color) {
     setState(() {
-      _tabBackgroundColor = color;
     });
   }
 }

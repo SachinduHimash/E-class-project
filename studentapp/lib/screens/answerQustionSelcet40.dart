@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-// import 'package:kf_drawer/kf_drawer.dart';
-import 'package:studentapp/screens/paper_page40.dart';
 
 import '../main.dart';
 import 'answer_page40.dart';

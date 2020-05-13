@@ -1,12 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flip_panel/flip_panel.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-// import 'package:kf_drawer/kf_drawer.dart';
 import 'package:scrolling_page_indicator/scrolling_page_indicator.dart';
 import 'package:studentapp/screens/qustionSelcet.dart';
-import 'package:studentapp/service/database.dart';
 
 import '../main.dart';
 
@@ -95,9 +91,6 @@ class _PaperPageState extends State<PaperPage> {
           )
         )
       );
-                      
-                         
-      
     } else {
       if( PaperPage.qNumber == 19){
         return new WillPopScope(
@@ -185,7 +178,7 @@ class _PaperPageState extends State<PaperPage> {
                                     child: Text(
                                       'submit'
                                     ),
-                                    onPressed: () { 
+                                    onPressed: () async { 
                                       var marks =0;
                                       if(PaperPage.answer.indexOf(0) == -1){
                                         PaperPage.qNumber = null;

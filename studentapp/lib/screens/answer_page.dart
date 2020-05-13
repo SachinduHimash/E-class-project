@@ -1,14 +1,14 @@
-import 'package:flip_panel/flip_panel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scrolling_page_indicator/scrolling_page_indicator.dart';
-import 'package:studentapp/screens/qustionSelcet.dart';
 import '../main.dart';
+import 'answerQustionSelcet.dart';
 
 class AnswerPage extends  MyApp{
   static double qNumber;
     static dynamic questions;
     static dynamic endTime;
+    static dynamic marks;
     static List<int> answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
     
     @override
@@ -63,47 +63,33 @@ class _AnswerPageState extends State<AnswerPage> {
       buildPage(19,AnswerPage.questions[18], Color.fromRGBO(10, 10, 10,0.1)),
       buildPage(20,AnswerPage.questions[19], Color.fromRGBO(10, 10, 10,0.1)),
     ];
+
+    var marks = 0;
+    for (var i = 0; i < AnswerPage.answer.length; i++) {
+      if(AnswerPage.answer[i] == AnswerPage.questions[i]['correctAnswer']){
+          marks+=5;
+      }
+    }
+    AnswerPage.marks = marks;
     
-    if(AnswerPage.endTime.difference(DateTime.now()).toString()[0]=='-'){
-      return SafeArea(
-        child: Container(
-          padding: EdgeInsets.all(40),
-          child: Center(
-            child: AlertDialog(
-                              title: Text('Time out'),
-                              content: SingleChildScrollView(
-                              child: ListBody(
-                                children: <Widget>[
-                                  Text('paper is over'),
-                                  ],
-                                ),
-                              ),
-                              actions: <Widget>[
-                                FlatButton(
-                                  child: Text('Ok'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
-                            ),
-          )
-        )
-      );
-                      
-                         
-      
-    } else {
-      if( AnswerPage.qNumber == 19){
-        return new WillPopScope(
-          onWillPop: () async => false,
-          child: MaterialApp(
+    if( AnswerPage.qNumber == 19){
+        return new MaterialApp(
           home: Scaffold(
             body: SafeArea(
                 child: Container(
                   child: Column(
                     children: <Widget>[
-                      
+                       Row(
+                      children: <Widget>[
+                        Center(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 10,horizontal: 40),
+                            child: Text("your marks is  " +AnswerPage.marks.toString()+' %',
+                              style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.black87),
+                            ),
+                          ),
+                        )
+                      ],),
                       Expanded(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -153,86 +139,26 @@ class _AnswerPageState extends State<AnswerPage> {
                                       builder: (BuildContext context) {
                                         AnswerPage.qNumber = _controller.page;
                                         print(AnswerPage.qNumber);
-                                        MyApp.page = 'QustionSelect';
-                                        return QustionSelect();
+                                        MyApp.page = 'AnswerQustionSelect';
+                                        return AnswerQustionSelect();
                                       },
                                     ));
                                     },
                                   ),
                                   RaisedButton(
                                     child: Text(
-                                      'submit'
+                                      'finsh'
                                     ),
                                     onPressed: () { 
-                                      var marks =0;
-                                      if(AnswerPage.answer.indexOf(0) == -1){
-                                        AnswerPage.qNumber = null;
-                                        for (var i = 0; i < AnswerPage.answer.length; i++) {
-                                          if(AnswerPage.answer[i] == AnswerPage.questions[i]['correctAnswer']){
-                                            marks+=5;
-                                          }
-                                        }
-                                        
-                                        showDialog<void>(
-                                          context: context,
-                                          barrierDismissible: false, // user must tap button!
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              title: Text('Marks'),
-                                              content: SingleChildScrollView(
-                                                child: ListBody(
-                                                  children: <Widget>[
-                                                    Text('you marks is $marks'),
-                                                  ],
-                                                ),
-                                              ),
-                                              actions: <Widget>[
-                                                FlatButton(
-                                                  child: Text('Ok'),
-                                                  onPressed: () {
-                                                    Navigator.of(context).push(CupertinoPageRoute(
-                                                          fullscreenDialog: true,
-                                                          builder: (BuildContext context) {
-                                                            MyApp.page = 'myapp';
-                                                            AnswerPage.qNumber = 0;
-                                                            return MyApp();
-                                                          },
-                                                      ),
-                                                    );
-                                        
-                                                  },
-                                                ),
-                                              ],
-                                            );
-                                          }
-                                        );
-                                        
-                                      } else {
-                                        return showDialog<void>(
-                                          context: context,
-                                          barrierDismissible: false, // user must tap button!
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              title: Text('Paper not Completed'),
-                                              content: SingleChildScrollView(
-                                                child: ListBody(
-                                                  children: <Widget>[
-                                                    Text('you must complete every question'),
-                                                  ],
-                                                ),
-                                              ),
-                                              actions: <Widget>[
-                                                FlatButton(
-                                                  child: Text('Ok'),
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        );
-                                      }
+                                      Navigator.of(context).push(CupertinoPageRoute(
+                                      fullscreenDialog: true,
+                                      builder: (BuildContext context) {
+                                        MyApp.page = 'myapp';
+                                        AnswerPage.qNumber = 0;
+                                        return MyApp();
+                                        },
+                                      ),
+                                    );
                                     },
                                   ),
                                 ],
@@ -246,34 +172,25 @@ class _AnswerPageState extends State<AnswerPage> {
                 ),
               ),
           ),
-        ));
+        );
       } else if(AnswerPage.qNumber == 0 ) {
-        return new WillPopScope(
-          onWillPop: () async => false,
-          child:MaterialApp(
+        return new MaterialApp(
           home: Scaffold(
             body: SafeArea(
                 child: Container(
                   child: Column(
                     children: <Widget>[
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                            child: Center(
-                              heightFactor: 1.4,
-                              child: FlipClock.countdown(
-                                duration:  AnswerPage.endTime.difference(DateTime.now()),
-                                digitColor: Colors.white,
-                                backgroundColor: Colors.black,
-                                digitSize: 48.0,
-                                borderRadius: const BorderRadius.all(Radius.circular(3.0)),
-                                onDone: () => print('ih'),
-                              ),
+                       Row(
+                      children: <Widget>[
+                        Center(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 10,horizontal: 40),
+                            child: Text("your marks is  " +AnswerPage.marks.toString()+' %',
+                              style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.black87),
                             ),
                           ),
-                        ],
-                      ),
+                        )
+                      ],),
                       Expanded(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -313,8 +230,8 @@ class _AnswerPageState extends State<AnswerPage> {
                                       builder: (BuildContext context) {
                                         AnswerPage.qNumber = _controller.page;
                                         print(AnswerPage.qNumber);
-                                        MyApp.page = 'QustionSelect';
-                                        return QustionSelect();
+                                        MyApp.page = 'AnswerQustionSelect';
+                                        return AnswerQustionSelect();
                                       },
                                     ));
                                     },
@@ -341,34 +258,25 @@ class _AnswerPageState extends State<AnswerPage> {
                 ),
               ),
           ),
-        ));
+        );
       } else {
-        return new WillPopScope(
-          onWillPop: () async => false,
-          child:MaterialApp(
+        return new MaterialApp(
           home: Scaffold(
             body: SafeArea(
                 child: Container(
                   child: Column(
                     children: <Widget>[
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                            child: Center(
-                              heightFactor: 1.4,
-                              child: FlipClock.countdown(
-                                duration: AnswerPage.endTime.difference(DateTime.now()),
-                                digitColor: Colors.white,
-                                backgroundColor: Colors.black,
-                                digitSize: 48.0,
-                                borderRadius: const BorderRadius.all(Radius.circular(3.0)),
-                                onDone: () => print('ih'),
-                              ),
+                      children: <Widget>[
+                        Center(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 10,horizontal: 40),
+                            child: Text("your marks is  " +AnswerPage.marks.toString()+' %',
+                              style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.black87),
                             ),
                           ),
-                        ],
-                      ),
+                        )
+                      ],),
                       Expanded(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -418,8 +326,8 @@ class _AnswerPageState extends State<AnswerPage> {
                                       builder: (BuildContext context) {
                                         AnswerPage.qNumber = _controller.page;
                                         print(AnswerPage.qNumber);
-                                        MyApp.page = 'QustionSelect';
-                                        return QustionSelect();
+                                        MyApp.page = 'AnswerQustionSelect';
+                                        return AnswerQustionSelect();
                                       },
                                     ));
                                     },
@@ -446,97 +354,8 @@ class _AnswerPageState extends State<AnswerPage> {
                 ),
               ),
           ),
-        ));
+        );
       }
-    }
-
-    
-
-
-    
-  
-
-    // var endTime = DateTime(2020,4,16,5,28,0);
-    // print(endTime.difference(DateTime.now()));
-    // if(endTime.difference(DateTime.now()).inSeconds<0){
-    //   return SafeArea(
-    //   child: Center(
-    //     child: Column(
-    //       children: <Widget>[
-    //         Row(
-    //           children: <Widget>[
-    //             ClipRRect(
-    //               borderRadius: BorderRadius.all(Radius.circular(32.0)),
-    //               child: Material(
-    //                 shadowColor: Colors.transparent,
-    //                 color: Colors.transparent,
-    //                 child: IconButton(
-    //                   icon: Icon(
-    //                     Icons.menu,
-    //                     color: Colors.black,
-    //                   ),
-    //                   onPressed: widget.onMenuPressed,
-    //                 ),
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //         Expanded(
-    //           child: Column(
-    //             mainAxisAlignment: MainAxisAlignment.center,
-    //             children: <Widget>[
-    //                Text('AnswerPage is over')
-    //             ],
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
-    // } else {
-    //   return SafeArea(
-    //   child: Center(
-    //     child: Column(
-    //       children: <Widget>[
-    //         Row(
-    //           children: <Widget>[
-    //             ClipRRect(
-    //               borderRadius: BorderRadius.all(Radius.circular(32.0)),
-    //               child: Material(
-    //                 shadowColor: Colors.transparent,
-    //                 color: Colors.transparent,
-    //                 child: IconButton(
-    //                   icon: Icon(
-    //                     Icons.menu,
-    //                     color: Colors.black,
-    //                   ),
-    //                   onPressed: widget.onMenuPressed,
-    //                 ),
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //         Expanded(
-    //           child: Column(
-    //             mainAxisAlignment: MainAxisAlignment.center,
-    //             children: <Widget>[
-    //                FlipClock.countdown(
-    //                     duration: endTime.difference(DateTime.now()),
-    //                     digitColor: Colors.white,
-    //                     backgroundColor: Colors.black,
-    //                     digitSize: 48.0,
-    //                     borderRadius: const BorderRadius.all(Radius.circular(3.0)),
-    //                     onDone: () => print('ih'),
-    //                   ),
-                      
-    //             ],
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
-    // }
   }
 
   Widget buildPage(int qNumber,dynamic qContent, Color color) {
@@ -555,6 +374,28 @@ class _AnswerPageState extends State<AnswerPage> {
                     color: color,
                     child: Column(
                       children: <Widget>[ 
+                        Row(
+                          children: <Widget>[
+                            Container(
+                               padding: EdgeInsets.fromLTRB(20, 30, 20, 5),
+                               child: Row(
+                                 children: <Widget>[
+                                  Icon(AnswerPage.answer[qNumber-1] == qContent['correctAnswer'] ?  Icons.assignment_turned_in :(AnswerPage.answer[qNumber-1] == 0? Icons.assignment_late: Icons.cancel),
+                                    color: AnswerPage.answer[qNumber-1] == qContent['correctAnswer'] ? Colors.green :(AnswerPage.answer[qNumber-1] == 0? Colors.amber: Colors.red)  
+                                  ),
+                                  SizedBox(width: 20,),
+                                  Text(AnswerPage.answer[qNumber-1] == qContent['correctAnswer'] ? 'correct':(AnswerPage.answer[qNumber-1] == 0? 'not attempted': 'wrong'),
+                                    style: TextStyle(color: AnswerPage.answer[qNumber-1] == qContent['correctAnswer'] ? Colors.green :(AnswerPage.answer[qNumber-1] == 0? Colors.amber: Colors.red),
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold
+                                    )
+                                  ),
+                                 ],
+                               )
+                               
+                            )
+                          ],
+                        ),
                         Row(
 
                           children: <Widget>[
@@ -575,11 +416,9 @@ class _AnswerPageState extends State<AnswerPage> {
                               child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
                               child: RaisedButton(
-                                  color: AnswerPage.answer[qNumber-1] == 1 ?  Colors.green[400] : Colors.amber,
+                                  color:  qContent['correctAnswer'] == 1 ?  Colors.green[400] :(AnswerPage.answer[qNumber-1] == 1 ?Colors.red[300]: Colors.amber),
                                   onPressed: () {
-                                    setState(() {
-                                      AnswerPage.answer[qNumber-1] = 1;
-                                    });
+                                    
                                   },
                                   padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
                                   child: Text(
@@ -598,11 +437,9 @@ class _AnswerPageState extends State<AnswerPage> {
                               child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
                               child:RaisedButton(
-                                  color: AnswerPage.answer[qNumber-1] == 2 ?  Colors.green[400] : Colors.amber,
+                                  color:  qContent['correctAnswer'] == 2 ?  Colors.green[400] :(AnswerPage.answer[qNumber-1] == 2 ?Colors.red[300]: Colors.amber),
                                   onPressed: () {
-                                    setState(() {
-                                      AnswerPage.answer[qNumber-1] = 2;
-                                    });
+                                    
                                   },
                                   padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
                                     child: Text(
@@ -621,11 +458,9 @@ class _AnswerPageState extends State<AnswerPage> {
                               child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
                               child:RaisedButton(
-                              color: AnswerPage.answer[qNumber-1] == 3 ?  Colors.green[400] : Colors.amber,
+                              color: qContent['correctAnswer'] == 3 ?  Colors.green[400] :(AnswerPage.answer[qNumber-1] == 3 ?Colors.red[300]: Colors.amber),
                               onPressed: () {
-                                setState(() {
-                                  AnswerPage.answer[qNumber-1] = 3;
-                                });
+                                
                               },
                               padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
                               child: Text(
@@ -644,11 +479,9 @@ class _AnswerPageState extends State<AnswerPage> {
                               child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
                               child: RaisedButton(
-                              color: AnswerPage.answer[qNumber-1] == 4 ?  Colors.green[400] : Colors.amber,
+                              color:  qContent['correctAnswer'] == 4 ?  Colors.green[400] :(AnswerPage.answer[qNumber-1] == 4 ?Colors.red[300]: Colors.amber),
                               onPressed: () {
-                                setState(() {
-                                  AnswerPage.answer[qNumber-1] = 4;
-                                });
+                                
                               },
                               padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
                               child: Text(
@@ -684,6 +517,28 @@ class _AnswerPageState extends State<AnswerPage> {
                     child: Column(
                       children: <Widget>[ 
                         Row(
+                          children: <Widget>[
+                            Container(
+                               padding: EdgeInsets.fromLTRB(20, 30, 20, 5),
+                               child: Row(
+                                 children: <Widget>[
+                                  Icon(AnswerPage.answer[qNumber-1] == qContent['correctAnswer'] ?  Icons.assignment_turned_in :(AnswerPage.answer[qNumber-1] == 0? Icons.assignment_late: Icons.cancel),
+                                    color: AnswerPage.answer[qNumber-1] == qContent['correctAnswer'] ? Colors.green :(AnswerPage.answer[qNumber-1] == 0? Colors.amber: Colors.red)
+                                  ),
+                                  SizedBox(width: 20,),
+                                  Text(AnswerPage.answer[qNumber-1] == qContent['correctAnswer'] ? 'correct':(AnswerPage.answer[qNumber-1] == 0? 'not attempted': 'wrong'),
+                                    style: TextStyle(color: AnswerPage.answer[qNumber-1] == qContent['correctAnswer'] ? Colors.green :(AnswerPage.answer[qNumber-1] == 0? Colors.amber: Colors.red),
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold
+                                    ),
+                                  ),
+                                 ],
+                               )
+                               
+                            )
+                          ],
+                        ),
+                        Row(
 
                           children: <Widget>[
                             Container(
@@ -715,11 +570,9 @@ class _AnswerPageState extends State<AnswerPage> {
                               child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
                               child: RaisedButton(
-                                  color: AnswerPage.answer[qNumber-1] == 1 ?  Colors.green[400] : Colors.amber,
+                                  color: qContent['correctAnswer'] == 1 ?  Colors.green[400] :(AnswerPage.answer[qNumber-1] == 1 ?Colors.red[300]: Colors.amber),
                                   onPressed: () {
-                                    setState(() {
-                                      AnswerPage.answer[qNumber-1] = 1;
-                                    });
+                                    
                                   },
                                   padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
                                   child: Text(
@@ -738,11 +591,9 @@ class _AnswerPageState extends State<AnswerPage> {
                               child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
                               child:RaisedButton(
-                                  color: AnswerPage.answer[qNumber-1] == 2 ?  Colors.green[400] : Colors.amber,
+                                  color: qContent['correctAnswer'] == 2 ?  Colors.green[400] :(AnswerPage.answer[qNumber-1] == 2 ?Colors.red[300]: Colors.amber),
                                   onPressed: () {
-                                    setState(() {
-                                      AnswerPage.answer[qNumber-1] = 2;
-                                    });
+                                    
                                   },
                                   padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
                                     child: Text(
@@ -761,11 +612,9 @@ class _AnswerPageState extends State<AnswerPage> {
                               child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
                               child:RaisedButton(
-                              color: AnswerPage.answer[qNumber-1] == 3 ?  Colors.green[400] : Colors.amber,
+                              color: qContent['correctAnswer'] == 3 ?  Colors.green[400] :(AnswerPage.answer[qNumber-1] == 3 ?Colors.red[300]: Colors.amber),
                               onPressed: () {
-                                setState(() {
-                                  AnswerPage.answer[qNumber-1] = 3;
-                                });
+                                
                               },
                               padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
                               child: Text(
@@ -784,11 +633,9 @@ class _AnswerPageState extends State<AnswerPage> {
                               child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
                               child: RaisedButton(
-                              color: AnswerPage.answer[qNumber-1] == 4 ?  Colors.green[400] : Colors.amber,
+                              color: qContent['correctAnswer'] == 4 ?  Colors.green[400] :(AnswerPage.answer[qNumber-1] == 4 ?Colors.red[300]: Colors.amber),
                               onPressed: () {
-                                setState(() {
-                                  AnswerPage.answer[qNumber-1] = 4;
-                                });
+                                
                               },
                               padding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
                               child: Text(
