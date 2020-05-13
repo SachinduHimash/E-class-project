@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../main.dart';
+import 'answer_page.dart';
+import 'answer_page40.dart';
 import 'paper_page.dart';
 import 'paper_page40.dart';
 
@@ -232,11 +234,11 @@ class _PastPaperState extends State<PastPaper> {
                       Navigator.of(context).push(CupertinoPageRoute(
                         fullscreenDialog: true,
                         builder: (BuildContext context) {
-                          PaperPage.qNumber = 0;
+                          AnswerPage.qNumber = 0;
                           MyApp.page = 'PaperPage';
-                          PaperPage.answer= i.anwser;
-                          PaperPage.questions = i.paperData['questions'];
-                          return PaperPage();
+                          AnswerPage.answer= i.anwser;
+                          AnswerPage.questions = i.paperData['questions'];
+                          return AnswerPage();
                                      
                       },))
                       
@@ -244,11 +246,11 @@ class _PastPaperState extends State<PastPaper> {
                       Navigator.of(context).push(CupertinoPageRoute(
                         fullscreenDialog: true,
                         builder: (BuildContext context) {
-                          PaperPage40.qNumber = 0;
+                          AnswerPage40.qNumber = 0;
                           MyApp.page = 'PaperPage40';
-                          PaperPage40.answer= i.anwser;
-                          PaperPage40.questions = i.paperData['questions'];
-                          return PaperPage40();
+                          AnswerPage40.answer= i.anwser;
+                          AnswerPage40.questions = i.paperData['questions'];
+                          return AnswerPage40();
                                      
                       },))
                     }        
