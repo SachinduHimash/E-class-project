@@ -69,17 +69,17 @@ class _PaperPageState extends State<PaperPage> {
       buildPage(20,PaperPage.questions[19], Color.fromRGBO(10, 10, 10,0.1)),
     ];
     
-    if(PaperPage.endTime.difference(DateTime.now())<0){
+    if(PaperPage.endTime.difference(DateTime.now()).toString()[0]=='-'){
       return SafeArea(
         child: Container(
           padding: EdgeInsets.all(40),
           child: Center(
             child: AlertDialog(
-                              title: Text('your not in a class'),
+                              title: Text('Time out'),
                               content: SingleChildScrollView(
                               child: ListBody(
                                 children: <Widget>[
-                                  Text('pleass mark your attendance'),
+                                  Text('paper is over'),
                                   ],
                                 ),
                               ),

@@ -33,11 +33,12 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                       .get().then((y) => {
                         
                         if(y.data["access"]){
-                          PaperPage.qNumber = 0,
+                          
                           Navigator.of(context).push(CupertinoPageRoute(
                               fullscreenDialog: true,
                               builder: (BuildContext context) {
                                 if(x.data["questions"] == 40) {
+                                  PaperPage40.qNumber = 0;
                                   MyApp.page = 'PaperPage40';
                                   PaperPage40.answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
                                   return new StreamBuilder(
@@ -52,6 +53,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                                     }
                                   );
                                 } else {
+                                  PaperPage.qNumber = 0;
                                   MyApp.page = 'PaperPage';
                                   PaperPage.answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
                                   PaperPage.endTime = DateTime.parse(x.data["endTime"].toDate().toString());
