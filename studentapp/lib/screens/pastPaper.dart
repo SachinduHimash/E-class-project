@@ -2,11 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../default_appbar_demo.dart';
 import '../main.dart';
 import 'answer_page.dart';
 import 'answer_page40.dart';
-import 'paper_page.dart';
-import 'paper_page40.dart';
 
 class PaperList{
   final dynamic paperData;
@@ -48,13 +47,16 @@ class _PastPaperState extends State<PastPaper> {
     _calculation();
   }
 
+  
+
+  
+
   Future _calculation() async {
     var today;
     var classN = '9.1';
     var year = '11';
     var studentId = '2022001A';
-    print(PastPaper.papers);
-
+    
     if(PastPaper.papers.length == 0 ){
       await Firestore.instance.collection('paperAccess').document(classN).collection('day').getDocuments()
         .then((QuerySnapshot snapshot) {
@@ -101,7 +103,8 @@ class _PastPaperState extends State<PastPaper> {
                                   
                                 }
                               ).then((value) => setState(() {
-                                    
+                                    DefaultAppBarDemo.pr.hide();
+                                    DefaultAppBarDemo.load = true;
                                     data = PastPaper.papers;
                                     
                                 })
@@ -135,7 +138,8 @@ class _PastPaperState extends State<PastPaper> {
 
                                 }
                               ).then((value) => setState(() {
-                                  
+                                  DefaultAppBarDemo.pr.hide();
+                                  DefaultAppBarDemo.load = true;
                                   data = PastPaper.papers;
                                   
                               })
@@ -169,7 +173,8 @@ class _PastPaperState extends State<PastPaper> {
 
                           }
                         ).then((value) => setState(() {
-                              
+                              DefaultAppBarDemo.pr.hide();
+                              DefaultAppBarDemo.load = true;
                               data = PastPaper.papers;
                               
                           })
@@ -187,6 +192,7 @@ class _PastPaperState extends State<PastPaper> {
       
       
     } else {
+      
       print('dd');
       print(PastPaper.papers[0].paperId);
       //print(PastPaper.papers[1].paperId);
@@ -195,6 +201,8 @@ class _PastPaperState extends State<PastPaper> {
       print(PastPaper.papers[0].anwser);
       //print(PastPaper.papers[1].anwser);
        setState(() {
+          DefaultAppBarDemo.pr.hide().catchError((e)=>print(e));
+          print(DefaultAppBarDemo.pr.isShowing());
           data = PastPaper.papers;
         });
     }
@@ -205,20 +213,25 @@ class _PastPaperState extends State<PastPaper> {
   
   @override
   Widget build(BuildContext context) {
-   
+      
+    
     if(data == null){
       return SafeArea(
         child: Container(
           padding: EdgeInsets.all(40),
           child: Center(
             child: Column(
-
-            )
+              children: <Widget>[
+               
+            
+              ],
+               )
           )
         )
       );
 
     } else {
+      
       return SafeArea(
       child: Container(
         padding: EdgeInsets.all(40),
@@ -229,6 +242,8 @@ class _PastPaperState extends State<PastPaper> {
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: new RaisedButton(
                   onPressed:() => { 
+                   
+                    
                     print(i.anwser),
                     if(i.paperData['questions'].length == 20) {
                       Navigator.of(context).push(CupertinoPageRoute(

@@ -8,6 +8,7 @@ void main() => runApp(MyApp());
 class MyApp extends StatefulWidget {
   //final String title;
   static String page;
+  
   @override
   State createState() => _State();
 }

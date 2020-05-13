@@ -1,10 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../main.dart';
-import 'paper_page.dart';
-import 'paper_page40.dart';
 
 class Rank extends MyApp {
 
