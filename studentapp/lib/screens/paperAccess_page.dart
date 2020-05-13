@@ -17,6 +17,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
   
   @override
   Widget build(BuildContext context) {
+    
     return SafeArea(
       child: Container(
         padding: EdgeInsets.all(40),
@@ -30,12 +31,14 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                       if(x.data["access"]){
                       await Firestore.instance.collection('paperAccess').document('9.1').collection('day').document('20200414').collection('student').document('202020001')
                       .get().then((y) => {
+                        
                         if(y.data["access"]){
-                          PaperPage.qNumber = 0,
+                          
                           Navigator.of(context).push(CupertinoPageRoute(
                               fullscreenDialog: true,
                               builder: (BuildContext context) {
                                 if(x.data["questions"] == 40) {
+                                  PaperPage40.qNumber = 0;
                                   MyApp.page = 'PaperPage40';
                                   PaperPage40.answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
                                   return new StreamBuilder(
@@ -50,8 +53,13 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                                     }
                                   );
                                 } else {
+                                  PaperPage.qNumber = 0;
                                   MyApp.page = 'PaperPage';
                                   PaperPage.answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+                                  PaperPage.endTime = DateTime.parse(x.data["endTime"].toDate().toString());
+                                  print(PaperPage.endTime);
+                                  print(DateTime.now());
+                                  print( PaperPage.endTime.difference(DateTime.now()));
                                   return new StreamBuilder(
                                     stream: Firestore.instance.collection('papers').document('11').collection('paperNumbers').document('202001').snapshots(),
                                     builder: (context, snapshot) {
