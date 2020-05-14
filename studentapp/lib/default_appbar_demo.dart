@@ -1,5 +1,6 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -126,7 +127,9 @@ class _State extends State<DefaultAppBarDemo>
     
     return Scaffold(
       body: TabBarView(
+        physics: NeverScrollableScrollPhysics(),
           controller: _tabController,
+          dragStartBehavior: DragStartBehavior.start,
           children: _tabItems.value
               .map((i) => i.title == 'Home' || i.title == 'Happy'
                   ? Home()
@@ -141,7 +144,7 @@ class _State extends State<DefaultAppBarDemo>
               backgroundColor: _barColor,
               gradient: _gradient,
               controller: _tabController,
-              onTap: (int i) => {debugPrint('select index=$i'), if(i == 3 && !DefaultAppBarDemo.load) DefaultAppBarDemo.pr.show()},
+              onTap: (int i) => {debugPrint('select index=$i'), if(i == 3 && !DefaultAppBarDemo.load) {DefaultAppBarDemo.pr.show(),DefaultAppBarDemo.load = true}},
             )
           : ConvexAppBar.badge(
               {3: _badge.text, 4: Icons.assistant_photo, 2: Colors.redAccent},
