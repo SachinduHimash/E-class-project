@@ -121,7 +121,7 @@ class _State extends State<DefaultAppBarDemo>
       options.addAll(
           Data.curves.map((c) => RadioItem<Curve>(c, _curve, _onCurveChanged)));
     }
-    DefaultAppBarDemo.pr = new ProgressDialog(context);
+    DefaultAppBarDemo.pr = new ProgressDialog(context,isDismissible: false,);
     DefaultAppBarDemo.pr.style(message: "Please wait...");
     
     return Scaffold(
