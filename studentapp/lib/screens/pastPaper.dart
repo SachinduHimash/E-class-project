@@ -52,6 +52,7 @@ class _PastPaperState extends State<PastPaper> {
   
 
   Future _calculation() async {
+    
     var today;
     var classN = '9.1';
     var year = '11';
@@ -69,90 +70,7 @@ class _PastPaperState extends State<PastPaper> {
             print(today);
 
         }).catchError((ee) => print(ee)).then((e) async => {
-             
-          await Firestore.instance.collection('paperAccess').document(classN).collection('day').document(today).get()
-            .then((g) async {
-
-              
-              await Firestore.instance.collection('class').document(classN).collection('students').document(studentId).collection('marks').document(g.data['paper']).get()
-                .then((value) async => {
-                  
-                  if(value.data == null){
-                   
-                    await Firestore.instance.collection('papers').document(year).collection('paperNumbers').getDocuments()
-                      .then((QuerySnapshot snapshot) {
-                        
-                        snapshot.documents.forEach((f) async => { 
-                            
-
-                          if(PastPaper.papersId.indexOf(f.documentID) != -1 && g.data['paper'] != f.documentID){
-                              
-                            await Firestore.instance.collection('class').document(classN).collection('students').document(studentId).collection('marks').document(f.documentID).get()
-                              .then((h) =>{
-                                
-                                PastPaper.papers.add(PaperList(paperData: f.data,paperId: f.documentID,anwser: new List<int>.from(h.data["answer"])))
-                                }
-                              ).catchError( (e) => { 
-                                  
-                                  
-                                  if(PastPaper.visible[PastPaper.visible.indexOf(PastPaper.visible.firstWhere((e) => e.paperId == f.documentID) )].visible == true){
-                                    print('y'),
-                                    PastPaper.papers.add(PaperList(paperData: f.data,paperId: f.documentID,anwser: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]))
-
-                                  }
-                                  
-                                }
-                              ).then((value) => setState(() {
-                                    DefaultAppBarDemo.pr.hide();
-                                    DefaultAppBarDemo.load = true;
-                                    data = PastPaper.papers;
-                                    
-                                })
-                              )
-                      
-                          }
-                        });
-                      }
-                    ).catchError((x)=> print(x))
-                  } else {
-                    
-                    await Firestore.instance.collection('papers').document(year).collection('paperNumbers').getDocuments()
-                      .then((QuerySnapshot snapshot) {
-
-                        snapshot.documents.forEach((f) async => { 
-                          
-                          if(PastPaper.papersId.indexOf(f.documentID) != -1){
-                            
-                            await Firestore.instance.collection('class').document(classN).collection('students').document(studentId).collection('marks').document(f.documentID).get()
-                              .then((h) => {
-                                
-                                PastPaper.papers.add(PaperList(paperData: f.data,paperId: f.documentID,anwser: new List<int>.from(h.data["answer"])))
-                                }
-                              ).catchError( (e) => {
-                                  
-                                  if(PastPaper.visible[PastPaper.visible.indexOf(PastPaper.visible.firstWhere((e) => e.paperId == f.documentID) )].visible == true){
-                                    print('x'),
-                                    PastPaper.papers.add(PaperList(paperData: f.data,paperId: f.documentID,anwser: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]))
-
-                                  }
-
-                                }
-                              ).then((value) => setState(() {
-                                  DefaultAppBarDemo.pr.hide();
-                                  DefaultAppBarDemo.load = true;
-                                  data = PastPaper.papers;
-                                  
-                              })
-                            )
-                          }
-                    
-                        });
-                      })
-                  }
-                });
-
-            }).catchError((err) async =>{
-
+                
               await Firestore.instance.collection('papers').document(year).collection('paperNumbers').getDocuments()
                  .then((QuerySnapshot snapshot) async {
                    
@@ -174,7 +92,7 @@ class _PastPaperState extends State<PastPaper> {
                           }
                         ).then((value) => setState(() {
                               DefaultAppBarDemo.pr.hide();
-                              DefaultAppBarDemo.load = true;
+                              
                               data = PastPaper.papers;
                               
                           })
@@ -184,8 +102,125 @@ class _PastPaperState extends State<PastPaper> {
                     }
               
                   });
-                })
+                
             }).catchError((ee)=> {})
+            
+              
+          // await Firestore.instance.collection('paperAccess').document(classN).collection('day').document(today).get()
+          //   .then((g) async {
+              
+            //   await Firestore.instance.collection('class').document(classN).collection('students').document(studentId).collection('marks').document(g.data['paper']).get()
+            //     .then((value) async => {
+                  
+            //       if(value.data == null){
+                   
+            //         await Firestore.instance.collection('papers').document(year).collection('paperNumbers').getDocuments()
+            //           .then((QuerySnapshot snapshot) {
+                        
+            //             snapshot.documents.forEach((f) async => { 
+                            
+
+            //               if(PastPaper.papersId.indexOf(f.documentID) != -1 && g.data['paper'] != f.documentID){
+                              
+            //                 await Firestore.instance.collection('class').document(classN).collection('students').document(studentId).collection('marks').document(f.documentID).get()
+            //                   .then((h) =>{
+                                
+            //                     PastPaper.papers.add(PaperList(paperData: f.data,paperId: f.documentID,anwser: new List<int>.from(h.data["answer"])))
+            //                     }
+            //                   ).catchError( (e) => { 
+                                  
+                                  
+            //                       if(PastPaper.visible[PastPaper.visible.indexOf(PastPaper.visible.firstWhere((e) => e.paperId == f.documentID) )].visible == true){
+            //                         print('y'),
+            //                         PastPaper.papers.add(PaperList(paperData: f.data,paperId: f.documentID,anwser: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]))
+
+            //                       }
+                                  
+            //                     }
+            //                   ).then((value) => setState(() {
+            //                         DefaultAppBarDemo.pr.hide();
+                                    
+            //                         data = PastPaper.papers;
+                                    
+            //                     })
+            //                   )
+                      
+            //               }
+            //             });
+            //           }
+            //         ).catchError((x)=> print(x))
+            //       } else {
+                    
+            //         await Firestore.instance.collection('papers').document(year).collection('paperNumbers').getDocuments()
+            //           .then((QuerySnapshot snapshot) {
+
+            //             snapshot.documents.forEach((f) async => { 
+                          
+            //               if(PastPaper.papersId.indexOf(f.documentID) != -1){
+                            
+            //                 await Firestore.instance.collection('class').document(classN).collection('students').document(studentId).collection('marks').document(f.documentID).get()
+            //                   .then((h) => {
+                                
+            //                     PastPaper.papers.add(PaperList(paperData: f.data,paperId: f.documentID,anwser: new List<int>.from(h.data["answer"])))
+            //                     }
+            //                   ).catchError( (e) => {
+                                  
+            //                       if(PastPaper.visible[PastPaper.visible.indexOf(PastPaper.visible.firstWhere((e) => e.paperId == f.documentID) )].visible == true){
+            //                         print('x'),
+            //                         PastPaper.papers.add(PaperList(paperData: f.data,paperId: f.documentID,anwser: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]))
+
+            //                       }
+
+            //                     }
+            //                   ).then((value) => setState(() {
+            //                       DefaultAppBarDemo.pr.hide();
+                                  
+            //                       data = PastPaper.papers;
+                                  
+            //                   })
+            //                 )
+            //               }
+                    
+            //             });
+            //           })
+            //       }
+            //     });
+
+            // }).catchError((err) async =>{
+
+            //   await Firestore.instance.collection('papers').document(year).collection('paperNumbers').getDocuments()
+            //      .then((QuerySnapshot snapshot) async {
+                   
+            //       snapshot.documents.forEach((f) async => {
+
+            //         print(f.documentID ),
+            //         if(PastPaper.papersId.indexOf(f.documentID) != -1){
+            //           await Firestore.instance.collection('class').document(classN).collection('students').document(studentId).collection('marks').document(f.documentID).get()
+            //             .then((h) => 
+            //               PastPaper.papers.add(PaperList(paperData: f.data,paperId: f.documentID,anwser: new List<int>.from(h.data["answer"])))
+            //             ).catchError( (e) => {
+                            
+            //                 if(PastPaper.visible[PastPaper.visible.indexOf(PastPaper.visible.firstWhere((e) => e.paperId == f.documentID) )].visible == true){
+            //                   print('7'),     
+            //                   PastPaper.papers.add(PaperList(paperData: f.data,paperId: f.documentID,anwser: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]))
+
+            //                 }
+
+            //               }
+            //             ).then((value) => setState(() {
+            //                   DefaultAppBarDemo.pr.hide();
+                              
+            //                   data = PastPaper.papers;
+                              
+            //               })
+            //             )
+                      
+                
+            //         }
+              
+            //       });
+            //     })
+            // }).catchError((ee)=> {})
 
         
       }).catchError((ee) => {});
