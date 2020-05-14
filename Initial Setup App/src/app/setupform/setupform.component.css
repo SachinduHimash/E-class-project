@@ -13,6 +13,14 @@
     display: block;
   }
 
+  ::ng-deep .mat-progress-bar {
+    width: 94% !important;
+  }
+
+  ::ng-deep .ng-trigger-list {
+    width: 94%;
+  }
+
   ul {
     display: block;
     list-style-type: disc;

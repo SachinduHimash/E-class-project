@@ -1,5 +1,4 @@
 <div fxLayout="row wrap">
-  <!--  change_'fxFlex.gt-md=50'-->
   <div fxFlex="100" fxFlex.gt-lg="25" fxFlex.gt-md="40" fxFlex.gt-xs="100">
     <ul>
       <mat-card>
@@ -8,155 +7,85 @@
           <!--        <h6 class="card-subtitle text-white m-0 op-5">Checkout my contacts here</h6>-->
           <!--        <button mat-mini-fab color="accent" class="add-contact">+</button>-->
         </div>
-        <div class="message-box contact-box p-20">
-          <div class="message-widget contact-widget">
-            <ul>
-              <!-- Message -->
-              <a *ngFor="let doc of student | async">
-                <!--            <div class="user-img"> <img src="../assets/images/users/1.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>-->
-                <div class="mail-contnet">
-                  <h5>{{doc | json}}</h5>
-                </div>
-              </a>
-              <!-- Message -->
-            </ul>
+
+        <div class="example-container">
+
+          <div class="example-header">
+            <mat-form-field>
+              <input (keyup)="applyFilter($event.target?.value)" matInput placeholder="Search">
+            </mat-form-field>
           </div>
+
+          <mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="uid">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> ID</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.uid}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="fullName">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Full Name</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.fullName}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="className">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Class Name</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.className}}</mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row (click)="getRecord(row)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
         </div>
       </mat-card>
     </ul>
 
-    <!-- <mat-card>-->
-    <!--      <div class="p-20 bg-info position-relative">-->
-    <!--        <h4 class="card-title text-white m-0">address 09</h4>-->
-    <!--        &lt;!&ndash;        <h6 class="card-subtitle text-white m-0 op-5">Checkout my contacts here</h6>&ndash;&gt;-->
-    <!--        &lt;!&ndash;        <button mat-mini-fab color="accent" class="add-contact">+</button>&ndash;&gt;-->
-    <!--      </div>-->
-    <!--      <div class="message-box contact-box p-20">-->
-    <!--        <div class="message-widget contact-widget">-->
-    <!--          <ul>-->
-    <!--            <li *ngFor="let class of testClass">-->
-    <!--              {{ class }}-->
-    <!--            </li>-->
-    <!--          </ul>-->
-    <!--          &lt;!&ndash; Message &ndash;&gt;-->
-    <!--          <a href="#">-->
-    <!--            &lt;!&ndash;            <div class="user-img"> <img src="../assets/images/users/1.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>&ndash;&gt;-->
-    <!--            <div class="mail-contnet">-->
-    <!--              <h5>Pavan kumar</h5>-->
-    <!--            </div>-->
-    <!--          </a>-->
-    <!--          &lt;!&ndash; Message &ndash;&gt;-->
-    <!--          <a href="#">-->
-    <!--            &lt;!&ndash;            <div class="user-img"> <img src="../assets/images/users/1.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>&ndash;&gt;-->
-    <!--            <div class="mail-contnet">-->
-    <!--              <h5>Pavan kumar</h5>-->
-    <!--            </div>-->
-    <!--          </a>-->
-    <!--        </div>-->
+    <!--    algolia-->
+
+    <!--    <mat-card>-->
+    <!--      <div class="p-20 position-relative">-->
+    <!--        <ais-instantsearch [config]="algoliaConfig">-->
+    <!--          <ais-configure [searchParameters]="{ clickAnalytics: true }"></ais-configure>-->
+    <!--          <ais-search-box></ais-search-box>-->
+    <!--          <ais-hits>-->
+    <!--            <ng-template let-hits="hits" let-insights="insights">-->
+    <!--              <div *ngFor="let hit of hits">-->
+    <!--                {{hit.fullName}} {{hit.ID}}-->
+    <!--                <button (click)="hirhg(hit)">-->
+    <!--                  Add to favorite-->
+    <!--                </button>-->
+    <!--                &lt;!&ndash;        <button (click)="insights('clickedObjectIDsAfterSearch', { eventName: 'Add to cart', objectIDs: [hit.objectID] })">&ndash;&gt;-->
+    <!--                &lt;!&ndash;          Add to cart&ndash;&gt;-->
+    <!--                &lt;!&ndash;        </button>&ndash;&gt;-->
+    <!--              </div>-->
+    <!--            </ng-template>-->
+    <!--          </ais-hits>-->
+    <!--        </ais-instantsearch>-->
     <!--      </div>-->
     <!--    </mat-card>-->
   </div>
-  <!--  change_'fxFlex.gt-md=50'-->
   <div fxFlex="100" fxFlex.gt-lg="75" fxFlex.gt-md="60" fxFlex.gt-xs="100">
-    <button class="button-add-student" mat-raised-button  color="primary" (click)="showAddStudent()">{{buttonText}}</button>
+
+    <button (click)="showAddStudent()" class="button-add-student" color="primary"
+            mat-raised-button>{{buttonText}}</button>
     <ng-template [ngIf]="addStudentShow">
-      <mat-card>
-        <div class="p-20 bg-info position-relative">
-          <h4 class="card-title text-white m-0">Add Student</h4>
-        </div>
-        <mat-card-content class="main-container">
-          <form (ngSubmit)="submit()" [formGroup]="createStudent">
-
-            <mat-form-field appearance="outline">
-              <mat-label>Student Id (Required) </mat-label>
-              <input formControlName="userId" matInput type="text">
-              <mat-hint
-                *ngIf="createStudent.controls['userId'].invalid && (createStudent.controls['userId'].dirty || createStudent.controls['userId'].touched)"
-                class="alert alert-danger">
-                <div *ngIf="createStudent.controls['userId'].errors.required">User id is required</div>
-              </mat-hint>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-              <mat-label>Name (Required)</mat-label>
-              <input formControlName="fullName" matInput type="text">
-              <mat-hint
-                *ngIf="createStudent.controls['fullName'].invalid && (createStudent.controls['fullName'].dirty || createStudent.controls['fullName'].touched)"
-                class="alert alert-danger">
-                <div *ngIf="createStudent.controls['fullName'].errors.required">Name is required</div>
-              </mat-hint>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-              <mat-label>telephone</mat-label>
-              <input formControlName="teleNo" matInput type="number" min="0">
-              <mat-hint
-                *ngIf="createStudent.controls['teleNo'].invalid && (createStudent.controls['teleNo'].dirty || createStudent.controls['teleNo'].touched)"
-                class="alert alert-danger">
-                <div *ngIf="createStudent.controls['teleNo'].errors.required">telephone number is required</div>
-              </mat-hint>
-            </mat-form-field>
-
-
-            <mat-form-field appearance="outline">
-              <mat-label>School</mat-label>
-              <input formControlName="school" matInput type="text">
-              <mat-hint
-                *ngIf="createStudent.controls['school'].invalid && (createStudent.controls['school'].dirty || createStudent.controls['school'].touched)"
-                class="alert alert-danger">
-                <div *ngIf="createStudent.controls['school'].errors.email">Please enter a valid email.</div>
-              </mat-hint>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-              <mat-label>Address</mat-label>
-              <textarea matInput formControlName="address" placeholder="">Address</textarea>
-              <mat-hint
-                *ngIf="createStudent.controls['address'].invalid && (createStudent.controls['address'].dirty || createStudent.controls['address'].touched)"
-                class="alert alert-danger">
-                <div *ngIf="createStudent.controls['address'].errors.required">address is required</div>
-              </mat-hint>
-            </mat-form-field>
-
-
-            <mat-form-field appearance="outline">
-              <mat-label>Email</mat-label>
-              <input formControlName="email" matInput type="text">
-              <mat-hint
-                *ngIf="createStudent.controls['email'].invalid && (createStudent.controls['email'].dirty || createStudent.controls['email'].touched)"
-                class="alert alert-danger">
-                <div *ngIf="createStudent.controls['email'].errors.email">Please enter a valid email.</div>
-              </mat-hint>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-              <mat-label>Class</mat-label>
-              <mat-select formControlName="class" >
-                <mat-option *ngFor="let type of classTypes" [value]="type">
-                  {{type.name}}
-                </mat-option>
-              </mat-select>
-              <mat-error *ngIf="createStudent.controls['class'].hasError('required')">
-                You must make a selection
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-              <mat-label>Password (Required)</mat-label>
-              <input formControlName="password" matInput type="{{passwordType}}">
-              <mat-icon (click)="showPassword()" *ngIf="passwordType === 'text'" matSuffix>visibility_off</mat-icon>
-              <mat-icon (click)="showPassword()" *ngIf="passwordType === 'password'" matSuffix>visibility</mat-icon>
-              <mat-hint
-                *ngIf="createStudent.controls['password'].invalid && (createStudent.controls['password'].dirty || createStudent.controls['password'].touched)"
-                class="alert alert-danger">
-                <div *ngIf="createStudent.controls['password'].errors.required">Password is required</div>
-              </mat-hint>
-            </mat-form-field>
-
-            <button [disabled]="createStudent.invalid" class="button" mat-raised-button type="submit">Create class</button>
-          </form>
-        </mat-card-content>
-      </mat-card>
+      <app-add-student></app-add-student>
     </ng-template>
+    <ng-template [ngIf]="studentIdReportCard">
+      <app-student-report [studentId]='studentIdReportCard'></app-student-report>
+    </ng-template>
+
   </div>
 </div>
+
+
+<!--<div id="search-box">-->
+<!--efergf-->
+<!--</div>-->
+
+<!--<div id="hits">-->
+<!--  erfer-->
+<!--</div>-->
+

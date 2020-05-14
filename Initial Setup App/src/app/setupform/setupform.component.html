@@ -7,11 +7,11 @@
         <h4>Student Registration Form</h4>
       </div>
       <mat-card-content>
-        <form class="formbox" (ngSubmit)="submit()" [formGroup]="myform">
+        <form class="formbox"  [formGroup]="myform">
 
           <mat-form-field appearance="outline">
             <mat-label>User ID</mat-label>
-            <input formControlName="userID" matInput type="text">
+            <input formControlName="userID" pattern="202+([0-9]){4}([A-Z]){1}" matInput type="text">
             <mat-error
               *ngIf="myform.controls['userID'].invalid && (myform.controls['userID'].dirty || myform.controls['userID'].touched)"
               >
@@ -59,6 +59,18 @@
           </mat-form-field>
 
           <br>
+<!--
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input formControlName="password" matInput type="text">
+            <mat-error
+              *ngIf="myform.controls['password'].invalid && (myform.controls['password'].dirty || myform.controls['password'].touched)">
+              <div *ngIf="myform.controls['password'].errors.required">Password is required</div>
+              <div *ngIf="(!myform.controls['password'].errors.required && myform.controls['password'].invalid)">Password must atleast 8 characters</div>
+            </mat-error>
+          </mat-form-field> -->
+          <br>
+
 
           <mat-form-field appearance="outline">
             <mat-label>School</mat-label>
@@ -97,8 +109,44 @@
           </mat-form-field>
           <br>
 
+          <mat-form-field appearance="outline" >
+            <mat-label>Password</mat-label>
+            <mat-pass-toggle-visibility #toggle matSuffix></mat-pass-toggle-visibility>
+            <input formControlName="password" matInput #password [type]="toggle.type" required placeholder="Password">
+            <mat-hint align="end" aria-live="polite">
+              {{password.value.length}} / {{passwordComponent.max}}
+            </mat-hint>
+          </mat-form-field>
+          <!--@angular-material-extensions/password-strength's main component-->
+          <mat-password-strength #passwordComponent [password]="password.value">
+          </mat-password-strength>
+          <!--Password's strength info-->
+          <mat-password-strength-info *ngIf="showDetails" [passwordComponent]="passwordComponent">
+          </mat-password-strength-info>
+          <br>
 
-          <button [disabled]="myform.invalid" class="button" mat-raised-button type="submit" 
+          <mat-form-field appearance="outline" >
+            <mat-label>Confirm Password</mat-label>
+            <mat-pass-toggle-visibility #toggle1 matSuffix></mat-pass-toggle-visibility>
+            <input formControlName="cpassword" matInput #cpassword [type]="toggle1.type" required placeholder="Confirm Password" [errorStateMatcher]="matcher">
+            <mat-hint align="end" aria-live="polite">
+              {{cpassword.value.length}} / {{password.value.length}}
+            </mat-hint>
+
+            <mat-error *ngIf="myform.hasError('notSame')">
+                Passwords do not match
+            </mat-error>
+
+          </mat-form-field>
+          <h4>{{error1}}</h4>
+          <h4>{{test1}}</h4>
+          <h4>{{test2}}</h4>
+          <h4>{{test3}}</h4>
+          <h4>{{test4}}</h4>
+          <h4>{{test5}}</h4>
+          <h4>{{test6}}</h4>
+          <br>
+          <button [disabled]="myform.invalid" class="button" (click)="submit()"  mat-raised-button
             color="primary">Submit</button>
         </form>
       </mat-card-content>

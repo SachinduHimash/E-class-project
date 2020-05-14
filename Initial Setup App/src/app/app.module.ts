@@ -12,7 +12,7 @@ import { AppComponent } from './app.component';
 import { SetupformComponent } from './setupform/setupform.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import {MatFormFieldModule} from '@angular/material/form-field'; 
+import {MatFormFieldModule} from '@angular/material/form-field';
 import { PaperComponent } from './paper/paper.component';
 import { MarkingsheetComponent } from './markingsheet/markingsheet.component';
 
@@ -54,9 +54,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import { DatePipe } from '@angular/common';
 import { DialogboxComponent } from './dialogbox/dialogbox.component';
-
-
-
+import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
+import { AngularFireFunctionsModule, REGION } from '@angular/fire/functions';
 
 
 @NgModule({
@@ -68,6 +67,7 @@ import { DialogboxComponent } from './dialogbox/dialogbox.component';
     MarkingsheetComponent
   ],
   imports: [
+    MatPasswordStrengthModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
@@ -109,12 +109,16 @@ import { DialogboxComponent } from './dialogbox/dialogbox.component';
     MatTooltipModule,
     MatTreeModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireFunctionsModule,
     AngularFireDatabaseModule,
     AngularFirestoreModule,
     AngularFireAuthModule,
 
   ],
-  providers: [DatePipe],
+  providers: [
+    DatePipe,
+    { provide: REGION, useValue: 'us-central1' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

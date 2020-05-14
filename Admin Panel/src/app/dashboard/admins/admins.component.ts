@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
@@ -7,6 +7,9 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 // use_for_timestamp
 import * as firebase from 'firebase';
 import 'firebase/firestore';
+
+// notifications
+import {NotificationService} from '../services/notification.service';
 
 @Component({
   selector: 'app-admins',
@@ -25,9 +28,12 @@ export class AdminsComponent implements OnInit {
   // password_not_match
   passwordError = false;
 
+  private destroy = new Subject();
+
   constructor(private _af: AngularFirestore,
               private _auth: AngularFireAuth,
-              private _fb: FormBuilder) {
+              private _fb: FormBuilder,
+              private _notification: NotificationService) {
   }
 
   ngOnInit(): void {
@@ -51,9 +57,8 @@ export class AdminsComponent implements OnInit {
   }// eo_buildForm
 
   fetchAdmins() {
-    this.adminList = this._af.collection('users', ref => ref.where('role', '==', 'admin')).valueChanges();
-    // tc
-    // this.adminList.subscribe(console.log);
+    this.adminList = this._af.collection('users', ref => ref.where('role', '==', 'admin'))
+      .valueChanges();
   }
 
   // change_password_input_field_type
@@ -78,7 +83,6 @@ export class AdminsComponent implements OnInit {
       // get_form_value
       const formValue = this.form.value;
 
-      // document_for_add_to_user_collection
       const docData = {
         name: formValue.userName,
         role: 'admin',
@@ -86,10 +90,6 @@ export class AdminsComponent implements OnInit {
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       };
 
-      // tc
-      // console.log(docData);
-
-      // first_register_admin_user_with_firebase_authentication_and_then_add_to_users_collection
       this._auth.createUserWithEmailAndPassword(formValue.email, formValue.password)
         .then(credential => {
           docData.uid = credential.user.uid;
@@ -97,10 +97,12 @@ export class AdminsComponent implements OnInit {
             .collection('users')
             .doc(credential.user.uid)
             .set(docData)
-            .then(doc => console.log(doc))
-            .catch(err => console.log(err));
+            .then(doc => {
+              this._notification.NotificationMessage('successfully added user');
+            })
+            .catch(err => this._notification.ErrorMessage(err));
         })
-        .catch(err => console.log(err.message));
+        .catch(err => this._notification.ErrorMessage(err));
 
     } // eo_if
   }// eo_submit

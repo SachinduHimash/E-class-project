@@ -1,6 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { MathsService } from '../maths.service';
+import { DatePipe } from '@angular/common';
+import * as firebase from 'firebase';
+import { AngularFireFunctions } from '@angular/fire/functions';
+import { Md5 } from 'ts-md5';
 
 
 @Component({
@@ -12,20 +18,112 @@ export class DialogboxComponent implements OnInit {
 
 
   isPaper;
-  constructor(private router: Router
-     ) { 
+  classN: string;
+  userID: string;
+  name: string;
+  marks: any = 0;
+  toggle: any;
+  paper: any;
+  data$: any;
+  constructor(private router: Router,
+              private af: AngularFirestore,
+              private _math: MathsService,
+              public dialog: MatDialog,
+              private datePipe: DatePipe,
+              private fns: AngularFireFunctions,
+     ) {
        this.getData();
+       this.classN = localStorage.getItem('class');
+       this.userID = localStorage.getItem('userID');
+       this.name = localStorage.getItem('name');
+       const retrivedToggle = localStorage.getItem('toggleKey');
+       this.toggle = JSON.parse(retrivedToggle);
+
+       const retrivedPaper = localStorage.getItem('paperKey');
+       this.paper = JSON.parse(retrivedPaper);
      }
 
   ngOnInit(): void {
   }
-  viewPaper(paper:string): void {
-    this.router.navigate([`${paper}`]);
-   
+  viewPaper(paper: string){
+    if (paper === 'markingsheet'){
+      this.checkMarks();
+      // this.af.collection('class').doc(this.classN).collection('students').doc(this.userID).collection('marks')
+      //   .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).set({
+      //     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      //     mark: this.marks,
+      //     date: this.datePipe.transform(new Date(), 'yyyy.MM.dd'),
+      //     name: this.name,
+      //   });
+      // try {
+      //   this.af.firestore.collection('marks').doc(localStorage.getItem('grade')).get().then((docSnapshot) => {
+      //     if (!docSnapshot.exists) {
+      //       this.af.collection('marks').doc(localStorage.getItem('grade')).set({}, { merge: true })
+      //     }
+      //   }).then(() => {
+      //     // tslint:disable-next-line: no-unused-expression
+      //     this.af.firestore.collection('marks').doc(localStorage.getItem('grade')).collection('paperNumbers')
+      //       .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1)))
+      //       .get().then(docSnapshot => {
+      //         if (!docSnapshot.exists) {
+      //           this.af.collection('marks').doc(localStorage.getItem('grade')).collection('paperNumbers')
+      //             .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).set({
+      //               date: this.datePipe.transform(new Date(), 'yyyy.MM.dd')
+      //             });
+      //         }
+      //       }).then(() => {
+      //         this.af.collection('marks').doc(localStorage.getItem('grade')).collection('paperNumbers')
+      //           .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).collection('students')
+      //           .doc(this.userID).set({
+      //             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      //             mark: this.marks,
+      //             date: this.datePipe.transform(new Date(), 'yyyy.MM.dd'),
+      //             name: this.name
+      //           });
+      //       });
+      //   });
+      // } catch (error) {
+      //   this.af.collection('marks').doc(localStorage.getItem('grade')).collection('paperNumbers')
+      //     .doc((new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))).collection('students')
+      //     .doc(this.userID).set({
+      //       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      //       mark: this.marks,
+      //       date: this.datePipe.transform(new Date(), 'yyyy.MM.dd'),
+      //       name: this.name
+      //     });
+      // }
+
+      const callable = this.fns.httpsCallable('login/marks');
+      this.data$ = callable({
+        userID: this.userID,
+        marks: this.marks,
+        name: this.name,
+        class: this.classN,
+        grade: localStorage.getItem('grade'),
+        paperNumber: (new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1)),
+      });
+      this.data$.subscribe(async res => {
+        if (res){
+         console.log('su')
+        }
+      });
+      this.router.navigate(['markingsheet']);
+    } else{
+      this.router.navigate([`${paper}`]);
+    }
+
   }
   getData(){
     const retrivedPaper = localStorage.getItem('onKey');
     this.isPaper = JSON.parse(retrivedPaper);
-    
+
+  }
+
+  checkMarks() {
+    for (let index = 0; index < this.toggle.length; index++) {
+      if (this.toggle[index] === this.paper[index].correctAnswer) {
+        this.marks += 5;
+      }
+    }
   }
 }

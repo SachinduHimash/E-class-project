@@ -1,147 +1,152 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-
 // type_definition
-import {Users, Class} from '../interfaces/databaseInterfaces';
-
+import {Class} from '../interfaces/databaseInterfaces';
 // authentication_service_for_hashing password
-import {AuthenticationService} from '../services/authentication.service';
-
-import * as firebase from 'firebase';
 import 'firebase/firestore';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {Subscription} from 'rxjs';
+import {environment} from '../../../environments/environment';
+
+import algoliaSearch from 'algoliasearch/lite';
 
 @Component({
   selector: 'app-students',
   templateUrl: './students.component.html',
   styleUrls: ['./students.component.css']
 })
-export class StudentsComponent implements OnInit {
+export class StudentsComponent implements OnInit, OnDestroy {
 
-  // forms
-  createClass: FormGroup;
-  createStudent: FormGroup;
-  // class_type
-  classTypes: any[] = [];
 
-  // list_of_student
-  student: any;
-
+  algoliaConfig = {
+    indexName: environment.algolia.indexName,
+    searchClient: algoliaSearch(environment.algolia.appId, environment.algolia.apiKey),
+    insightsClient: (window as any).aa,
+  };
   // show_hide_add_class
   addStudentShow = false;
   buttonText = 'Insert student';
 
+  // list_of_student
+  @Input() student = [];
 
-  passwordType = 'password';
+  // table
+  displayedColumns = ['uid', 'fullName', 'className'];
+  dataSource: MatTableDataSource<any>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  studentIdReportCard: any;
 
-  constructor(private _fb: FormBuilder,
-              private _af: AngularFirestore,
-              private _authService: AuthenticationService) {
+
+  private classSubscribe: Subscription;
+  private studentSubscribe: Subscription;
+  private search: any;
+
+  constructor(private _af: AngularFirestore) {
   }
 
   ngOnInit(): void {
-    this.fetchStudent();
-    this.fetchClasses();
-    this.buildCreateStudent();
+    this.fetchStudentData();
+    // this.search = instantSearch({
+    //   indexName: environment.algolia.indexName,
+    //   searchClient: algoliaSearch(
+    //     environment.algolia.appId,
+    //     environment.algolia.apiKey
+    //   ),
+    // });
+    // this.search.addWidget(
+    //   searchBox({
+    //     container: '#search-box',
+    //     autofocus: false,
+    //     palceholder: 'Search',
+    //     poweredBy: true,
+    //     clickAnalytics: true,
+    //   })
+    // );
+    //
+    // this.search.addWidget(
+    //   hits({
+    //     container: '#hits',
+    //     templates: {
+    //       item(hit) {
+    //         return `
+    //         <article>
+    //           <h3> ${instantSearch.highlight({ attribute: 'fullName', hit })} </h3>
+    //         </article>
+    //       `;
+    //       }
+    //     }
+    //   })
+    // );
+    //
+    // this.search.start();
   }
 
-  buildCreateStudent() {
-    this.createStudent = this._fb.group({
-        userId: new FormControl('', Validators.required),
-        fullName: new FormControl('', Validators.required),
-        address: new FormControl('',),
-        teleNo: new FormControl('',),
-        email: new FormControl(''),
-        school: new FormControl('',),
-        class: new FormControl('',),
-        password: new FormControl('', Validators.required),
-      },
-    );
+
+  ngOnDestroy() {
+    this.classSubscribe.unsubscribe();
+    this.studentSubscribe.unsubscribe();
   }
 
-  submit() {
-
-    const formValue = this.createStudent.value;
-    // hash_password_with_md5
-    formValue.password = this._authService.hashString(formValue.password);
-
-    const userObj = {
-      ...formValue,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      role: 'student'
-    };
-
-    // remove_user_id_&_class_field
-    delete userObj.userId;
-    // remove_nested_class_object_&_only_add_class_code
-    userObj.class = userObj.class.value;
-
-    // first_check_user_is_already_exists
-    this._af.firestore
-      .doc(`users/${formValue.userId}`)
-      .get()
-      .then((documentSnapshot) => {
-
-        // if_document_already_exists_return
-        // else_if_class_information_is_provided_then_update_users_and_class_collections
-        // otherwise_only_update_users_collection
-
-        if (documentSnapshot.exists) {
-          console.log('user already exists');
-        } else if (!documentSnapshot.exists && (!formValue.class.value || formValue.class === '')) {
-          this._af.doc(`users/${formValue.userId}`)
-            .set(userObj)
-            .catch(console.log);
-        } else if (!documentSnapshot.exists && formValue.class.value) {
-          this._af.doc(`users/${formValue.userId}`)
-            .set(userObj)
-            .then(() => {
-              this._af.doc(`class/${formValue.class.value}/students/${formValue.userId}`)
-                .set({
-                  fullName: formValue.fullName,
-                  year: null
-                })
-                .then(() => console.log('added'))
-                .catch(console.log);
-            })
-            .catch(console.log);
-
-        }
-      });
-
-
+  applyFilter(filterValue) {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSource.filter = filterValue;
   }
 
-  fetchStudent() {
-    this.student = this.student = this._af.collection('users', ref => ref.where('role', '==', 'student'))
-      .valueChanges({idField: 'id'});
-  }
+  fetchStudentData() {
+    this.classSubscribe = this._af.collection('class', ref => ref.where('grade', '==', 11))
+      .valueChanges()
+      .subscribe((docs) => {
+        docs = docs.map((doc: Class) => {
 
-  fetchClasses() {
-    this._af.collection('class')
-      .valueChanges({idField: 'id'})
-      .subscribe(docs => {
+          const grade = doc.grade.toString().concat('.').concat(doc.number.toString());
 
-        this.classTypes.push({name: 'Don\'t assign to class', value: null, grade: null});
-
-        this.classTypes = this.classTypes.concat(docs.map((data) => {
-          // @ts-ignore
-          return {name: data.grade.toString().concat(' - ').concat(data.name.toString()), value: data.id, grade: data.grade};
-        }));
-
+          this.studentSubscribe = this._af.collection(`class/${grade}/students`)
+            .valueChanges({idField: 'uid'})
+            .subscribe(results => {
+              results.map((resultDoc) => {
+                this.student.push({
+                  uid: resultDoc.uid,
+                  // @ts-ignore
+                  fullName: resultDoc.fullName,
+                  // grade: doc.grade.toString().concat(doc.number.toString()),
+                  className: doc.name,
+                  classType: doc.type,
+                  grade: grade,
+                });
+              });
+              this.dataSource = new MatTableDataSource(this.student);
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
+            });
+        });
 
       });
   }
 
-  // change_password_input_field_type
-  showPassword() {
-    this.passwordType === 'text' ? this.passwordType = 'password' : this.passwordType = 'text';
+  getRecord(row: any) {
+
+    if (this.addStudentShow) {
+      this.buttonText = 'Insert Student';
+      this.addStudentShow = false;
+    }
+    console.table(row);
+    this.studentIdReportCard = row;
+
   }
+
 
   // show_hide_add_class_content
   showAddStudent() {
+    this.studentIdReportCard = null;
     this.addStudentShow ? this.buttonText = 'Insert student' : this.buttonText = 'Hide form';
     this.addStudentShow = !this.addStudentShow;
 
+  }
+
+  hirhg(hdewf) {
+    console.log('rmginege');
+    console.log(hdewf);
   }
 }

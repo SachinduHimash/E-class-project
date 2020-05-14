@@ -7,7 +7,7 @@
   /*text-decoration: none;*/
   margin: 10px;
   padding: 9px 15px;
-  border-radius: 10px;
+  border-radius: 2px;
 }
 
 .mail-contnet h5{
@@ -31,4 +31,8 @@ ul {
   margin-right: auto;
   margin-top: 16px;
   padding: 5px;
+}
+
+.example-header{
+  margin: 2% 5% 0 5%;
 }

@@ -5,3 +5,14 @@ mat-hint{
   color: #e91e63 !important;
 }
 
+.message-box .message-widget a {
+  background: #1e88e5;
+  border-bottom:none !important;
+  /*border-bottom: 1px solid rgba(73, 125, 177, 0.13);*/
+  /*display: -webkit-box;*/
+  /*display: flex;*/
+  /*text-decoration: none;*/
+  margin: 10px;
+  padding: 9px 15px;
+  border-radius: 2px;
+}
