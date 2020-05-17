@@ -1,1 +1,74 @@
-<p>leaderboard works!</p>
+<form [formGroup]="viewRank">
+  <mat-card>
+    <div class="p-20 bg-info position-relative">
+      <h4 class="card-title text-white m-0">
+        <ng-container *ngIf="!showViewForm">
+          View Paper
+        </ng-container>
+        <ng-container *ngIf="showViewForm">
+          View Grade {{viewRank.value.grade}}  - Paper {{viewRank.value.paperNumber}}
+        </ng-container>
+      </h4>
+    </div>
+    <ng-template [ngIf]="!showViewForm">
+      <mat-card-content>
+        <mat-form-field appearance="outline">
+          <mat-label>Grade</mat-label>
+          <input formControlName="grade" matInput type="number">
+          <mat-hint
+            *ngIf="viewRank.controls['grade'].invalid && (viewRank.controls['grade'].dirty || viewRank.controls['grade'].touched)"
+            class="alert alert-danger">
+            <div *ngIf="viewRank.controls['grade'].errors.required">Grade is required</div>
+          </mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Paper number</mat-label>
+          <input formControlName="paperNumber" matInput type="number">
+          <mat-hint
+            *ngIf="viewRank.controls['paperNumber'].invalid && (viewRank.controls['paperNumber'].dirty || viewRank.controls['paperNumber'].touched)"
+            class="alert alert-danger">
+            <div *ngIf="viewRank.controls['paperNumber'].errors.required">paper number is required</div>
+          </mat-hint>
+        </mat-form-field>
+
+        <button (click)="getstudents()" [disabled]="viewRank.invalid" color="primary" mat-raised-button
+                style="margin:0 0 20px 30px" type="submit">View Paper
+        </button>
+
+      </mat-card-content>
+    </ng-template>
+    <ng-template [ngIf]="showViewForm">
+        <div class="example-container">
+
+          <div class="example-header">
+            <mat-form-field>
+              <input (keyup)="applyFilter($event.target?.value)" matInput placeholder="Filter">
+            </mat-form-field>
+          </div>
+
+          <mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="rank">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> ID</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.rank}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="displayName">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Full Name</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.displayName}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="mark">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Mark</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.mark}} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+    </ng-template>
+  </mat-card>
+</form>

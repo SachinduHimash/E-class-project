@@ -41,7 +41,8 @@ export class StudentReportComponent implements OnInit, OnChanges {
     scales: {
       yAxes: [{
         ticks: {
-          beginAtZero: true
+          beginAtZero: true,
+          suggestedMax: 100
         }
       }]
     }

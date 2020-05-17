@@ -37,3 +37,10 @@ mat-hint{
   color: #e91e63 !important;
 }
 
+.blue-snackbar{
+  background: #2196F3;
+}
+
+.red-snackbar{
+  background: #F44336;
+}

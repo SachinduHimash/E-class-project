@@ -3,7 +3,9 @@ import {Routes} from '@angular/router';
 import {FullComponent} from './layouts/full/full.component';
 import {LoginComponent} from './login/login.component';
 import {ERROR404Component} from './error404/error404.component';
+import { AngularFireAuthGuard , redirectUnauthorizedTo} from '@angular/fire/auth-guard';
 
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 // sidebar_routes_configure_on_'./shared/menu_item/menu_item.ts'_&_show_in_'./layout/full/sidebar'_component
 
 export const AppRoutes: Routes = [
@@ -11,6 +13,10 @@ export const AppRoutes: Routes = [
   {
     path: '',
     component: FullComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: {
+      authGuardPipe: redirectUnauthorizedToLogin,
+    },
     children: [
       {
         path: '',

@@ -1,13 +1,14 @@
 import * as functions from 'firebase-functions';
+import * as express from 'express';
+import * as bodyParser from 'body-parser';
+import * as cors from 'cors';
+import {firestore, TimeStamp, auth} from './config';
+import {DocumentSnapshot} from "firebase-functions/lib/providers/firestore";
+import * as admin from "firebase-admin";
 
 export const helloWorld = functions.https.onRequest((request, response) => {
   response.json("Hello from Firebase!");
 });
-
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
-import * as cors from 'cors';
-import {firestore, TimeStamp} from './config';
 
 const app = express();
 app.use(cors({origin: true}));
@@ -75,59 +76,59 @@ app.post('/registration', (req, res) => {
               }).then(() => {
                 res.json(
                   {
-                    data:{
+                    data: {
                       msg: 'success'
                     }
-                });
+                  });
                 return;
               }).catch((err) => {
                 res.json(
                   {
-                    data:{
+                    data: {
                       err: err,
                       location: 'add student to  class'
                     }
-                });
+                  });
                 return;
               });
             }).catch(err => {
               res.json(
                 {
-                  data:{
+                  data: {
                     err: err,
                     location: 'class existence'
                   }
-              });
+                });
               return;
             });
           }).catch((err) => {
-            res.json(
-              {
-                data:{
-                  err: err,
-                  location: 'add user to users collection'
-                }
-          });
+          res.json(
+            {
+              data: {
+                err: err,
+                location: 'add user to users collection'
+              }
+            });
           return;
         });
       } else {
         res.json(
           {
-            data:{
+            data: {
               err: 'user already exists',
               location: 'user existence'
             }
-        });
+          });
         return;
       }
     }).catch((err) => {
-      res.json(
-        {
-          data:{
-            err: err,
-            location: 'get user'
-          }
-    });
+    res.json(
+      {
+        data: {
+          err: err,
+          location: 'get user'
+        }
+      });
     return;
   });
 });
@@ -166,28 +167,28 @@ app.post('/marks', (req, res) => {
       date: date,
       name: reqData.name,
     }).catch((err) => {
-      res.json(
-        {
-          data:{
-            err: err,
-            location: 'marks add to class/student/marks'
-          }
-    });
+    res.json(
+      {
+        data: {
+          err: err,
+          location: 'marks add to class/student/marks'
+        }
+      });
     return;
   });
   firestore.collection('marks').doc(reqData.grade).get().then(docSnapshot => {
 
     if (!docSnapshot.exists) {
       firestore.collection('marks').doc(reqData.grade)
-        .set({}, { merge: true })
+        .set({}, {merge: true})
         .catch((err) => {
           res.json(
             {
-              data:{
+              data: {
                 err: err,
                 location: 'check marks/grade existence'
               }
-          });
+            });
           return;
         });
 
@@ -206,66 +207,77 @@ app.post('/marks', (req, res) => {
             .catch((err) => {
               res.json(
                 {
-                  data:{
+                  data: {
                     err: err,
                     location: 'check marks/paperNumber existence'
                   }
-              });
+                });
               return;
             });
         }
 
       }).then(() => {
-        firestore.collection('marks').doc(reqData.grade).collection('paperNumbers')
-          .doc(fullPaperNumber).collection('students')
-          .doc(userID)
-          .set({
-            createdAt: TimeStamp,
-            mark: reqData.marks,
-            date: date,
-            name: reqData.name
-          }).catch((err) => {
-            res.json(
-              {
-                data:{
-                  err: err,
-                  location: 'check marks paperNumber user marks add'
-                }
-            });
-            return;
-          });
-      }).then(() => {
+      firestore.collection('marks').doc(reqData.grade).collection('paperNumbers')
+        .doc(fullPaperNumber).collection('students')
+        .doc(userID)
+        .set({
+          createdAt: TimeStamp,
+          mark: reqData.marks,
+          date: date,
+          name: reqData.name
+        }).catch((err) => {
         res.json(
           {
-            data:{
-              msg: 'success, try block'
-            }
-        })
-      }).catch((err) => {
-        res.json(
-          {
-            data:{
+            data: {
               err: err,
-              location: 'check marks reqData grade paperNumber'
+              location: 'check marks paperNumber user marks add'
             }
-        });
+          });
         return;
       });
+    }).then(() => {
+      res.json(
+        {
+          data: {
+            msg: 'success, try block'
+          }
+        })
+    }).catch((err) => {
+      res.json(
+        {
+          data: {
+            err: err,
+            location: 'check marks reqData grade paperNumber'
+          }
+        });
+      return;
+    });
   }).catch((err) => {
     res.json(
       {
-        data:{
+        data: {
           err: err,
           location: 'check marks grade existence'
         }
-    });
+      });
     return;
   });
 
 
-
-
 });
+
+export const onCreateAdmin = functions.firestore.document('users/{userId}')
+  .onCreate((snap:DocumentSnapshot, context:functions.EventContext) => {
+    // @ts-ignore
+    if(snap.data().role === 'admin'){
+      auth.setCustomUserClaims(snap.id, {admin: true}).catch(console.error);
+      const data = snap.data() ;
+      // @ts-ignore
+      admin.firestore().collection('testClaims').add(data).catch(console.log);
+    }
+
+
+  });
 
 
 export const login = functions.https.onRequest(app);

@@ -13,7 +13,12 @@
             <li *ngFor="let item of adminList | async">
               <a>
                 <div class="user-img">
-                  <img alt="user" class="img-circle" src="../assets/images/users/1.jpg">
+                  <ng-template [ngIf]="item.dp">
+                    <img alt="user" class="img-circle" [src]="item.dp">
+                  </ng-template>
+                  <ng-template [ngIf]="!item.dp">
+                    <img alt="user" class="img-circle" src="https://firebasestorage.googleapis.com/v0/b/e-class-13f92.appspot.com/o/meta%2Fpngwave.png?alt=media&token=1f685144-ac0c-4ec0-9f04-ba1db73c439b"    >
+                  </ng-template>
                   <span class="profile-status online pull-right"></span>
                 </div>
                 <div class="mail-contnet">

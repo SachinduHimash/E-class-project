@@ -8,11 +8,17 @@ export interface Menu {
 }
 
 const MENUITEMS = [
+  // {
+  //   state: 'dashboard',
+  //   name: 'Dashboard',
+  //   type: 'link',
+  //   icon: 'home'
+  // },
   {
-    state: 'dashboard',
-    name: 'Dashboard',
+    state: 'leaderboard',
+    name: 'Leaderboard',
     type: 'link',
-    icon: 'home'
+    icon: 'assessment'
   },
   {
     state: 'students',

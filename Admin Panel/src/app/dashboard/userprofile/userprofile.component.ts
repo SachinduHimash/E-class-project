@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {first} from 'rxjs/operators';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import * as firebase from 'firebase';
 
 import {NotificationService} from '../services/notification.service';
@@ -67,6 +67,7 @@ export class UserprofileComponent implements OnInit {
         .doc(this.user?.uid)
         .valueChanges()
         .subscribe((doc) => {
+          // console.log(doc);
           this.userData = doc;
           // @ts-ignore
           this.userProfile.controls['userName'].patchValue(doc.name);
@@ -107,27 +108,18 @@ export class UserprofileComponent implements OnInit {
   // form_submit
   submit() {
 
-    let obj;
-    if (this.profileUrl) {
-      obj = {
-        name: this.userProfile.value.userName,
-        dp: this.profileUrl
-      };
-    } else {
-      obj = {
-        name: this.userProfile.value.userName,
-        dp: this.profileUrl
-      };
-    }
     this._af.collection('users')
       // @ts-ignore
       .doc(this.uid)
-      .update(obj)
+      .update({
+        name: this.userProfile.value.userName
+      })
       .then((doc) => {
         this._notification.NotificationMessage('username updated');
       })
       .catch(err => this._notification.ErrorMessage(err));
   }
+
 
   // create_credential_for_reauthentication
   updateUser = (password) => {
@@ -190,8 +182,18 @@ export class UserprofileComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log(this.uid);
       this.profileUrl = result.url;
-      this._notification.NotificationMessage('image upload successfully');
+      this._af.collection('users')
+        // @ts-ignore
+        .doc(this.uid)
+        .update({
+          dp: result.url
+        })
+        .then((doc) => {
+          this._notification.NotificationMessage('image update successfully');
+        })
+        .catch(err => this._notification.ErrorMessage(err));
     });
   }
 }

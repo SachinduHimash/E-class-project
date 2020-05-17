@@ -39,6 +39,9 @@ export class AdminsComponent implements OnInit {
   ngOnInit(): void {
     this.fetchAdmins();
     this.buildForm();
+    // this._auth.currentUser.then( user => {
+    //   console.log(user);
+    // })
   }
 
   // build_form

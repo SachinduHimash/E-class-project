@@ -84,8 +84,8 @@ export class StudentsComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-    this.classSubscribe.unsubscribe();
-    this.studentSubscribe.unsubscribe();
+    // this.classSubscribe.unsubscribe();
+    // this.studentSubscribe.unsubscribe();
   }
 
   applyFilter(filterValue) {
