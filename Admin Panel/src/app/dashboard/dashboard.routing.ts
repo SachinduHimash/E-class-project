@@ -60,14 +60,14 @@ export const DashboardRoutes: Routes = [
       authGuardPipe: adminOnly,
     },
   },
-  {
-    path: 'leaderboard',
-    component: LeaderboardComponent,
-    canActivate: [AngularFireAuthGuard],
-    data: {
-      authGuardPipe: adminOnly,
-    },
-  },
+  // {
+  //   path: 'leaderboard',
+  //   component: LeaderboardComponent,
+  //   canActivate: [AngularFireAuthGuard],
+  //   data: {
+  //     authGuardPipe: adminOnly,
+  //   },
+  // },
   {
     path: 'profile',
     component: UserprofileComponent,

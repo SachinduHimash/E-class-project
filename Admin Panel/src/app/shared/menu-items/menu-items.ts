@@ -14,12 +14,12 @@ const MENUITEMS = [
   //   type: 'link',
   //   icon: 'home'
   // },
-  {
-    state: 'leaderboard',
-    name: 'Leaderboard',
-    type: 'link',
-    icon: 'assessment'
-  },
+  // {
+  //   state: 'leaderboard',
+  //   name: 'Leaderboard',
+  //   type: 'link',
+  //   icon: 'assessment'
+  // },
   {
     state: 'students',
     name: 'Students',
