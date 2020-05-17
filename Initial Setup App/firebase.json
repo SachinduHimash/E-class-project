@@ -1,5 +1,7 @@
 {
   "hosting": {
+    "site": "eclassstudent",
+    "target": "eclassstudent",
     "public": "dist",
     "ignore": [
       "firebase.json",
@@ -17,6 +19,7 @@
     "predeploy": [
       "npm --prefix \"$RESOURCE_DIR\" run lint",
       "npm --prefix \"$RESOURCE_DIR\" run build"
-    ]
+    ],
+    "source": "functions"
   }
 }
