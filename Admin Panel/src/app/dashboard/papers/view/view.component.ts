@@ -6,6 +6,7 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {Papers} from '../../interfaces/databaseInterfaces';
 
 import {MathsService} from '../../services/maths.service';
+import {NotificationService} from "../../services/notification.service";
 
 @Component({
   selector: 'app-view',
@@ -28,7 +29,8 @@ export class ViewComponent implements OnInit {
 
   constructor(private _fb: FormBuilder,
               private _af: AngularFirestore,
-              private _math: MathsService) {
+              private _math: MathsService,
+              private notification: NotificationService) {
   }
 
   ngOnInit() {
@@ -62,8 +64,12 @@ export class ViewComponent implements OnInit {
     this._af.doc(docPath)
       .valueChanges()
       .subscribe((doc: Papers) => {
-        this.paper = doc.questions;
-        this.showViewForm = true;
+        if(doc){
+          this.paper = doc.questions;
+          this.showViewForm = true;
+        }else {
+          this.notification.NotificationMessage('paper not found');
+        }
       });
   }
 }

@@ -7,6 +7,7 @@ import 'firebase/firestore';
 import {MatDialog} from '@angular/material';
 
 import {UploaderComponent} from '../../uploader/uploader.component';
+import {NotificationService} from "../../services/notification.service";
 
 @Component({
   selector: 'app-create',
@@ -44,7 +45,8 @@ export class CreateComponent implements OnInit {
 
   constructor(private _fb: FormBuilder,
               private _af: AngularFirestore,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog,
+              public notification: NotificationService) { }
 
   ngOnInit(): void {
     this.buildForm();
@@ -101,7 +103,8 @@ export class CreateComponent implements OnInit {
     this._af
       .firestore.doc(docRef).get().then(docSnapshot => {
       if (docSnapshot.exists) {
-        console.log('paper already exists');
+        this.notification.NotificationMessage('paper already exist');
+        // console.log('paper already exists');
       } else {
         this._af.doc(docRef).set({
           questions: this.form.value,
@@ -109,6 +112,7 @@ export class CreateComponent implements OnInit {
           updatedAt: null
         })
           .then(() => {
+            this.notification.NotificationMessage('paper submit successfully');
             this.showCreatePaper = false;
             this.formGroup.reset();
             this.formGroup.clearValidators();
@@ -128,7 +132,8 @@ export class CreateComponent implements OnInit {
       .get()
       .then(documentSnapshot => {
         if (documentSnapshot.exists) {
-          console.log('document exists');
+          this.notification.NotificationMessage('paper already exist');
+          // console.log('document exists');
         } else {
           this.showCreatePaper = true;
         }

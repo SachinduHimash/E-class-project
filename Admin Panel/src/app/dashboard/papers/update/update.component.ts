@@ -4,6 +4,7 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {MatDialog} from '@angular/material';
 import {UploaderComponent} from '../../uploader/uploader.component';
 import * as firebase from 'firebase';
+import {NotificationService} from "../../services/notification.service";
 
 @Component({
   selector: 'app-update',
@@ -41,7 +42,8 @@ export class UpdateComponent implements OnInit {
 
   constructor(private _fb: FormBuilder,
               private _af: AngularFirestore,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              public notification: NotificationService) {
   }
 
   ngOnInit() {
@@ -98,7 +100,7 @@ export class UpdateComponent implements OnInit {
           });
           this.showUpdateForm = true;
         } else {
-          console.log('paper not found');
+          this.notification.NotificationMessage('paper not found');
         }
       });
 
@@ -130,11 +132,14 @@ export class UpdateComponent implements OnInit {
       updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
     }, {merge: true})
       .then(() => {
+        this.notification.NotificationMessage('paper update successfully');
         this.showUpdateForm = false;
         this.updateFormGroup.reset();
         this.updateFormGroup.clearValidators();
       })
-      .catch(console.log);
+      .catch((e) => {
+        this.notification.NotificationMessage('Fail to update paper');
+      });
 
   }
 }
