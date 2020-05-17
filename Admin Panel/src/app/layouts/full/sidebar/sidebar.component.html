@@ -1,15 +1,30 @@
 <!-- ============================================================== -->
 <!-- sidebar -->
 <!-- ============================================================== -->
- <div class="user-profile" style="background: url(assets/images/background/user-info.jpg) no-repeat;">
+ <div class="user-profile" style="background: url(assets/images/background/login.jpg) no-repeat;">
     <!-- User profile image -->
-    <div class="profile-img"> <img src="assets/images/users/profile.png" alt="user"> </div>
+   <div class="pro-img">
+     <ng-template [ngIf]="user?.dp">
+       <div class="profile-img">
+         <img alt="user" class="img-circle" [src]="user?.dp">
+       </div>
+
+     </ng-template>
+     <ng-template [ngIf]="!user?.dp">
+       <div class="profile-img">
+         <img alt="user" class="img-circle" src="assets/images/users/profile.png">
+       </div>
+     </ng-template>
+   </div>
     <!-- User profile text-->
     <!-- ============================================================== -->
     <!-- Profile - style you can find in header.scss -->
     <!-- ============================================================== -->
-    <div class="profile-text"><a [matMenuTriggerFor]="sdprofile" class=""> Markarn Doe <i class="ti-angle-down font-12 m-l-5"></i></a></div>
-    <mat-menu #sdprofile="matMenu" class="mymegamenu">
+
+   <ng-template [ngIf]="user?.name">
+     <div class="profile-text"><a [matMenuTriggerFor]="sdprofile" class=""> {{user.name}} <i class="ti-angle-down font-12 m-l-5"></i></a></div>
+   </ng-template>
+   <mat-menu #sdprofile="matMenu" class="mymegamenu">
         <button mat-menu-item>
             <mat-icon>settings</mat-icon> Settings </button>
         <button mat-menu-item>
@@ -19,18 +34,18 @@
         <button mat-menu-item>
             <mat-icon>exit_to_app</mat-icon> Sign Out </button>
     </mat-menu>
-    
+
 </div>
 <mat-nav-list appAccordion>
     <mat-list-item appAccordionLink *ngFor="let menuitem of menuItems.getMenuitem()" routerLinkActive="selected" group="{{menuitem.state}}">
         <a class="" appAccordionToggle [routerLink]="['/', menuitem.state]" *ngIf="menuitem.type === 'link'">
-            <mat-icon>{{ menuitem.icon }}</mat-icon> 
-            <span>{{ menuitem.name }}</span> 
-            <span fxFlex></span> 
-            <span class="label label-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span> 
+            <mat-icon>{{ menuitem.icon }}</mat-icon>
+            <span>{{ menuitem.name }}</span>
+            <span fxFlex></span>
+            <span class="label label-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
         </a>
 
-        
+
     </mat-list-item>
 
 </mat-nav-list>
