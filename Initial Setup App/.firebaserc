@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "e-class-13f92"
+  },
+  "targets": {
+    "e-class-13f92": {
+      "hosting": {
+        "eclassstudent": [
+          "eclassstudent"
+        ]
+      }
+    }
   }
 }
