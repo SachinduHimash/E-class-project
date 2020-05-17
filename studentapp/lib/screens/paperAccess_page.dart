@@ -1,13 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:studentapp/default_appbar_demo.dart';
 
 import '../main.dart';
 import 'paper_page.dart';
 import 'paper_page40.dart';
 
 class PaperAccessPage extends MyApp {
-
+  static String today = new DateTime.now().year.toString()+(new DateTime.now().month.toString().length == 1 ? '0'+new DateTime.now().month.toString():new DateTime.now().month.toString())+new DateTime.now().day.toString();
   @override
   _PaperAccessPageState createState() => _PaperAccessPageState();
 
@@ -17,6 +18,9 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
   
   @override
   Widget build(BuildContext context) {
+    
+    
+    
     return SafeArea(
       child: Container(
         padding: EdgeInsets.all(40),
@@ -25,17 +29,19 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
             children: <Widget>[
               RaisedButton(
                 onPressed: () async{
-                  await Firestore.instance.collection('paperAccess').document('9.1').collection('day').document('20200414')
+                  DefaultAppBarDemo.pr.show();
+                  await Firestore.instance.collection('paperAccess').document('9.1').collection('day').document(PaperAccessPage.today)
                   .get().then((x) async=> {
                       if(x.data["access"]){
-                      await Firestore.instance.collection('paperAccess').document('9.1').collection('day').document('20200414').collection('student').document('202020001')
-                      .get().then((y) => {
+                      await Firestore.instance.collection('paperAccess').document('9.1').collection('day').document(PaperAccessPage.today).collection('students').document('202020001')
+                      .get().then((y) async => {
                         if(y.data["access"]){
-                          PaperPage.qNumber = 0,
+                          await DefaultAppBarDemo.pr.hide(),
                           Navigator.of(context).push(CupertinoPageRoute(
                               fullscreenDialog: true,
                               builder: (BuildContext context) {
                                 if(x.data["questions"] == 40) {
+                                  PaperPage40.qNumber = 0;
                                   MyApp.page = 'PaperPage40';
                                   PaperPage40.answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
                                   return new StreamBuilder(
@@ -50,8 +56,13 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                                     }
                                   );
                                 } else {
+                                  PaperPage.qNumber = 0;
                                   MyApp.page = 'PaperPage';
                                   PaperPage.answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+                                  PaperPage.endTime = DateTime.parse(x.data["endTime"].toDate().toString());
+                                  print(PaperPage.endTime);
+                                  print(DateTime.now());
+                                  print( PaperPage.endTime.difference(DateTime.now()));
                                   return new StreamBuilder(
                                     stream: Firestore.instance.collection('papers').document('11').collection('paperNumbers').document('202001').snapshots(),
                                     builder: (context, snapshot) {
@@ -70,6 +81,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                           ),
                        
                         } else{
+                          await DefaultAppBarDemo.pr.hide(),
                           showDialog<void>(
                           context: context,
                           barrierDismissible: false, // user must tap button!
@@ -97,7 +109,9 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                         
                         }                 
 
-                      }).catchError((e)=>{
+                      }).catchError((e) async =>{
+                        print(e),
+                        await DefaultAppBarDemo.pr.hide(),
                         showDialog<void>(
                           context: context,
                           barrierDismissible: false, // user must tap button!
@@ -125,6 +139,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                       }),
                          
                     } else {
+                        await DefaultAppBarDemo.pr.hide(),
                         showDialog<void>(
                           context: context,
                           barrierDismissible: false, // user must tap button!

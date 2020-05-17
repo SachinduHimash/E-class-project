@@ -1,11 +1,11 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:studentapp/screens/home.dart';
 import 'package:studentapp/screens/paperAccess_page.dart';
-import 'package:studentapp/screens/paper_page.dart';
 import 'package:studentapp/screens/pastPaper.dart';
 import 'package:studentapp/screens/profile.dart';
 import 'package:studentapp/screens/rank.dart';
@@ -19,12 +19,15 @@ import 'components/radio_item.dart';
 import 'data.dart';
 import 'model/badge.dart';
 import 'model/choice_value.dart';
-
+import 'package:progress_dialog/progress_dialog.dart';
 class DefaultAppBarDemo extends StatefulWidget {
   @override
   State createState() {
     return _State();
   }
+  static ProgressDialog pr;
+  static bool load = false;
+  
 }
 
 class _State extends State<DefaultAppBarDemo>
@@ -119,10 +122,14 @@ class _State extends State<DefaultAppBarDemo>
       options.addAll(
           Data.curves.map((c) => RadioItem<Curve>(c, _curve, _onCurveChanged)));
     }
+    DefaultAppBarDemo.pr = new ProgressDialog(context,isDismissible: false,);
+    DefaultAppBarDemo.pr.style(message: "Please wait...");
     
     return Scaffold(
       body: TabBarView(
+        physics: NeverScrollableScrollPhysics(),
           controller: _tabController,
+          dragStartBehavior: DragStartBehavior.start,
           children: _tabItems.value
               .map((i) => i.title == 'Home' || i.title == 'Happy'
                   ? Home()
@@ -137,7 +144,7 @@ class _State extends State<DefaultAppBarDemo>
               backgroundColor: _barColor,
               gradient: _gradient,
               controller: _tabController,
-              onTap: (int i) => debugPrint('select index=$i'),
+              onTap: (int i) => {debugPrint('select index=$i'), if(i == 3 && !DefaultAppBarDemo.load) {DefaultAppBarDemo.pr.show(),DefaultAppBarDemo.load = true}},
             )
           : ConvexAppBar.badge(
               {3: _badge.text, 4: Icons.assistant_photo, 2: Colors.redAccent},

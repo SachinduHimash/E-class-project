@@ -27,6 +27,7 @@ dependencies:
   flip_panel: ^1.0.1
   scrolling_page_indicator: ^0.1.2
   cloud_firestore: ^0.12.11
+  progress_dialog: ^1.2.2
 
 dev_dependencies:
   flutter_test:

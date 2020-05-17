@@ -1,19 +1,17 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flip_panel/flip_panel.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-// import 'package:kf_drawer/kf_drawer.dart';
 import 'package:scrolling_page_indicator/scrolling_page_indicator.dart';
 import 'package:studentapp/screens/qustionSelcet.dart';
-import 'package:studentapp/service/database.dart';
 
 import '../main.dart';
 
 class PaperPage extends  MyApp{
   static double qNumber;
     static dynamic questions;
+    static dynamic endTime;
     static List<int> answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    
     @override
     _PaperPageState createState() => _PaperPageState();
   }
@@ -25,7 +23,7 @@ class _PaperPageState extends State<PaperPage> {
 
   @override
   void initState() {
-   
+    
     if(PaperPage.qNumber != null){
 
        _controller = PageController(initialPage: PaperPage.qNumber.round());
@@ -66,380 +64,408 @@ class _PaperPageState extends State<PaperPage> {
       buildPage(19,PaperPage.questions[18], Color.fromRGBO(10, 10, 10,0.1)),
       buildPage(20,PaperPage.questions[19], Color.fromRGBO(10, 10, 10,0.1)),
     ];
+    
+    if(PaperPage.endTime.difference(DateTime.now()).toString()[0]=='-'){
+      return SafeArea(
+        child: Container(
+          padding: EdgeInsets.all(40),
+          child: Center(
+            child: AlertDialog(
+                              title: Text('Time out'),
+                              content: SingleChildScrollView(
+                              child: ListBody(
+                                children: <Widget>[
+                                  Text('paper is over'),
+                                  ],
+                                ),
+                              ),
+                              actions: <Widget>[
+                                FlatButton(
+                                  child: Text('Ok'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            ),
+          )
+        )
+      );
+    } else {
+      if( PaperPage.qNumber == 19){
+        return new WillPopScope(
+          onWillPop: () async => false,
+          child: MaterialApp(
+          home: Scaffold(
+            body: SafeArea(
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(
+                            child: Center(
+                              heightFactor: 1.4,
+                              child: FlipClock.countdown(
+                                duration:  PaperPage.endTime.difference(DateTime.now()),
+                                digitColor: Colors.white,
+                                backgroundColor: Colors.black,
+                                digitSize: 48.0,
+                                borderRadius: const BorderRadius.all(Radius.circular(3.0)),
+                                onDone: () => print('ih'),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Expanded(
+                              flex: 8,
+                              child: PageView(
+                                children: items,
+                                controller: _controller,
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.fromLTRB(0, 3 , 0, 5),
+                              child: ScrollingPageIndicator(
+                                dotColor: Colors.grey,
+                                dotSelectedColor: Colors.deepPurple,
+                                dotSize: 6,
+                                dotSelectedSize: 8,
+                                dotSpacing: 12,
+                                controller: _controller,
+                                itemCount: items.length,
+                                orientation: Axis.horizontal
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  RaisedButton(
+                                    child: Text(
+                                      'Back'
+                                    ),
+                                    onPressed: () { 
+                                      PaperPage.qNumber = _controller.page - 1;
+                                      setState(() {
+                                        _controller.previousPage(duration: Duration(microseconds: 150), curve: Curves.ease);
+                                      });
+                                    },
+                                  ),
+                                  RaisedButton(
+                                    child: Text(
+                                      'All'
+                                    ),
+                                    onPressed: () { 
+                                      Navigator.of(context).push(CupertinoPageRoute(
+                                      fullscreenDialog: true,
+                                      builder: (BuildContext context) {
+                                        PaperPage.qNumber = _controller.page;
+                                        print(PaperPage.qNumber);
+                                        MyApp.page = 'QustionSelect';
+                                        return QustionSelect();
+                                      },
+                                    ));
+                                    },
+                                  ),
+                                  RaisedButton(
+                                    child: Text(
+                                      'submit'
+                                    ),
+                                    onPressed: () async { 
+                                      var marks =0;
+                                      if(PaperPage.answer.indexOf(0) == -1){
+                                        PaperPage.qNumber = null;
+                                        for (var i = 0; i < PaperPage.answer.length; i++) {
+                                          if(PaperPage.answer[i] == PaperPage.questions[i]['correctAnswer']){
+                                            marks+=5;
+                                          }
+                                        }
+                                        
+                                        showDialog<void>(
+                                          context: context,
+                                          barrierDismissible: false, // user must tap button!
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text('Marks'),
+                                              content: SingleChildScrollView(
+                                                child: ListBody(
+                                                  children: <Widget>[
+                                                    Text('you marks is $marks'),
+                                                  ],
+                                                ),
+                                              ),
+                                              actions: <Widget>[
+                                                FlatButton(
+                                                  child: Text('Ok'),
+                                                  onPressed: () {
+                                                    Navigator.of(context).push(CupertinoPageRoute(
+                                                          fullscreenDialog: true,
+                                                          builder: (BuildContext context) {
+                                                            MyApp.page = 'myapp';
+                                                            PaperPage.qNumber = 0;
+                                                            return MyApp();
+                                                          },
+                                                      ),
+                                                    );
+                                        
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          }
+                                        );
+                                        
+                                      } else {
+                                        return showDialog<void>(
+                                          context: context,
+                                          barrierDismissible: false, // user must tap button!
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text('Paper not Completed'),
+                                              content: SingleChildScrollView(
+                                                child: ListBody(
+                                                  children: <Widget>[
+                                                    Text('you must complete every question'),
+                                                  ],
+                                                ),
+                                              ),
+                                              actions: <Widget>[
+                                                FlatButton(
+                                                  child: Text('Ok'),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      }
+                                    },
+                                  ),
+                                ],
+                              )
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          ),
+        ));
+      } else if(PaperPage.qNumber == 0 ) {
+        return new WillPopScope(
+          onWillPop: () async => false,
+          child:MaterialApp(
+          home: Scaffold(
+            body: SafeArea(
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(
+                            child: Center(
+                              heightFactor: 1.4,
+                              child: FlipClock.countdown(
+                                duration:  PaperPage.endTime.difference(DateTime.now()),
+                                digitColor: Colors.white,
+                                backgroundColor: Colors.black,
+                                digitSize: 48.0,
+                                borderRadius: const BorderRadius.all(Radius.circular(3.0)),
+                                onDone: () => print('ih'),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Expanded(
+                              flex: 8,
+                              child: PageView(
+                                children: items,
+                                controller: _controller,
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.fromLTRB(0, 3 , 0, 5),
+                              child: ScrollingPageIndicator(
+                                dotColor: Colors.grey,
+                                dotSelectedColor: Colors.deepPurple,
+                                dotSize: 6,
+                                dotSelectedSize: 8,
+                                dotSpacing: 12,
+                                controller: _controller,
+                                itemCount: items.length,
+                                orientation: Axis.horizontal
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  SizedBox(width: 90,),
+                                  RaisedButton(
+                                    child: Text(
+                                      'All'
+                                    ),
+                                    onPressed: () { 
+                                      Navigator.of(context).push(CupertinoPageRoute(
+                                      fullscreenDialog: true,
+                                      builder: (BuildContext context) {
+                                        PaperPage.qNumber = _controller.page;
+                                        print(PaperPage.qNumber);
+                                        MyApp.page = 'QustionSelect';
+                                        return QustionSelect();
+                                      },
+                                    ));
+                                    },
+                                  ),
+                                  RaisedButton(
+                                    child: Text(
+                                      'Next'
+                                    ),
+                                    onPressed: () {
+                                      PaperPage.qNumber = _controller.page + 1;
+                                      setState(() {
+                                        _controller.nextPage(duration: Duration(microseconds: 1), curve: Curves.ease);
+                                      });
+                                    },
+                                  ),
+                                ],
+                              )
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          ),
+        ));
+      } else {
+        return new WillPopScope(
+          onWillPop: () async => false,
+          child:MaterialApp(
+          home: Scaffold(
+            body: SafeArea(
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(
+                            child: Center(
+                              heightFactor: 1.4,
+                              child: FlipClock.countdown(
+                                duration: PaperPage.endTime.difference(DateTime.now()),
+                                digitColor: Colors.white,
+                                backgroundColor: Colors.black,
+                                digitSize: 48.0,
+                                borderRadius: const BorderRadius.all(Radius.circular(3.0)),
+                                onDone: () => print('ih'),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Expanded(
+                              flex: 8,
+                              child: PageView(
+                                children: items,
+                                controller: _controller,
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.fromLTRB(0, 3 , 0, 5),
+                              child: ScrollingPageIndicator(
+                                dotColor: Colors.grey,
+                                dotSelectedColor: Colors.deepPurple,
+                                dotSize: 6,
+                                dotSelectedSize: 8,
+                                dotSpacing: 12,
+                                controller: _controller,
+                                itemCount: items.length,
+                                orientation: Axis.horizontal
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  RaisedButton(
+                                    child: Text(
+                                      'Back'
+                                    ),
+                                    onPressed: () { 
+                                      PaperPage.qNumber = _controller.page - 1;
+                                      setState(() {
+                                        _controller.previousPage(duration: Duration(microseconds: 150), curve: Curves.ease);
+                                      });
+                                    },
+                                  ),
+                                  RaisedButton(
+                                    child: Text(
+                                      'All'
+                                    ),
+                                    onPressed: () { 
+                                      Navigator.of(context).push(CupertinoPageRoute(
+                                      fullscreenDialog: true,
+                                      builder: (BuildContext context) {
+                                        PaperPage.qNumber = _controller.page;
+                                        print(PaperPage.qNumber);
+                                        MyApp.page = 'QustionSelect';
+                                        return QustionSelect();
+                                      },
+                                    ));
+                                    },
+                                  ),
+                                  RaisedButton(
+                                    child: Text(
+                                      'Next'
+                                    ),
+                                    onPressed: () { 
+                                      PaperPage.qNumber = _controller.page + 1;
+                                      setState(() {
+                                        _controller.nextPage(duration: Duration(microseconds: 1), curve: Curves.ease);
+                                      });
+                                    },
+                                  ),
+                                ],
+                              )
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          ),
+        ));
+      }
+    }
 
     
-
-    if( PaperPage.qNumber == 19){
-      return new WillPopScope(
-        onWillPop: () async => false,
-        child: MaterialApp(
-        home: Scaffold(
-          body: SafeArea(
-              child: Container(
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                          child: Center(
-                            heightFactor: 1.4,
-                            child: FlipClock.countdown(
-                              duration: Duration(minutes: 25),
-                              digitColor: Colors.white,
-                              backgroundColor: Colors.black,
-                              digitSize: 48.0,
-                              borderRadius: const BorderRadius.all(Radius.circular(3.0)),
-                              onDone: () => print('ih'),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                            flex: 8,
-                            child: PageView(
-                              children: items,
-                              controller: _controller,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(0, 3 , 0, 5),
-                            child: ScrollingPageIndicator(
-                              dotColor: Colors.grey,
-                              dotSelectedColor: Colors.deepPurple,
-                              dotSize: 6,
-                              dotSelectedSize: 8,
-                              dotSpacing: 12,
-                              controller: _controller,
-                              itemCount: items.length,
-                              orientation: Axis.horizontal
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                RaisedButton(
-                                  child: Text(
-                                    'Back'
-                                  ),
-                                  onPressed: () { 
-                                    PaperPage.qNumber = _controller.page - 1;
-                                    setState(() {
-                                      _controller.previousPage(duration: Duration(microseconds: 150), curve: Curves.ease);
-                                    });
-                                  },
-                                ),
-                                RaisedButton(
-                                  child: Text(
-                                    'All'
-                                  ),
-                                  onPressed: () { 
-                                    Navigator.of(context).push(CupertinoPageRoute(
-                                    fullscreenDialog: true,
-                                    builder: (BuildContext context) {
-                                      PaperPage.qNumber = _controller.page;
-                                      print(PaperPage.qNumber);
-                                      MyApp.page = 'QustionSelect';
-                                      return QustionSelect();
-                                    },
-                                  ));
-                                  },
-                                ),
-                                RaisedButton(
-                                  child: Text(
-                                    'submit'
-                                  ),
-                                  onPressed: () { 
-                                    var marks =0;
-                                    if(PaperPage.answer.indexOf(0) == -1){
-                                      PaperPage.qNumber = null;
-                                      for (var i = 0; i < PaperPage.answer.length; i++) {
-                                        if(PaperPage.answer[i] == PaperPage.questions[i]['correctAnswer']){
-                                          marks+=5;
-                                        }
-                                      }
-                                      
-                                      showDialog<void>(
-                                        context: context,
-                                        barrierDismissible: false, // user must tap button!
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: Text('Marks'),
-                                            content: SingleChildScrollView(
-                                              child: ListBody(
-                                                children: <Widget>[
-                                                  Text('you marks is $marks'),
-                                                ],
-                                              ),
-                                            ),
-                                            actions: <Widget>[
-                                              FlatButton(
-                                                child: Text('Ok'),
-                                                onPressed: () {
-                                                   Navigator.of(context).push(CupertinoPageRoute(
-                                                        fullscreenDialog: true,
-                                                        builder: (BuildContext context) {
-                                                          MyApp.page = 'myapp';
-                                                          PaperPage.qNumber = 0;
-                                                          return MyApp();
-                                                        },
-                                                    ),
-                                                  );
-                                      
-                                                },
-                                              ),
-                                            ],
-                                          );
-                                        }
-                                      );
-                                      
-                                    } else {
-                                      return showDialog<void>(
-                                        context: context,
-                                        barrierDismissible: false, // user must tap button!
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: Text('Paper not Completed'),
-                                            content: SingleChildScrollView(
-                                              child: ListBody(
-                                                children: <Widget>[
-                                                  Text('you must complete every question'),
-                                                ],
-                                              ),
-                                            ),
-                                            actions: <Widget>[
-                                              FlatButton(
-                                                child: Text('Ok'),
-                                                onPressed: () {
-                                                   Navigator.of(context).pop();
-                                                },
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    }
-                                  },
-                                ),
-                              ],
-                            )
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-        ),
-      ));
-    } else if(PaperPage.qNumber == 0 ) {
-      return new WillPopScope(
-        onWillPop: () async => false,
-        child:MaterialApp(
-        home: Scaffold(
-          body: SafeArea(
-              child: Container(
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                          child: Center(
-                            heightFactor: 1.4,
-                            child: FlipClock.countdown(
-                              duration: Duration(minutes: 25),
-                              digitColor: Colors.white,
-                              backgroundColor: Colors.black,
-                              digitSize: 48.0,
-                              borderRadius: const BorderRadius.all(Radius.circular(3.0)),
-                              onDone: () => print('ih'),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                            flex: 8,
-                            child: PageView(
-                              children: items,
-                              controller: _controller,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(0, 3 , 0, 5),
-                            child: ScrollingPageIndicator(
-                              dotColor: Colors.grey,
-                              dotSelectedColor: Colors.deepPurple,
-                              dotSize: 6,
-                              dotSelectedSize: 8,
-                              dotSpacing: 12,
-                              controller: _controller,
-                              itemCount: items.length,
-                              orientation: Axis.horizontal
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                SizedBox(width: 90,),
-                                RaisedButton(
-                                  child: Text(
-                                    'All'
-                                  ),
-                                  onPressed: () { 
-                                    Navigator.of(context).push(CupertinoPageRoute(
-                                    fullscreenDialog: true,
-                                    builder: (BuildContext context) {
-                                      PaperPage.qNumber = _controller.page;
-                                      print(PaperPage.qNumber);
-                                      MyApp.page = 'QustionSelect';
-                                      return QustionSelect();
-                                    },
-                                  ));
-                                  },
-                                ),
-                                RaisedButton(
-                                  child: Text(
-                                    'Next'
-                                  ),
-                                  onPressed: () {
-                                    PaperPage.qNumber = _controller.page + 1;
-                                    setState(() {
-                                      _controller.nextPage(duration: Duration(microseconds: 1), curve: Curves.ease);
-                                    });
-                                  },
-                                ),
-                              ],
-                            )
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-        ),
-      ));
-    } else {
-      return new WillPopScope(
-        onWillPop: () async => false,
-        child:MaterialApp(
-        home: Scaffold(
-          body: SafeArea(
-              child: Container(
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                          child: Center(
-                            heightFactor: 1.4,
-                            child: FlipClock.countdown(
-                              duration: Duration(minutes: 25),
-                              digitColor: Colors.white,
-                              backgroundColor: Colors.black,
-                              digitSize: 48.0,
-                              borderRadius: const BorderRadius.all(Radius.circular(3.0)),
-                              onDone: () => print('ih'),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                            flex: 8,
-                            child: PageView(
-                              children: items,
-                              controller: _controller,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(0, 3 , 0, 5),
-                            child: ScrollingPageIndicator(
-                              dotColor: Colors.grey,
-                              dotSelectedColor: Colors.deepPurple,
-                              dotSize: 6,
-                              dotSelectedSize: 8,
-                              dotSpacing: 12,
-                              controller: _controller,
-                              itemCount: items.length,
-                              orientation: Axis.horizontal
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                RaisedButton(
-                                  child: Text(
-                                    'Back'
-                                  ),
-                                  onPressed: () { 
-                                    PaperPage.qNumber = _controller.page - 1;
-                                    setState(() {
-                                      _controller.previousPage(duration: Duration(microseconds: 150), curve: Curves.ease);
-                                    });
-                                  },
-                                ),
-                                RaisedButton(
-                                  child: Text(
-                                    'All'
-                                  ),
-                                  onPressed: () { 
-                                    Navigator.of(context).push(CupertinoPageRoute(
-                                    fullscreenDialog: true,
-                                    builder: (BuildContext context) {
-                                      PaperPage.qNumber = _controller.page;
-                                      print(PaperPage.qNumber);
-                                      MyApp.page = 'QustionSelect';
-                                      return QustionSelect();
-                                    },
-                                  ));
-                                  },
-                                ),
-                                RaisedButton(
-                                  child: Text(
-                                    'Next'
-                                  ),
-                                  onPressed: () { 
-                                    PaperPage.qNumber = _controller.page + 1;
-                                    setState(() {
-                                      _controller.nextPage(duration: Duration(microseconds: 1), curve: Curves.ease);
-                                    });
-                                  },
-                                ),
-                              ],
-                            )
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-        ),
-      ));
-    }
 
 
     
