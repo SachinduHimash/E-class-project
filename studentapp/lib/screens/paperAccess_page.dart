@@ -32,7 +32,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                   DefaultAppBarDemo.pr.show();
                   await Firestore.instance.collection('paperAccess').document('9.1').collection('day').document(PaperAccessPage.today)
                   .get().then((x) async=> {
-                      if(x.data["access"]){
+                    if(x.data["access"]){
                       await Firestore.instance.collection('paperAccess').document('9.1').collection('day').document(PaperAccessPage.today).collection('students').document('202020001')
                       .get().then((y) async => {
                         if(y.data["access"]){
@@ -149,7 +149,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                               content: SingleChildScrollView(
                               child: ListBody(
                                 children: <Widget>[
-                                  Text('wait for sir ccommand'),
+                                  Text('wait for start'),
                                   ],
                                 ),
                               ),
@@ -166,6 +166,33 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                         )
                                     
                     }
+                    }).catchError((e) async =>{
+                      await DefaultAppBarDemo.pr.hide(),
+                        showDialog<void>(
+                          context: context,
+                          barrierDismissible: false, // user must tap button!
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Paper not distributed'),
+                              content: SingleChildScrollView(
+                              child: ListBody(
+                                children: <Widget>[
+                                  Text('wait for strat'),
+                                  ],
+                                ),
+                              ),
+                              actions: <Widget>[
+                                FlatButton(
+                                  child: Text('Ok'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        )
+                    
                     });
                      
                 

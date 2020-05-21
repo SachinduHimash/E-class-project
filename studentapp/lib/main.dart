@@ -17,7 +17,7 @@ class _State extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: "/",
+     initialRoute: "/",
       routes: {
         "/": (BuildContext context) => DefaultAppBarDemo(),
         "/custom": (BuildContext context) => CustomAppBarDemo(),
