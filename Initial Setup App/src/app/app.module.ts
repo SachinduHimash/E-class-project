@@ -56,6 +56,9 @@ import { DatePipe } from '@angular/common';
 import { DialogboxComponent } from './dialogbox/dialogbox.component';
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 import { AngularFireFunctionsModule, REGION } from '@angular/fire/functions';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { RankComponent } from './rank/rank.component';
 
 
 @NgModule({
@@ -64,7 +67,10 @@ import { AngularFireFunctionsModule, REGION } from '@angular/fire/functions';
     SetupformComponent,
     PaperComponent,
     DialogboxComponent,
-    MarkingsheetComponent
+    MarkingsheetComponent,
+    HomeComponent,
+    LoginComponent,
+    RankComponent
   ],
   imports: [
     MatPasswordStrengthModule.forRoot(),
