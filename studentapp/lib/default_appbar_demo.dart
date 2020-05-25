@@ -144,7 +144,7 @@ class _State extends State<DefaultAppBarDemo>
               backgroundColor: _barColor,
               gradient: _gradient,
               controller: _tabController,
-              onTap: (int i) => {debugPrint('select index=$i'), if(i == 3 && !DefaultAppBarDemo.load) {DefaultAppBarDemo.pr.show(),DefaultAppBarDemo.load = true}},
+              onTap: (int i) => {debugPrint('select index=$i'), if((i == 3 && !DefaultAppBarDemo.load) || i==2) {DefaultAppBarDemo.pr.show(),DefaultAppBarDemo.load = true}},
             )
           : ConvexAppBar.badge(
               {3: _badge.text, 4: Icons.assistant_photo, 2: Colors.redAccent},
