@@ -9,6 +9,7 @@ import {PapersComponent} from './papers/papers.component';
 import {AdminsComponent} from './admins/admins.component';
 import {UserprofileComponent} from './userprofile/userprofile.component';
 import {UploaderComponent} from './uploader/uploader.component';
+import {PaperAccessComponent} from './paper-access/paper-access.component';
 import {LeaderboardComponent} from './leaderboard/leaderboard.component';
 const adminOnly = () => hasCustomClaim('admin');
 export const DashboardRoutes: Routes = [
@@ -23,6 +24,14 @@ export const DashboardRoutes: Routes = [
   {
     path: 'dashboard',
     component: ClassesComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: {
+      authGuardPipe: adminOnly,
+    },
+  },
+  {
+    path: 'access',
+    component: PaperAccessComponent,
     canActivate: [AngularFireAuthGuard],
     data: {
       authGuardPipe: adminOnly,

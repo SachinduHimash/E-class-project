@@ -21,22 +21,28 @@ const MENUITEMS = [
   //   icon: 'assessment'
   // },
   {
-    state: 'students',
-    name: 'Students',
-    type: 'link',
-    icon: 'face'
-  },
-  {
     state: 'classes',
     name: 'Classes',
     type: 'link',
     icon: 'class'
   },
   {
+    state: 'students',
+    name: 'Students',
+    type: 'link',
+    icon: 'face'
+  },
+  {
     state: 'papers',
     name: 'Papers',
     type: 'link',
     icon: 'description'
+  },
+  {
+    state: 'access',
+    name: 'Papers Access',
+    type: 'link',
+    icon: 'timer'
   },
   {
     state: 'admins',

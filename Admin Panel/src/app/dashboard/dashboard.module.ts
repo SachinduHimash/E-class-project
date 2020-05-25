@@ -23,13 +23,15 @@ import { ViewClassComponent } from './classes/view-class/view-class.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { StudentListComponent } from './students/student-list/student-list.component';
 import { StudentReportComponent } from './students/student-report/student-report.component';
-
-import { ChartsModule } from 'ng2-charts';
 import { AddStudentComponent } from './students/add-student/add-student.component';
+import { ReportComponent } from './classes/report/report.component';
+import { PaperAccessComponent } from './paper-access/paper-access.component';
 
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 import { NgAisModule} from 'angular-instantsearch';
-import { ReportComponent } from './classes/report/report.component';
+import { ChartsModule } from 'ng2-charts';
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule , NgxMatNativeDateModule} from '@angular-material-components/datetime-picker';
+
 
 @NgModule({
   imports: [
@@ -39,6 +41,9 @@ import { ReportComponent } from './classes/report/report.component';
     ChartistModule,
     MatPasswordStrengthModule,
     FormsModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    NgxMatNativeDateModule,
     ReactiveFormsModule,
     NgAisModule,
     RouterModule.forChild(DashboardRoutes),
@@ -63,6 +68,7 @@ import { ReportComponent } from './classes/report/report.component';
     StudentReportComponent,
     AddStudentComponent,
     ReportComponent,
+    PaperAccessComponent,
   ]
 })
 export class DashboardModule {

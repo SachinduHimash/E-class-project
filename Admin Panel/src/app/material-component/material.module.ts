@@ -19,6 +19,7 @@ import { ChipsComponent } from './chips/chips.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { ProgressSnipperComponent } from './progress-snipper/progress-snipper.component';
 import { ProgressComponent } from './progress/progress.component';
+
 import {
   DialogComponent,
   DialogOverviewExampleDialogComponent

@@ -74,8 +74,8 @@
                   <div *ngIf="userProfile.controls['userName'].errors.required">Password is required</div>
                 </mat-hint>
               </mat-form-field>
-              <button class="button" mat-raised-button type="submit"  color="warn"  (click)="openDialog()">Upload profile picture</button>
-              <button [disabled]="userProfile.invalid" class="button" mat-raised-button type="submit">Update Username</button>
+              <button [disabled]="userProfile.invalid"  style="width: 100%" class="button" color="primary" mat-raised-button type="submit">Update Username</button>
+              <button class="button" mat-raised-button type="submit" style="width: 100%; margin-top: 1%"  color="warn"  (click)="openDialog()">Upload profile picture</button>
             </form>
           </mat-card-content>
         </mat-tab>
@@ -128,7 +128,7 @@
               </mat-form-field>
 
               <!--              <button class="button" mat-raised-button type="submit">Update Password</button>-->
-              <button [disabled]="updatePassword.invalid || passwordError" class="button" mat-raised-button type="submit">Update Password</button>
+              <button style="width: 100%" color="primary"  [disabled]="updatePassword.invalid || passwordError" class="button" mat-raised-button type="submit">Update Password</button>
             </form>
           </mat-card-content>
         </mat-tab>
@@ -159,7 +159,7 @@
                 </mat-hint>
               </mat-form-field>
 
-              <button [disabled]="updateEmail.invalid" class="button" mat-raised-button type="submit">Update Email</button>
+              <button style="width: 100%" color="primary" [disabled]="updateEmail.invalid" class="button" mat-raised-button type="submit">Update Email</button>
             </form>
           </mat-card-content>
         </mat-tab>

@@ -13,6 +13,7 @@
   "private": true,
   "dependencies": {
     "@angular-devkit/core": "9.0.2",
+    "@angular-material-components/datetime-picker": "^2.0.4",
     "@angular-material-extensions/password-strength": "^6.0.0",
     "@angular/animations": "^9.0.1",
     "@angular/cdk": "8.2.3",
@@ -40,6 +41,7 @@
     "instantsearch.js": "^4.4.1",
     "lodash": "^4.17.15",
     "lodash-es": "^4.17.15",
+    "moment": "^2.26.0",
     "ng-chartist": "4.1.0",
     "ng2-charts": "^2.3.0",
     "node-sass": "^4.13.1",

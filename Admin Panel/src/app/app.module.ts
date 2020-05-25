@@ -15,7 +15,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {DemoMaterialModule} from './demo-material-module';
 import {MatPasswordStrengthModule} from '@angular-material-extensions/password-strength';
-
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 
 import {SharedModule} from './shared/shared.module';
 import {SpinnerComponent} from './shared/spinner.component';
@@ -50,6 +50,9 @@ import {ChartsModule} from 'ng2-charts';
     FlexLayoutModule,
     HttpClientModule,
     SharedModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    NgxMatNativeDateModule,
     // firebase_initialization
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,

@@ -1,0 +1,227 @@
+<!--<button (click)="testArray()">Button</button>-->
+
+<div fxLayout="row wrap">
+  <!--  change_'fxFlex.gt-md=50'-->
+  <div fxFlex="100" fxFlex.gt-lg="25" fxFlex.gt-md="40" fxFlex.gt-xs="100">
+      <mat-card>
+        <div class="p-20 bg-info position-relative">
+          <h4 class="card-title text-white m-0">
+            <ng-container>
+              Enable paper access
+            </ng-container>
+          </h4>
+        </div>
+          <mat-card-content>
+            <mat-vertical-stepper [linear]="linear"   #stepper>
+              <mat-step [stepControl]="firstFormGroup" [editable]="editable">
+                <form [formGroup]="firstFormGroup">
+                  <ng-template matStepLabel>Select Grade</ng-template>
+                  <mat-form-field>
+                    <mat-label>Grade</mat-label>
+                    <input matInput type="number" [min]="0" [max]="13"  placeholder="Grade" formControlName="grade" required>
+                  </mat-form-field>
+                  <div>
+                    <mat-progress-bar *ngIf="progress" mode="indeterminate"></mat-progress-bar>
+                    <button *ngIf="!progress"
+                            mat-button
+                            color="primary"
+                            (click)="getClassByGrade(stepper)"
+                            type="submit">Next</button>
+                  </div>
+                </form>
+              </mat-step>
+              <mat-step [stepControl]="secondFormGroup" [editable]="editable">
+                <form [formGroup]="secondFormGroup">
+                  <ng-template matStepLabel>Select class</ng-template>
+                  <mat-form-field>
+                    <mat-label>class</mat-label>
+                    <mat-select formControlName="class" >
+                      <mat-option *ngFor="let class of classes" [value]="class.id">
+                        {{class?.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div>
+                    <mat-progress-bar *ngIf="progress2" mode="indeterminate"></mat-progress-bar>
+                    <button *ngIf="!progress2"
+                            mat-button
+                            (click)="getPaperByGrade(stepper)"
+                            type="submit">Next</button>
+                  </div>
+                </form>
+              </mat-step>
+              <mat-step [stepControl]="fourthFormGroup" [editable]="editable">
+                <form [formGroup]="fourthFormGroup">
+                  <ng-template matStepLabel>Select Paper</ng-template>
+                  <mat-form-field>
+                    <mat-label>Paper</mat-label>
+                    <mat-select formControlName="paperNumber" >
+                      <mat-option *ngFor="let paper of papers" [value]="paper?.paperNumber">
+                        {{paper?.id}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div>
+                    <button mat-button
+                            (click)="stepper.next()"
+                            type="submit">Next</button>
+                  </div>
+                </form>
+              </mat-step>
+              <mat-step [stepControl]="thirdFormGroup" [editable]="editable">
+                <form [formGroup]="thirdFormGroup">
+                  <ng-template matStepLabel>Select Time</ng-template>
+                  <mat-form-field>
+                    <mat-form-field>
+                      <input matInput [ngxMatDatetimePicker]="picker" formControlName="time">
+<!--                             [formControl]="dateControl" [min]="minDate" [max]="maxDate" [disabled]="disabled"-->
+<!--                      >-->
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <ngx-mat-datetime-picker #picker>
+<!--                                               [showSpinners]="showSpinners" -->
+<!--                                               [showSeconds]="showSeconds"-->
+<!--                                               [stepHour]="stepHour" -->
+<!--                                               [stepMinute]="stepMinute" -->
+<!--                                               [stepSecond]="stepSecond"-->
+<!--                                               [touchUi]="touchUi" -->
+<!--                                               [color]="color" -->
+<!--                                               [enableMeridian]="enableMeridian"-->
+<!--                                               [disableMinute]="disableMinute" -->
+<!--                                               [hideTime]="hideTime"-->
+<!--                      >-->
+                      </ngx-mat-datetime-picker>
+                    </mat-form-field>
+                  </mat-form-field>
+                  <div>
+                    <button mat-button
+                            (click)="submit(stepper)"
+                            type="submit">Next</button>
+                  </div>
+                </form>
+              </mat-step>
+              <mat-step>
+                <ng-template matStepLabel>Done</ng-template>
+                <div>
+                  <button mat-button (click)="stepper.reset()">Reset</button>
+                </div>
+              </mat-step>
+            </mat-vertical-stepper>
+          </mat-card-content>
+      </mat-card>
+  </div>
+  <!--  change_'fxFlex.gt-md=50'-->
+  <div fxFlex="100" fxFlex.gt-lg="75" fxFlex.gt-md="60" fxFlex.gt-xs="100">
+<!--    <mat-card>-->
+<!--      <div class="p-20 bg-info position-relative">-->
+<!--        <h4 class="card-title text-white m-0">Update</h4>-->
+<!--      </div>-->
+
+<!--      <mat-tab-group>-->
+<!--        &lt;!&ndash; Tab 1 &ndash;&gt;-->
+<!--        <mat-tab label="Profile">-->
+<!--          <mat-card-content class="main-container">-->
+<!--            <form (ngSubmit)="submit()" [formGroup]="userProfile">-->
+
+<!--              <mat-form-field appearance="outline">-->
+<!--                <mat-label>Username</mat-label>-->
+<!--                <input formControlName="userName" matInput type="text">-->
+<!--                <mat-hint-->
+<!--                  *ngIf="userProfile.controls['userName'].invalid && (userProfile.controls['userName'].dirty || userProfile.controls['userName'].touched)"-->
+<!--                  class="alert alert-danger">-->
+<!--                  <div *ngIf="userProfile.controls['userName'].errors.required">Password is required</div>-->
+<!--                </mat-hint>-->
+<!--              </mat-form-field>-->
+<!--              <button [disabled]="userProfile.invalid"  style="width: 100%" class="button" color="primary" mat-raised-button type="submit">Update Username</button>-->
+<!--              <button class="button" mat-raised-button type="submit" style="width: 100%; margin-top: 1%"  color="warn"  (click)="openDialog()">Upload profile picture</button>-->
+<!--            </form>-->
+<!--          </mat-card-content>-->
+<!--        </mat-tab>-->
+<!--        &lt;!&ndash; End Tab 1 &ndash;&gt;-->
+<!--        &lt;!&ndash; Tab 2 &ndash;&gt;-->
+<!--        <mat-tab label="Password">-->
+<!--          <mat-card-content>-->
+<!--            <form (ngSubmit)="submitUpdatePassword()" [formGroup]="updatePassword">-->
+
+<!--              <mat-form-field appearance="outline">-->
+<!--                <mat-label>Old password</mat-label>-->
+<!--                <input formControlName="oldPassword" matInput [type]="passwordType">-->
+<!--                <mat-icon (click)="showPassword()" *ngIf="passwordType === 'text'" matSuffix>visibility_off</mat-icon>-->
+<!--                <mat-icon (click)="showPassword()" *ngIf="passwordType === 'password'" matSuffix>visibility</mat-icon>-->
+<!--                <mat-hint-->
+<!--                  *ngIf="updatePassword.controls['oldPassword'].invalid && (updatePassword.controls['oldPassword'].dirty || updatePassword.controls['oldPassword'].touched)"-->
+<!--                  class="alert alert-danger">-->
+<!--                  <div *ngIf="updatePassword.controls['oldPassword'].errors.required">Old Password is required</div>-->
+<!--                </mat-hint>-->
+<!--              </mat-form-field>-->
+
+<!--              <mat-form-field appearance="outline">-->
+<!--                <mat-label>New Password</mat-label>-->
+<!--                <input formControlName="password" matInput [type]="passwordType">-->
+<!--                <mat-icon (click)="showPassword()" *ngIf="passwordType === 'text'" matSuffix>visibility_off</mat-icon>-->
+<!--                <mat-icon (click)="showPassword()" *ngIf="passwordType === 'password'" matSuffix>visibility</mat-icon>-->
+<!--                <mat-hint-->
+<!--                  *ngIf="updatePassword.controls['password'].invalid && (updatePassword.controls['password'].dirty || updatePassword.controls['password'].touched)"-->
+<!--                  class="alert alert-danger">-->
+<!--                  <div *ngIf="updatePassword.controls['password'].errors.required">Password is required</div>-->
+<!--                </mat-hint>-->
+<!--              </mat-form-field>-->
+
+<!--              <mat-form-field appearance="outline">-->
+<!--                <mat-label>Confirm Password</mat-label>-->
+<!--                <input (ngModelChange)="watchPassword()" formControlName="confirmPassword" matInput [type]="passwordType">-->
+<!--                <mat-icon (click)="showPassword()" *ngIf="passwordType === 'text'" matSuffix>visibility_off-->
+<!--                </mat-icon>-->
+<!--                <mat-icon (click)="showPassword()" *ngIf="passwordType === 'password'" matSuffix>visibility-->
+<!--                </mat-icon>-->
+<!--                <mat-hint-->
+<!--                  *ngIf="updatePassword.controls['confirmPassword'].invalid && (updatePassword.controls['confirmPassword'].dirty || updatePassword.controls['confirmPassword'].touched)"-->
+<!--                  class="alert alert-danger">-->
+<!--                  <div *ngIf="updatePassword.controls['confirmPassword'].errors.required">Password is required</div>-->
+<!--                  <div *ngIf="passwordError">Password do not match</div>-->
+<!--                </mat-hint>-->
+<!--                <mat-hint *ngIf="passwordError" class="alert alert-danger">-->
+<!--                  <div>Password do not match</div>-->
+<!--                </mat-hint>-->
+<!--              </mat-form-field>-->
+
+<!--              &lt;!&ndash;              <button class="button" mat-raised-button type="submit">Update Password</button>&ndash;&gt;-->
+<!--              <button style="width: 100%" color="primary"  [disabled]="updatePassword.invalid || passwordError" class="button" mat-raised-button type="submit">Update Password</button>-->
+<!--            </form>-->
+<!--          </mat-card-content>-->
+<!--        </mat-tab>-->
+<!--        <mat-tab label="Email">-->
+<!--          <mat-card-content class="main-container">-->
+<!--            <form (ngSubmit)="submitUpdateEmail()" [formGroup]="updateEmail">-->
+
+<!--              <mat-form-field appearance="outline">-->
+<!--                <mat-label>Email</mat-label>-->
+<!--                <input formControlName="email" matInput type="text">-->
+<!--                <mat-hint-->
+<!--                  *ngIf="updateEmail.controls['email'].invalid && (updateEmail.controls['email'].dirty || updateEmail.controls['email'].touched)"-->
+<!--                  class="alert alert-danger">-->
+<!--                  <div *ngIf="updateEmail.controls['email'].errors.email">Please enter a valid email.</div>-->
+<!--                  <div *ngIf="updateEmail.controls['email'].errors.required">Email is required</div>-->
+<!--                </mat-hint>-->
+<!--              </mat-form-field>-->
+
+<!--              <mat-form-field appearance="outline">-->
+<!--                <mat-label>Password</mat-label>-->
+<!--                <input formControlName="password" matInput [type]="passwordType">-->
+<!--                <mat-icon (click)="showPassword()" *ngIf="passwordType === 'text'" matSuffix>visibility_off</mat-icon>-->
+<!--                <mat-icon (click)="showPassword()" *ngIf="passwordType === 'password'" matSuffix>visibility</mat-icon>-->
+<!--                <mat-hint-->
+<!--                  *ngIf="updateEmail.controls['password'].invalid && (updatePassword.controls['password'].dirty || updateEmail.controls['password'].touched)"-->
+<!--                  class="alert alert-danger">-->
+<!--                  <div *ngIf="updateEmail.controls['password'].errors.required">Password is required</div>-->
+<!--                </mat-hint>-->
+<!--              </mat-form-field>-->
+
+<!--              <button style="width: 100%" color="primary" [disabled]="updateEmail.invalid" class="button" mat-raised-button type="submit">Update Email</button>-->
+<!--            </form>-->
+<!--          </mat-card-content>-->
+<!--        </mat-tab>-->
+<!--      </mat-tab-group>-->
+<!--    </mat-card>-->
+
+  </div>
+</div>
