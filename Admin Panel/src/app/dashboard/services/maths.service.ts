@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,5 +15,10 @@ export class MathsService {
     }
     return paperNumber;
   }
+
+  getFullPaperNumber(paperNumber: any): Number {
+    return Number((new Date().getFullYear()).toString().concat(this.formatPaperNumber(paperNumber)));
+  }
+
 
 }

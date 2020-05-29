@@ -16,3 +16,8 @@ mat-hint{
   padding: 9px 15px;
   border-radius: 2px;
 }
+
+.mat-dialog-container {
+  padding: 0 !important;
+}
+

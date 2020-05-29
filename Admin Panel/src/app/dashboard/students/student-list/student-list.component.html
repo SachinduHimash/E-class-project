@@ -27,8 +27,17 @@
         </ng-container>
 
         <ng-container matColumnDef="className">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Class Name</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Class Names</mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.className}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="update">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Class Names</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button mat-icon-button color="warn" (click)="Delete(row)">
+              <mat-icon class="mat-18">system_update</mat-icon>
+            </button>
+          </mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

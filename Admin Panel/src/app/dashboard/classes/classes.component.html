@@ -17,6 +17,12 @@
                 <div class="mail-contnet" (click)="showClassData(doc, class)">
                   <h5>{{doc.name}}</h5>
                 </div>
+<!--                <div style="margin: 10px">-->
+<!--                  <button mat-stroked-button-->
+<!--                          color="primary"-->
+<!--                          style="width: 100%"-->
+<!--                          (click)="updateClass()">Update class details</button>-->
+<!--                </div>-->
               </a>
               <!-- Message -->
             </ul>
@@ -58,7 +64,11 @@
   </div>
   <!--  change_'fxFlex.gt-md=50'-->
   <div fxFlex="100" fxFlex.gt-lg="75" fxFlex.gt-md="60" fxFlex.gt-xs="100">
-    <button class="button-add-class" mat-raised-button  color="primary" (click)="showAddClass()">{{buttonText}}</button>
+    <button class="button-add-class"
+            mat-raised-button
+            style="width: 100%"
+            color="primary"
+            (click)="showAddClass()">{{buttonText}}</button>
     <ng-template [ngIf]="addClassShow">
       <mat-card>
         <div class="p-20 bg-info position-relative">
@@ -109,15 +119,23 @@
               </mat-error>
             </mat-form-field>
 
-            <button [disabled]="createClass.invalid" class="button" mat-raised-button type="submit">Create class</button>
+            <button [disabled]="createClass.invalid"
+                    class="button"
+                    mat-raised-button
+                    style="width: 100%"
+                    type="submit">Create class</button>
           </form>
         </mat-card-content>
       </mat-card>
     </ng-template>
 
 
-    <ng-template [ngIf]="!addClassShow && showClassDetail">
-      <app-view-class [classNumber]="classNumber"></app-view-class>
+    <ng-template [ngIf]="showClassDetail">
+      <app-view-class [classNumber]="classNumber" (updateClassDetails)="receiveUpdateClassDetails($event)"></app-view-class>
+    </ng-template>
+
+    <ng-template [ngIf]="showUpdateClassDetails">
+      <app-update-class [classDetails]="classDetailsForUpdates" ></app-update-class>
     </ng-template>
 
   </div>

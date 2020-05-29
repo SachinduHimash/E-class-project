@@ -14,12 +14,6 @@ const MENUITEMS = [
   //   type: 'link',
   //   icon: 'home'
   // },
-  // {
-  //   state: 'leaderboard',
-  //   name: 'Leaderboard',
-  //   type: 'link',
-  //   icon: 'assessment'
-  // },
   {
     state: 'classes',
     name: 'Classes',
@@ -31,6 +25,12 @@ const MENUITEMS = [
     name: 'Students',
     type: 'link',
     icon: 'face'
+  },
+  {
+    state: 'leaderboard',
+    name: 'Leaderboard',
+    type: 'link',
+    icon: 'assessment'
   },
   {
     state: 'papers',

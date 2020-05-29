@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnDestroy , OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 
 import {Class} from '../../interfaces/databaseInterfaces';
@@ -10,13 +10,13 @@ import {Subscription} from 'rxjs';
   templateUrl: './student-list.component.html',
   styleUrls: ['./student-list.component.css']
 })
-export class StudentListComponent implements OnInit, AfterViewInit , OnDestroy{
+export class StudentListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // list_of_student
   @Input() student = [];
 
   // table
-  displayedColumns = ['uid', 'fullName', 'className'];
+  displayedColumns = ['uid', 'fullName', 'className', 'update', 'view'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -78,6 +78,10 @@ export class StudentListComponent implements OnInit, AfterViewInit , OnDestroy{
 
   getRecord(row: any) {
     console.table(row)
+  }
+
+  Delete(id: any) {
+
   }
 }
 

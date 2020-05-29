@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
 import {AngularFirestore} from '@angular/fire/firestore';
 
 // typeDefinition
@@ -17,7 +17,7 @@ import {NotificationService} from "../../services/notification.service";
 
 export class ViewComponent implements OnInit {
 
-
+  @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
   // create_form
   updateFormGroup: FormGroup;
 
@@ -71,5 +71,10 @@ export class ViewComponent implements OnInit {
           this.notification.NotificationMessage('paper not found');
         }
       });
+  }
+
+  closeWindow() {
+    this.showViewForm = false;
+    setTimeout(() => this.formGroupDirective.resetForm(), 0);
   }
 }

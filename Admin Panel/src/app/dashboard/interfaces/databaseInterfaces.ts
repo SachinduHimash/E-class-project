@@ -1,5 +1,8 @@
 // Common_interfaces
 
+import * as firebase from "firebase";
+import {Ranking} from "./ranking";
+
 export interface TimeStamp {
   seconds: Number;
   nanoseconds: Number;
@@ -58,4 +61,13 @@ export interface ClassStudentMarks {
   id: string;
   mark: number;
   name: string;
+}
+
+
+// ranking
+export interface ClassStudentMarks {
+  grade: number;
+  paper: number;
+  createdAt: TimeStamp;
+  rank: [Ranking];
 }

@@ -1,0 +1,38 @@
+.message-box .message-widget a {
+  background: #1e88e5;
+  border-bottom:none !important;
+  /*border-bottom: 1px solid rgba(73, 125, 177, 0.13);*/
+  /*display: -webkit-box;*/
+  /*display: flex;*/
+  /*text-decoration: none;*/
+  margin: 10px;
+  padding: 9px 15px;
+  border-radius: 2px;
+}
+
+.mail-contnet h5{
+  display: block;
+}
+
+ul {
+  display: block;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 0px !important;
+}
+
+.button-add-student {
+  display: block;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 16px;
+  padding: 5px;
+}
+
+.example-header{
+  margin: 2% 5% 0 5%;
+}

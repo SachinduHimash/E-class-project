@@ -1,0 +1,48 @@
+<mat-card>
+  <div class="p-20 bg-info position-relative">
+    <h4 class="card-title text-white m-0">Update class</h4>
+  </div>
+  <mat-card-content class="main-container">
+    <form (ngSubmit)="submit()" [formGroup]="updateClass">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Class Name</mat-label>
+        <input formControlName="name" matInput type="text">
+        <mat-hint
+          *ngIf="updateClass.controls['name'].invalid && (updateClass.controls['name'].dirty || updateClass.controls['name'].touched)"
+          class="alert alert-danger">
+          <div *ngIf="updateClass.controls['name'].errors.required">Name is required</div>
+        </mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Fees</mat-label>
+        <input formControlName="fees" matInput type="number" min="0">
+        <mat-hint
+          *ngIf="updateClass.controls['fees'].invalid && (updateClass.controls['fees'].dirty || updateClass.controls['fees'].touched)"
+          class="alert alert-danger">
+          <div *ngIf="updateClass.controls['fees'].errors.required">Grade is required</div>
+        </mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Class Type</mat-label>
+        <mat-select formControlName="type" >
+          <mat-option *ngFor="let type of classTypes" [value]="type.type">
+            {{type.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="updateClass.controls['type'].hasError('required')">
+          You must make a selection
+        </mat-error>
+      </mat-form-field>
+
+      <button [disabled]="updateClass.invalid"
+              class="button"
+              mat-raised-button
+              color="primary"
+              style="width: 100%"
+              type="submit">Update class</button>
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -2,12 +2,16 @@
 <form [formGroup]="formGroup">
   <mat-card>
     <div class="p-20 bg-info position-relative">
+
       <h4 class="card-title text-white m-0">
         <ng-container *ngIf="!showCreatePaper">
           Create Paper
         </ng-container>
         <ng-container *ngIf="showCreatePaper">
-          Create Grade {{formGroup.value.grade}}  -  Paper {{formGroup.value.paperNumber}}
+          <button mat-icon-button (click)="closeWindow()" aria-label="Example icon button with a open in new tab icon">
+            <mat-icon class="white-icon">arrow_back_ios</mat-icon>
+          </button>
+<!--          Create Grade {{formGroup.value.grade}}  -  Paper {{formGroup.value.paperNumber}}-->
         </ng-container>
       </h4>
     </div>
@@ -37,6 +41,7 @@
       </mat-card-content>
     </ng-template>
     <ng-template [ngIf]="showCreatePaper">
+
       <mat-vertical-stepper  formArrayName="form">
         <mat-step [formGroupName]="i" *ngFor="let customerGroup of formGroup.controls.form.controls; let i = index">
 

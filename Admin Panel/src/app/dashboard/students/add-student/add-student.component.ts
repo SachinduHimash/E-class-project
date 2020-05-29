@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {AuthenticationService} from '../../services/authentication.service';
@@ -15,6 +15,7 @@ import {Class} from '../../interfaces/databaseInterfaces';
 })
 export class AddStudentComponent implements OnInit {
 
+  @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
   // forms
   createClass: FormGroup;
   createStudent: FormGroup;
@@ -80,6 +81,8 @@ export class AddStudentComponent implements OnInit {
               password: formValue.password,
               fullName: formValue.fullName,
               class: formValue.class,
+              school: formValue.school,
+              address: formValue.address,
               createdAt: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => {
             this._af.doc(`class/${formValue.class.value}/students/${formValue.userId}`)
@@ -92,7 +95,10 @@ export class AddStudentComponent implements OnInit {
                 school: formValue.school,
                 class: formValue.class,
               })
-              .then(() => this._notification.NotificationMessage('successfully added user'))
+              .then(() => {
+                setTimeout(() => this.formGroupDirective.resetForm(), 0);
+                this._notification.NotificationMessage('successfully added user')
+              })
               .catch(() => this._notification.ErrorMessage('failed to add user to class'));
           }).catch(() => this._notification.ErrorMessage('Failed add new student'));
         }

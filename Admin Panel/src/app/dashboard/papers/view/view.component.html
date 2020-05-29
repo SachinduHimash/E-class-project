@@ -6,7 +6,10 @@
           View Paper
         </ng-container>
         <ng-container *ngIf="showViewForm">
-          View Grade {{updateFormGroup.value.grade}}  - Paper {{updateFormGroup.value.paperNumber}}
+          <button mat-icon-button (click)="closeWindow()" aria-label="Example icon button with a open in new tab icon">
+            <mat-icon class="white-icon">arrow_back_ios</mat-icon>
+          </button>
+<!--          View Grade {{updateFormGroup.value.grade}}  - Paper {{updateFormGroup.value.paperNumber}}-->
         </ng-container>
       </h4>
     </div>
