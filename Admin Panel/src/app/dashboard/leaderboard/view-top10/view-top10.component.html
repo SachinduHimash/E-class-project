@@ -1,0 +1,67 @@
+<div class="example-container">
+  <div class="p-20 bg-info position-relative">
+    <button mat-icon-button (click)="closeWindow()" aria-label="Example icon button with a open in new tab icon">
+      <mat-icon class="white-icon">arrow_back_ios</mat-icon>
+    </button>
+    <h4 class="card-title text-white m-0" style="text-align: center;">
+      Leaderboard
+    </h4>
+  </div>
+<!--  <div class="example-header">-->
+<!--    <div  class="search">-->
+<!--      <mat-form-field>-->
+<!--          <label>-->
+<!--            <input   (keyup)="applyFilter($event.target?.value)" matInput placeholder="Search">-->
+<!--          </label>-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
+<!--  </div>-->
+
+  <mat-table [dataSource]="dataSource" matSort>
+
+
+    <ng-container matColumnDef="pic">
+      <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <ng-container *ngIf="row.photo">
+          <img class="img-view" [src]="row.photo" alt="Avatar">
+        </ng-container>
+        <ng-container *ngIf="!row.photo">
+          <img class="img-view" src="../../../../assets/images/users/profile.png" alt="Avatar">
+        </ng-container>
+
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="rank">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Rank</mat-header-cell>
+      <mat-cell *matCellDef="let row" style="margin-left: 1%">
+          {{row.rank.toString()}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="mark" >
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Mark</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.mark}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="fullName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Full Name</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.fullName}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="school">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> School</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.school}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="class">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Class</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.class}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row (click)="getRecords(row)"  *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+</div>

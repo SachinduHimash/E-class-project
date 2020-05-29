@@ -1,0 +1,8 @@
+.mat-expansion-panel-header {
+  background-color: #1e88e5;
+  height: 60px !important;
+}
+
+.mat-expansion-panel-header-title {
+  color: #fafafa;
+}

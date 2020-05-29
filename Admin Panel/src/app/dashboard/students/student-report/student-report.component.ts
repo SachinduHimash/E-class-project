@@ -17,7 +17,7 @@ export class StudentReportComponent implements OnInit, OnChanges {
 
 
   @Input() studentId;
-
+  progress = true;
   // if_student_marks_not_found
   marks404;
 
@@ -67,16 +67,16 @@ export class StudentReportComponent implements OnInit, OnChanges {
   studentDataSubscribe: Subscription;
   id: string;
   studentName: string;
-
   constructor(private _af: AngularFirestore,
               private _notificationService: NotificationService,) {
   }
 
   ngOnInit() {
-    console.table('init student report');
+    console.table('init student report 222');
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.table('change');
     console.log(this.studentId);
     if (this.studentId) {
       this.fetchStudentData(this.studentId.grade, this.studentId.uid);
@@ -101,6 +101,9 @@ export class StudentReportComponent implements OnInit, OnChanges {
         this.lastPaperMarks = value.map(r => r.mark).pop();
         this.NoOfPapers = this.lineChartLabels.length;
         this.averageMarks = Math.round(value.reduce((acc, item) => acc + item.mark, 0) / this.lineChartLabels.length);
+        if(this.lineChartLabels.length > 0){
+          this.progress = false;
+        }
       });
   }
 }

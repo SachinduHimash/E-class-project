@@ -21,41 +21,74 @@
         </div>
       </div>
     </div>
-    <div  class=""  style="width: 100%; padding: 5%">
-      <canvas baseChart
+
+
+    <div class="" style="width: 100%; padding: 5%">
+      <canvas [chartType]="lineChartType"
+              [colors]="lineChartColors"
               [datasets]="lineChartData"
               [labels]="lineChartLabels"
-              [options]="lineChartOptions"
-              [colors]="lineChartColors"
               [legend]="lineChartLegend"
-              [chartType]="lineChartType"
-              [plugins]="lineChartPlugins">
+              [options]="lineChartOptions"
+              [plugins]="lineChartPlugins"
+              baseChart>
       </canvas>
     </div>
-    <mat-card-content>
 
-      <!--        <mat-card-actions>-->
-      <!--          <button mat-raised-button color="warn">Follow</button>-->
-      <!--        </mat-card-actions>-->
-      <!--        <div fxLayout="row" fxLayoutWrap="wrap" class="m-t-30">-->
-      <!--          <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="33.33%" fxFlex="100">-->
-      <!--            <h3 class="m-0 font-light">1099</h3>-->
-      <!--            <small>Articles</small>-->
-      <!--          </div>-->
-      <!--          <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="33.33%" fxFlex="100">-->
-      <!--            <h3 class="m-0 font-light">23,469</h3>-->
-      <!--            <small>Followers</small>-->
-      <!--          </div>-->
-      <!--          <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="33.33%" fxFlex="100">-->
-      <!--            <h3 class="m-0 font-light">6035</h3>-->
-      <!--            <small>Likes</small>-->
-      <!--          </div>-->
-      <!--        </div>-->
-    </mat-card-content>
+    <mat-divider></mat-divider>
+    <div class="p-20 bg-info position-relative" style="">
+      <div class="m-t-2" fxLayout="row" fxLayoutWrap="wrap">
+        <div fxFlex="100" fxFlex.gt-sm="50%" fxFlex.gt-xs="33.33%">
+          <h5 class="card-title text-white m-0">School</h5>
+        </div>
+        <mat-divider [vertical]="true"></mat-divider>
+        <div fxFlex="100" fxFlex.gt-sm="50%" fxFlex.gt-xs="33.33%">
+          <h5 class="card-title text-white m-0">{{studentId?.school}}</h5>
+        </div>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="p-20 bg-info position-relative" style="">
+      <div class="m-t-2" fxLayout="row" fxLayoutWrap="wrap">
+        <div fxFlex="100" fxFlex.gt-sm="50%" fxFlex.gt-xs="33.33%">
+          <h5 class="card-title text-white m-0">Telephone</h5>
+        </div>
+        <mat-divider [vertical]="true"></mat-divider>
+        <div fxFlex="100" fxFlex.gt-sm="50%" fxFlex.gt-xs="33.33%">
+          <h5 class="card-title text-white m-0">{{studentId?.teleNo}}</h5>
+        </div>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="p-20 bg-info position-relative" style="">
+      <div class="m-t-2" fxLayout="row" fxLayoutWrap="wrap">
+        <div fxFlex="100" fxFlex.gt-sm="50%" fxFlex.gt-xs="33.33%">
+          <h5 class="card-title text-white m-0">Grade</h5>
+        </div>
+        <mat-divider [vertical]="true"></mat-divider>
+        <div fxFlex="100" fxFlex.gt-sm="50%" fxFlex.gt-xs="33.33%">
+          <h5 class="card-title text-white m-0">{{studentId?.grade.toString().split('.')[0]}}</h5>
+        </div>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+    <div class="p-20 bg-info position-relative" style="">
+      <div class="m-t-2" fxLayout="row" fxLayoutWrap="wrap">
+        <div fxFlex="100" fxFlex.gt-sm="50%" fxFlex.gt-xs="33.33%">
+          <h5 class="card-title text-white m-0">Address</h5>
+        </div>
+        <mat-divider [vertical]="true"></mat-divider>
+        <div fxFlex="100" fxFlex.gt-sm="50%" fxFlex.gt-xs="33.33%">
+          <h5 class="card-title text-white m-0">{{studentId?.address}}</h5>
+        </div>
+      </div>
+    </div>
+
   </mat-card>
 
 </ng-template>
-<ng-template [ngIf]="lineChartLabels.length <= 0">
+<ng-template [ngIf]="lineChartLabels.length <= 0 && progress">
   <mat-card class="oh text-center little-profile">
     <div class=" bg-info position-relative">
       <h4 class="card-title text-white m-0 p-10">{{studentName}} Marks data not found</h4>

@@ -1,5 +1,15 @@
-import {Component, OnInit, AfterViewInit, ViewChild, Input, SimpleChanges, OnChanges} from '@angular/core';
-import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
+import {AngularFirestore} from '@angular/fire/firestore';
 import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Observable} from 'rxjs';
 
@@ -16,7 +26,7 @@ import {User} from '../../interfaces/databaseInterfaces';
 export class ViewClassComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() classNumber: string;
-
+  @Output() updateClassDetails = new EventEmitter<string>();
   // classNumber = '11.1';
   // table_column
   displayedColumns = ['id', 'fullName'];
@@ -76,10 +86,14 @@ export class ViewClassComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   getRecords(row: any) {
+    // console.log(row);
     this.dialog.open(ReportComponent, {
       width: '600px',
       data: row
     });
   }
 
+  updateClass(classData) {
+    this.updateClassDetails.emit(classData);
+  }
 }

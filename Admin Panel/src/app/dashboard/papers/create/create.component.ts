@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {FormArray, FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
 import {AngularFirestore} from '@angular/fire/firestore';
 
 import * as firebase from 'firebase';
@@ -15,7 +15,7 @@ import {NotificationService} from "../../services/notification.service";
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit {
-
+  @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
   // create_form
   formGroup: FormGroup;
   form: FormArray;
@@ -157,4 +157,9 @@ export class CreateComponent implements OnInit {
     });
   }
 
+  closeWindow() {
+    this.showCreatePaper = false;
+    this.formGroup.reset();
+    setTimeout(() => this.formGroupDirective.resetForm(), 0)
+  }
 }

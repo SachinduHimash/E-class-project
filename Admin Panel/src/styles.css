@@ -1,3 +1,4 @@
+
 /* You can add global styles to this file, and also import other style files */
 ul {
   list-style-type: none;
@@ -39,4 +40,8 @@ progress::-webkit-progress-value {
 
 .red-snackbar{
   background: #F44336;
+}
+
+.white-icon {
+  color: white;
 }

@@ -1,5 +1,6 @@
 <div fxLayout="row wrap">
-  <div fxFlex="100" fxFlex.gt-lg="25" fxFlex.gt-md="40" fxFlex.gt-xs="100">
+<!--  <button (click)="fixStudent()">Fix student</button>-->
+  <div fxFlex="100" fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100">
     <ul>
       <mat-card>
         <div class="p-20 bg-info position-relative">
@@ -7,37 +8,69 @@
           <!--        <h6 class="card-subtitle text-white m-0 op-5">Checkout my contacts here</h6>-->
           <!--        <button mat-mini-fab color="accent" class="add-contact">+</button>-->
         </div>
-
         <div class="example-container">
+
+          <div class="example-header">
+            <mat-form-field >
+              <label>
+                <select matNativeControl [(ngModel)]="gradeSelected" (ngModelChange)="modelChanged($event)" required>
+                  <option value="6">Grade 6</option>
+                  <option value="7">Grade 7</option>
+                  <option value="8">Grade 8</option>
+                  <option value="9">Grade 9</option>
+                  <option value="10" selected>Grade 10</option>
+                  <option value="11" >Grade 11</option>
+                  <option value="12">Grade 12</option>
+                  <option value="13">Grade 13</option>
+                </select>
+              </label>
+            </mat-form-field>
+          </div>
 
           <div class="example-header">
             <mat-form-field>
               <input (keyup)="applyFilter($event.target?.value)" matInput placeholder="Search">
             </mat-form-field>
           </div>
+          <mat-progress-bar *ngIf="!showDataTables" mode="indeterminate"></mat-progress-bar>
+          <ng-container *ngIf="showDataTables">
+            <mat-table [dataSource]="dataSource" matSort>
 
-          <mat-table [dataSource]="dataSource" matSort>
+              <ng-container matColumnDef="uid">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> ID</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.uid}} </mat-cell>
+              </ng-container>
 
-            <ng-container matColumnDef="uid">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> ID</mat-header-cell>
-              <mat-cell *matCellDef="let row"> {{row.uid}} </mat-cell>
-            </ng-container>
+              <ng-container matColumnDef="fullName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Full Name</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.fullName}}</mat-cell>
+              </ng-container>
 
-            <ng-container matColumnDef="fullName">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> Full Name</mat-header-cell>
-              <mat-cell *matCellDef="let row"> {{row.fullName}}</mat-cell>
-            </ng-container>
+              <ng-container matColumnDef="className">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Class Name</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.className}}</mat-cell>
+              </ng-container>
 
-            <ng-container matColumnDef="className">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> Class Name</mat-header-cell>
-              <mat-cell *matCellDef="let row"> {{row.className}}</mat-cell>
-            </ng-container>
+              <ng-container matColumnDef="update">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Update</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <button mat-stroked-button color="primary" (click)="Update(row)">Update</button>
+                </mat-cell>
+              </ng-container>
 
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row (click)="getRecord(row)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
-          </mat-table>
+              <ng-container matColumnDef="view">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>View</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <button mat-stroked-button color="primary" (click)="getRecord(row)">View</button>
+                </mat-cell>
+              </ng-container>
 
-          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row  *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+          </ng-container>
         </div>
       </mat-card>
     </ul>
@@ -66,12 +99,18 @@
     <!--      </div>-->
     <!--    </mat-card>-->
   </div>
-  <div fxFlex="100" fxFlex.gt-lg="75" fxFlex.gt-md="60" fxFlex.gt-xs="100">
+  <div fxFlex="100" fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100">
 
-    <button (click)="showAddStudent()" class="button-add-student" color="primary"
+    <button (click)="showAddStudent()"
+            class="button-add-student"
+            style="width: 100%"
+            color="primary"
             mat-raised-button>{{buttonText}}</button>
     <ng-template [ngIf]="addStudentShow">
       <app-add-student></app-add-student>
+    </ng-template>
+    <ng-template [ngIf]="updateStudentShow">
+      <app-update-student  [student]='studentDetails'></app-update-student>
     </ng-template>
     <ng-template [ngIf]="studentIdReportCard">
       <app-student-report [studentId]='studentIdReportCard'></app-student-report>

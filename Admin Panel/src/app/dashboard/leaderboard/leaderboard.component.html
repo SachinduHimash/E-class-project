@@ -1,16 +1,17 @@
 <form [formGroup]="viewRank">
   <mat-card>
-    <div class="p-20 bg-info position-relative">
-      <h4 class="card-title text-white m-0">
-        <ng-container *ngIf="!showViewForm">
-          View Paper
-        </ng-container>
-        <ng-container *ngIf="showViewForm">
-          View Grade {{viewRank.value.grade}}  - Paper {{viewRank.value.paperNumber}}
-        </ng-container>
-      </h4>
-    </div>
-    <ng-template [ngIf]="!showViewForm">
+<!--    <div class="p-20 bg-info position-relative">-->
+<!--      <h4 class="card-title text-white m-0">-->
+<!--        <ng-container *ngIf="!showViewForm">-->
+<!--          View Paper-->
+<!--        </ng-container>-->
+<!--        <ng-container *ngIf="showViewForm">-->
+<!--           Grade {{viewRank.value.grade}}  - Paper {{viewRank.value.paperNumber}}-->
+<!--        </ng-container>-->
+<!--      </h4>-->
+<!--    </div>-->
+
+    <ng-template [ngIf]="!showViewForm && !showViewTop10">
       <mat-card-content>
         <mat-form-field appearance="outline">
           <mat-label>Grade</mat-label>
@@ -30,45 +31,25 @@
             <div *ngIf="viewRank.controls['paperNumber'].errors.required">paper number is required</div>
           </mat-hint>
         </mat-form-field>
-
-        <button (click)="getstudents()" [disabled]="viewRank.invalid" color="primary" mat-raised-button
-                style="margin:0 0 20px 30px" type="submit">View Paper
-        </button>
-
+        <mat-progress-bar *ngIf="progress" mode="indeterminate"></mat-progress-bar>
+        <ng-container *ngIf="!progress">
+          <button (click)="getRanking()" [disabled]="viewRank.invalid" color="primary" mat-raised-button
+                  style="width: 100%" type="submit">View All
+          </button>
+          <button (click)="viewTop10()" [disabled]="viewRank.invalid" color="primary" mat-raised-button
+                  style="margin-top:2% ; width: 100%" type="submit">View Top 10
+          </button>
+          <button (click)="generateRanking()" [disabled]="viewRank.invalid" color="primary" mat-raised-button
+                  style="margin-top:2% ; width: 100%" type="submit">Generate Ranking
+          </button>
+        </ng-container>
       </mat-card-content>
     </ng-template>
     <ng-template [ngIf]="showViewForm">
-        <div class="example-container">
-
-          <div class="example-header">
-            <mat-form-field>
-              <input (keyup)="applyFilter($event.target?.value)" matInput placeholder="Filter">
-            </mat-form-field>
-          </div>
-
-          <mat-table [dataSource]="dataSource" matSort>
-
-            <ng-container matColumnDef="rank">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> ID</mat-header-cell>
-              <mat-cell *matCellDef="let row"> {{row.rank}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="displayName">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> Full Name</mat-header-cell>
-              <mat-cell *matCellDef="let row"> {{row.displayName}}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="mark">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> Mark</mat-header-cell>
-              <mat-cell *matCellDef="let row"> {{row.mark}} </mat-cell>
-            </ng-container>
-
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-          </mat-table>
-
-          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-        </div>
+        <app-view-all-ranks [students]="students" (close)="closeWindow()"></app-view-all-ranks>
+    </ng-template>
+    <ng-template [ngIf]="showViewTop10">
+        <app-view-top10 [students]="students" (close)="closeWindow()"></app-view-top10>
     </ng-template>
   </mat-card>
 </form>

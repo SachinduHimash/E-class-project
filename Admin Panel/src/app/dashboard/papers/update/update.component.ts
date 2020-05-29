@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {FormArray, FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {MatDialog} from '@angular/material';
 import {UploaderComponent} from '../../uploader/uploader.component';
 import * as firebase from 'firebase';
-import {NotificationService} from "../../services/notification.service";
+import {NotificationService} from '../../services/notification.service';
 
 @Component({
   selector: 'app-update',
@@ -12,6 +12,8 @@ import {NotificationService} from "../../services/notification.service";
   styleUrls: ['./update.component.css']
 })
 export class UpdateComponent implements OnInit {
+
+  @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
 
   // create_form
   updateFormGroup: FormGroup;
@@ -56,7 +58,7 @@ export class UpdateComponent implements OnInit {
       paperNumber = '0'.concat(paperNumber.toString());
     }
     return paperNumber;
-  };
+  }
 
 
   // Update_paper_section
@@ -141,5 +143,10 @@ export class UpdateComponent implements OnInit {
         this.notification.NotificationMessage('Fail to update paper');
       });
 
+  }
+
+  closeWindow() {
+    this.showUpdateForm = false;
+    setTimeout(() => this.formGroupDirective.resetForm(), 0);
   }
 }

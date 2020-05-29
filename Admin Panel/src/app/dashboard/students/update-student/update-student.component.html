@@ -1,0 +1,185 @@
+<mat-card>
+  <div class="p-20 bg-info position-relative">
+    <h4 class="card-title text-white m-0">Add Student</h4>
+  </div>
+  <mat-tab-group>
+
+    <mat-tab label="Profile">
+      <mat-card-content class="main-container">
+        <form (ngSubmit)="submit()" [formGroup]="createStudent">
+          <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input formControlName="fullName" matInput type="text">
+            <mat-hint
+              *ngIf="createStudent.controls['fullName'].invalid && (createStudent.controls['fullName'].dirty || createStudent.controls['fullName'].touched)"
+              class="alert alert-danger">
+              <div *ngIf="createStudent.controls['fullName'].errors.required">Name is required</div>
+            </mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>telephone</mat-label>
+            <input formControlName="teleNo" matInput min="0" type="number">
+            <mat-hint
+              *ngIf="createStudent.controls['teleNo'].invalid && (createStudent.controls['teleNo'].dirty || createStudent.controls['teleNo'].touched)"
+              class="alert alert-danger">
+              <div *ngIf="createStudent.controls['teleNo'].errors.required">telephone number is required</div>
+            </mat-hint>
+          </mat-form-field>
+
+
+          <mat-form-field appearance="outline">
+            <mat-label>School</mat-label>
+            <input formControlName="school" matInput type="text">
+            <mat-hint
+              *ngIf="createStudent.controls['school'].invalid && (createStudent.controls['school'].dirty || createStudent.controls['school'].touched)"
+              class="alert alert-danger">
+              <div *ngIf="createStudent.controls['school'].errors.required">School is required</div>
+            </mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Address</mat-label>
+            <textarea formControlName="address" matInput placeholder="">Address</textarea>
+            <mat-hint
+              *ngIf="createStudent.controls['address'].invalid && (createStudent.controls['address'].dirty || createStudent.controls['address'].touched)"
+              class="alert alert-danger">
+              <div *ngIf="createStudent.controls['address'].errors.required">address is required</div>
+            </mat-hint>
+          </mat-form-field>
+
+
+          <!--      <mat-form-field appearance="outline">-->
+          <!--        <mat-label>Email</mat-label>-->
+          <!--        <input formControlName="email" matInput type="text">-->
+          <!--        <mat-hint-->
+          <!--          *ngIf="createStudent.controls['email'].invalid && (createStudent.controls['email'].dirty || createStudent.controls['email'].touched)"-->
+          <!--          class="alert alert-danger">-->
+          <!--          <div *ngIf="createStudent.controls['email'].errors.email">Please enter a valid email.</div>-->
+          <!--        </mat-hint>-->
+          <!--      </mat-form-field>-->
+
+          <!--          <mat-form-field appearance="outline">-->
+          <!--            <mat-label>Class</mat-label>-->
+          <!--            <mat-select formControlName="class" >-->
+          <!--              <mat-option *ngFor="let type of classTypes" [value]="type">-->
+          <!--                {{type.name}}-->
+          <!--              </mat-option>-->
+          <!--            </mat-select>-->
+          <!--            <mat-error *ngIf="createStudent.controls['class'].hasError('required')">-->
+          <!--              You must make a selection-->
+          <!--            </mat-error>-->
+          <!--          </mat-form-field>-->
+
+          <!--          <mat-form-field appearance="outline" >-->
+          <!--            <mat-label>Password</mat-label>-->
+          <!--            <mat-pass-toggle-visibility #toggle matSuffix></mat-pass-toggle-visibility>-->
+          <!--            <input formControlName="password" matInput #password [type]="toggle.type" required placeholder="Password">-->
+          <!--            <mat-hint align="end" aria-live="polite">-->
+          <!--              {{password.value.length}} / {{passwordComponent.max}}-->
+          <!--            </mat-hint>-->
+          <!--          </mat-form-field>-->
+          <!--          <mat-password-strength #passwordComponent [password]="password.value">-->
+          <!--          </mat-password-strength>-->
+          <!--          <mat-password-strength-info  [passwordComponent]="passwordComponent">-->
+          <!--          </mat-password-strength-info>-->
+          <!--          &lt;!&ndash;      <br>&ndash;&gt;-->
+
+          <!--          <mat-form-field appearance="outline" >-->
+          <!--            <mat-label>Confirm Password</mat-label>-->
+          <!--            <mat-pass-toggle-visibility #toggle1 matSuffix></mat-pass-toggle-visibility>-->
+          <!--            <input formControlName="confirmPassword" matInput #confirmPassword [type]="toggle1.type" required placeholder="Confirm Password" [errorStateMatcher]="matcher">-->
+          <!--            <mat-hint align="end" aria-live="polite">-->
+          <!--              {{confirmPassword.value.length}} / {{password.value.length}}-->
+          <!--            </mat-hint>-->
+
+          <!--            <mat-error *ngIf="createStudent.hasError('notSame')">-->
+          <!--              Passwords do not match-->
+          <!--            </mat-error>-->
+
+          <!--          </mat-form-field>-->
+
+
+          <button [disabled]="createStudent.invalid"
+                  class="button"
+                  color="primary"
+                  mat-raised-button style="width: 100%" type="submit">Update Student
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-tab>
+
+    <mat-tab label="Password">
+      <mat-card-content>
+        <form (ngSubmit)="submitUpdatePassword()" [formGroup]="updatePassword">
+
+          <mat-form-field appearance="outline" >
+            <mat-label>Password</mat-label>
+            <mat-pass-toggle-visibility #toggle matSuffix></mat-pass-toggle-visibility>
+            <input formControlName="password" matInput #password [type]="toggle.type" required placeholder="Password">
+            <mat-hint align="end" aria-live="polite">
+              {{password.value.length}} / {{passwordComponent.max}}
+            </mat-hint>
+          </mat-form-field>
+          <mat-password-strength #passwordComponent [password]="password.value">
+          </mat-password-strength>
+          <mat-password-strength-info  [passwordComponent]="passwordComponent">
+          </mat-password-strength-info>
+          <!--      <br>-->
+
+          <mat-form-field appearance="outline" >
+            <mat-label>Confirm Password</mat-label>
+            <mat-pass-toggle-visibility #toggle1 matSuffix></mat-pass-toggle-visibility>
+            <input formControlName="confirmPassword" matInput #confirmPassword [type]="toggle1.type" required placeholder="Confirm Password" [errorStateMatcher]="matcher">
+            <mat-hint align="end" aria-live="polite">
+              {{confirmPassword.value.length}} / {{password.value.length}}
+            </mat-hint>
+
+            <mat-error *ngIf="createStudent.hasError('notSame')">
+              Passwords do not match
+            </mat-error>
+
+          </mat-form-field>
+
+          <!--              <button class="button" mat-raised-button type="submit">Update Password</button>-->
+          <button [disabled]="updatePassword.invalid || passwordError"
+                  class="button"
+                  color="primary"
+                  mat-raised-button
+                  style="width: 100%" type="submit">Update Password
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-tab>
+
+    <mat-tab label="Class">
+      <mat-card-content>
+        <form (ngSubmit)="updateClassSubmit()" [formGroup]="updateClass">
+          <mat-form-field appearance="outline">
+            <mat-label>Class</mat-label>
+            <mat-select formControlName="class">
+              <mat-option *ngFor="let type of classTypes" [value]="type">
+                {{type.name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="updateClass.controls['class'].hasError('required')">
+              You must make a selection
+            </mat-error>
+          </mat-form-field>
+          <mat-progress-bar *ngIf="progress" mode="indeterminate"></mat-progress-bar>
+          <ng-template [ngIf]="!progress">
+            <button
+              [disabled]="updateClass.invalid"
+              class="button"
+              color="primary"
+              mat-raised-button
+              style="width: 100%" type="submit">Update class
+            </button>
+          </ng-template>
+        </form>
+      </mat-card-content>
+    </mat-tab>
+
+  </mat-tab-group>
+
+</mat-card>

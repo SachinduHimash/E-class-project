@@ -1,7 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
 import {AngularFirestore} from '@angular/fire/firestore';
-
 // use_for_timestamp
 import * as firebase from 'firebase';
 import 'firebase/firestore';
@@ -32,7 +31,7 @@ export class ClassesComponent implements OnInit {
       type: 'Paper'
     }
   ];
-
+  @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
   // list_of_classes
   classes: any;
   testClass: any[] = [];
@@ -44,6 +43,9 @@ export class ClassesComponent implements OnInit {
   // class_detail
   showClassDetail = false;
   classNumber: any;
+
+  classDetailsForUpdates;
+  showUpdateClassDetails = false;
 
   constructor(private _fb: FormBuilder,
               private _af: AngularFirestore,
@@ -91,8 +93,7 @@ export class ClassesComponent implements OnInit {
             fees: formValue.fees,
             type: formValue.type
           }).then(() => {
-            this.createClass.reset();
-            this.createClass.clearValidators();
+            setTimeout(() => this.formGroupDirective.resetForm(), 0);
             this._notification.NotificationMessage('successfully added');
           })
             .catch((err) => this._notification.ErrorMessage(err));
@@ -127,13 +128,24 @@ export class ClassesComponent implements OnInit {
     this.addClassShow = !this.addClassShow;
     if (this.addClassShow) {
       this.showClassDetail = false;
+      this.showUpdateClassDetails = false;
     }
   }
 
   showClassData(doc) {
     this.classNumber = doc.grade.toString().concat('.').concat(doc.number.toString());
     this.showClassDetail = true;
+    this.showUpdateClassDetails = false;
     this.addClassShow = false;
+  }
+
+  receiveUpdateClassDetails(data) {
+    data.subscribe(classDetails => {
+      this.showClassDetail = false;
+      this.addClassShow = false;
+      this.showUpdateClassDetails = true;
+      this.classDetailsForUpdates = classDetails;
+    });
   }
 }
 
