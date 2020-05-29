@@ -182,7 +182,6 @@ export class UserprofileComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(this.uid);
       this.profileUrl = result.url;
       this._af.collection('users')
         // @ts-ignore

@@ -63,7 +63,7 @@
         <!-- Tab 1 -->
         <mat-tab label="Profile">
           <mat-card-content class="main-container">
-            <form (ngSubmit)="submit()" [formGroup]="userProfile">
+            <form [formGroup]="userProfile">
 
               <mat-form-field appearance="outline">
                 <mat-label>Username</mat-label>
@@ -74,8 +74,8 @@
                   <div *ngIf="userProfile.controls['userName'].errors.required">Password is required</div>
                 </mat-hint>
               </mat-form-field>
-              <button [disabled]="userProfile.invalid"  style="width: 100%" class="button" color="primary" mat-raised-button type="submit">Update Username</button>
-              <button class="button" mat-raised-button type="submit" style="width: 100%; margin-top: 1%"  color="warn"  (click)="openDialog()">Upload profile picture</button>
+              <button [disabled]="userProfile.invalid"  style="width: 100%" class="button" color="primary" (click)="submit()" mat-raised-button>Update Username</button>
+              <button class="button" mat-raised-button style="width: 100%; margin-top: 1%"  color="warn"  (click)="openDialog()">Upload profile picture</button>
             </form>
           </mat-card-content>
         </mat-tab>
