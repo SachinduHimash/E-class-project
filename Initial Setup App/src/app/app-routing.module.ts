@@ -3,10 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { SetupformComponent} from './setupform/setupform.component';
 import { PaperComponent } from './paper/paper.component';
 import { MarkingsheetComponent } from './markingsheet/markingsheet.component';
+import { LoginComponent } from './login/login.component';
 
 
 const routes: Routes = [
-  {path:'',component:SetupformComponent},
+  {path:'',component:LoginComponent},
+  {path:'signup',component:SetupformComponent},
   {path:'paper',component:PaperComponent},
   {path:'markingsheet',component:MarkingsheetComponent}
 ];
