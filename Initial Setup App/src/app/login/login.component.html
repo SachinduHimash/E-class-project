@@ -1,1 +1,53 @@
-<p>login works!</p>
+
+<div class="row" style="margin: 0;background-image: url(../../assets/science-background-png-3.png);">
+    <div class="col-md-4 col-1"></div>
+    <div class="col-md-4 col-10">
+      <mat-card>
+  
+        <div class="headtitle">
+          <h4>Login</h4>
+        </div>
+        <mat-card-content>
+          <form class="formbox"  [formGroup]="myform">
+  
+            <mat-form-field appearance="outline">
+              <mat-label>User ID</mat-label>
+              <input formControlName="userID" pattern="202+([0-9]){4}([A-Z]){1}" matInput type="text">
+              <mat-error
+                *ngIf="myform.controls['userID'].invalid && (myform.controls['userID'].dirty || myform.controls['userID'].touched)"
+                >
+                <div *ngIf="myform.controls['userID'].errors.required">Please Contact Sir. User ID is required</div>
+              </mat-error>
+            </mat-form-field>
+            <br>
+  
+        <mat-form-field appearance="outline" >
+              <mat-label>Password</mat-label>
+              <mat-pass-toggle-visibility #toggle matSuffix></mat-pass-toggle-visibility>
+              <input formControlName="password" matInput #password [type]="toggle.type" required placeholder="Password">
+              <mat-hint align="end" aria-live="polite">
+                {{password.value.length}} / {{passwordComponent.max}}
+              </mat-hint>
+            </mat-form-field>
+            <!--@angular-material-extensions/password-strength's main component-->
+            <mat-password-strength #passwordComponent [password]="password.value">
+            </mat-password-strength>
+            <!--Password's strength info-->
+            <mat-password-strength-info *ngIf="showDetails" [passwordComponent]="passwordComponent">
+            </mat-password-strength-info>
+            <br>
+  
+              <mat-error *ngIf="myform.hasError('notSame')">
+                  Passwords is incorrect
+              </mat-error>
+  
+            <br>
+            <button [disabled]="myform.invalid" class="button" (click)="submit()"  mat-raised-button
+              color="primary">Submit</button>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-4 col-1"></div>
+  </div>
+  
