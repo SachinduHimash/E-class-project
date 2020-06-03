@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { AngularFirestore } from '@angular/fire/firestore/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import {Md5} from 'ts-md5';
+import { DialogboxComponent } from '../dialogbox/dialogbox.component';
 
 
 @Component({
@@ -16,6 +18,9 @@ export class LoginComponent implements OnInit {
 
   myform: FormGroup;
   showDetails=true;
+  correctPass;
+  pass;
+  isPaper;
 
   constructor(
     private fb: FormBuilder,
@@ -31,17 +36,26 @@ export class LoginComponent implements OnInit {
       userID: new FormControl('', Validators.required),
       password: new FormControl('', [Validators.required, Validators.minLength(8)]),
   
-    }, { validator: this.checkPasswords });
+    }, );
     
     }
 
-    checkPasswords(group: FormGroup){
-      
-    }
+    submit(value){
+      this.af.collection('users').doc(value.userID).valueChanges().subscribe((doc) => {
+        localStorage.setItem('grade', doc['class'].split('.')[0]);
+        this.correctPass=doc['password'];
+        this.pass= Md5.hashStr(value.password);
 
-    submit(){
-
+       if(this.pass==this.correctPass){
+        this.isPaper = true;
+        localStorage.setItem('onKey', JSON.stringify(this.isPaper));
+        localStorage.setItem('first', '1');
+          this.dialog.open(DialogboxComponent);
+       }
+        
+      });
     }
-  }
+ }
+  
 
 
