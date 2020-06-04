@@ -39,6 +39,9 @@ export class PaperComponent implements OnInit {
   name: string;
   timeOutIDs: any[] = [];
   data$: any;
+  paperNumber;
+  grade: string;
+  school: string;
 
   constructor(private _fb: FormBuilder,
               private _af: AngularFirestore,
@@ -47,20 +50,24 @@ export class PaperComponent implements OnInit {
               public dialog: MatDialog,
               private datePipe: DatePipe,
               private fns: AngularFireFunctions, ) {
-    if (localStorage.getItem('first') === '1' && localStorage.getItem('second') === '1') {
-      router.navigate(['markingsheet']);
-    } else if (localStorage.getItem('first') === '1') {
-      this.getPaper();
-    } else {
-      router.navigate(['']);
-    }
-    if (localStorage.getItem('toggleKey')){
-      const retrivedToggle = localStorage.getItem('toggleKey');
-      this.toggle = JSON.parse(retrivedToggle);
-    }
     this.classN = localStorage.getItem('class');
     this.userID = localStorage.getItem('userID');
     this.name = localStorage.getItem('name');
+    this.grade = localStorage.getItem('grade');
+    this.school = localStorage.getItem('school');
+    this.getPaper();
+    // if (localStorage.getItem('first') === '1' && localStorage.getItem('second') === '1') {
+    //   router.navigate(['markingsheet']);
+    // } else if (localStorage.getItem('first') === '1') {
+    //   this.getPaper();
+    // } else {
+    //   router.navigate(['']);
+    // }
+    // if (localStorage.getItem('toggleKey')){
+    //   const retrivedToggle = localStorage.getItem('toggleKey');
+    //   this.toggle = JSON.parse(retrivedToggle);
+    // }
+   
 
   }
 
@@ -87,18 +94,33 @@ export class PaperComponent implements OnInit {
   }
 
   // get_old_paper_data
-  getPaper() {
+  async getPaper() {
 
     // const formValue = this.updateFormGroup.value;
 
-    // tslint:disable-next-line:max-line-length
-    const docPath = `papers/${localStorage.getItem('grade')}/paperNumbers/${(new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1))}`;
-
-    this._af.doc(docPath)
-      .valueChanges()
-      .subscribe( (doc: Papers) => {
-        this.paper =  doc.questions;
+    // tslint:disable-next-line: max-line-length
+    console.log(this.name)
+    await this._af.collection('papers').doc(this.grade).
+      collection('paperNumbers', ref => ref.orderBy('createdAt', 'desc').limit(1))
+      .valueChanges({ idField: 'paperNumber' })
+      .subscribe( (doc) => {
+        this.paper = doc[0].questions;
+        this.paperNumber = doc[0].paperNumber;
+        localStorage.setItem('paperNumber', this.paperNumber);
+        this._af.collection('class').doc(this.classN).collection('students').doc(this.userID).collection('marks').doc(this.paperNumber)
+          .valueChanges()
+          .subscribe((doc) => {
+            if (doc) {
+              alert('paper allredy done');
+              this.router.navigate(['home']);
+            }
+            else{
+              localStorage.removeItem('toggleKey');
+            }
+          });
       });
+
+    
 
   }
 
@@ -116,10 +138,8 @@ export class PaperComponent implements OnInit {
   submit(){
     this.timeOutIDs.forEach(id => clearTimeout(id));
     this.isPaper = false;
-    localStorage.setItem('onKey', JSON.stringify(this.isPaper));
     localStorage.setItem('paperKey', JSON.stringify(this.paper));
     localStorage.setItem('toggleKey', JSON.stringify(this.toggle));
-    localStorage.setItem('second', '1');
 
 
 
@@ -130,7 +150,6 @@ export class PaperComponent implements OnInit {
     this.timeOutIDs.forEach(id => clearTimeout(id));
     localStorage.setItem('paperKey', JSON.stringify(this.paper));
     localStorage.setItem('toggleKey', JSON.stringify(this.toggle));
-    localStorage.setItem('second', '1');
     alert('Time is over');
     this.checkMarks();
 
@@ -190,11 +209,13 @@ export class PaperComponent implements OnInit {
       name: this.name,
       class: this.classN,
       grade: localStorage.getItem('grade'),
-      paperNumber: (new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1)),
+      paperNumber: this.paperNumber,
+      photo: '',
+      school: this.school
     });
     this.data$.subscribe(async res => {
       if (res){
-        console.log('su')
+        console.log('su');
       }
     });
     this.router.navigate(['markingsheet']);

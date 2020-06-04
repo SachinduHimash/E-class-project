@@ -2,19 +2,20 @@
 // Common_interfaces
 
 export interface TimeStamp {
+    // tslint:disable-next-line: ban-types
     seconds: Number;
     nanoseconds: Number;
   }
   
   
   // Paper_collection
-  export interface Papers {
+export interface Papers {
     createdAt: TimeStamp;
     updatedAt: TimeStamp;
     questions: PaperQuestion;
   }
   
-  export interface PaperQuestion {
+export interface PaperQuestion {
     number: Number;
     question: String;
     correctAnswer: Number;
@@ -27,7 +28,7 @@ export interface TimeStamp {
   
   
   // Users_collection
-  export interface Users {
+export interface Users {
     name: String;
     class: String;
     role: String;

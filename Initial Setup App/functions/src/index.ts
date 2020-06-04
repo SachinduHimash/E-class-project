@@ -154,7 +154,7 @@ app.post('/marks', (req, res) => {
     .concat(currentDate.getMonth().toString()).concat('.')
     .concat(currentDate.getDate().toString());
 
-  const fullPaperNumber = (new Date().getFullYear()).toString().concat(formatPaperNumber(reqData.paperNumber));
+  const fullPaperNumber = (reqData.paperNumber);
 
 
   firestore.collection('class').doc(reqData.class)
@@ -224,7 +224,11 @@ app.post('/marks', (req, res) => {
           createdAt: TimeStamp,
           mark: reqData.marks,
           date: date,
-          name: reqData.name
+          name: reqData.name,
+          class: reqData.class,
+          school: reqData.school,
+          photo: reqData.photo
+
         }).catch((err) => {
         res.json(
           {

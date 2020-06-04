@@ -205,7 +205,8 @@ export class SetupformComponent implements OnInit {
     localStorage.setItem('class', newClass);
     localStorage.setItem('userID', userID);
     localStorage.setItem('name', formValue.fullName);
-    this.test1 = 'test1';
+    localStorage.setItem('grade',formValue.grade);
+    localStorage.setItem('school',formValue.school);
 
     // try {
     //   this.af.firestore.collection('users').doc(userID).get().then(docSnapshot => {
