@@ -38,6 +38,11 @@ export class RankingService {
     return (await this._af.firestore.doc(documentPath).get()).exists;
   }
 
+  async checkGradeRankExists(grade: Number, paperNumber: Number): Promise<boolean> {
+    const documentPath = `ranking/${grade}/rank/${paperNumber}`;
+    return (await this._af.firestore.doc(documentPath).get()).exists;
+  }
+
   async generateRanking(grade: Number, paperNumber: Number) {
 
     paperNumber = await this._math.getFullPaperNumber(paperNumber);
@@ -65,7 +70,15 @@ export class RankingService {
 
     const rankedStudent = await this.calculateRanking(marksData);
 
-    await this._af.firestore.doc(`ranking/${paperNumber}`)
+    const gradeRankExists = await this.checkGradeRankExists(grade, paperNumber);
+
+    if (!gradeRankExists) {
+      this._af.firestore.doc(`ranking/${grade}`).set({
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    }
+
+    await this._af.firestore.doc(`ranking/${grade}/rank/${paperNumber}`)
       .set({
         grade,
         paper: paperNumber,
@@ -81,7 +94,7 @@ export class RankingService {
   async getStudent(grade: Number, paperNumber: Number) {
 
     paperNumber = await this._math.getFullPaperNumber(paperNumber);
-    const documentPath = `ranking/${paperNumber}`;
+    const documentPath = `ranking/${grade}/rank/${paperNumber}`;
 
     const paperExists = await this.checkPaperExists(grade, paperNumber);
 
