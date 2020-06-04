@@ -18,7 +18,10 @@ export class MarkingsheetComponent implements OnInit {
 
 
   constructor(private fb: FormBuilder, private router: Router,) {
-      this.getData();
+    if (!localStorage.getItem('userID')) {
+      router.navigate(['']);
+    }
+    this.getData();
 
    }
 
@@ -26,6 +29,9 @@ export class MarkingsheetComponent implements OnInit {
     this.myForm = this.fb.group({
 
     });
+  }
+  home(){
+    this.router.navigate(['home']);
   }
   getData(){
 

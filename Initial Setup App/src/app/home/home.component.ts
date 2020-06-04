@@ -8,7 +8,11 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private router: Router,) { }
+  constructor(private router: Router,) {
+    if (!localStorage.getItem('userID')) {
+      router.navigate(['']);
+    }
+   }
 
   ngOnInit(): void {
   }
@@ -19,6 +23,11 @@ export class HomeComponent implements OnInit {
     }
     return false;
 
+  }
+
+  logout(){
+    localStorage.clear();
+    this.router.navigate([''])
   }
 
   paper(){

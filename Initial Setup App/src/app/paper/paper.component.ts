@@ -50,6 +50,9 @@ export class PaperComponent implements OnInit {
               public dialog: MatDialog,
               private datePipe: DatePipe,
               private fns: AngularFireFunctions, ) {
+    if (!localStorage.getItem('userID')) {
+      router.navigate(['']);
+    }
     this.classN = localStorage.getItem('class');
     this.userID = localStorage.getItem('userID');
     this.name = localStorage.getItem('name');
