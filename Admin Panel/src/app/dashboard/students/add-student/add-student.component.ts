@@ -80,7 +80,7 @@ export class AddStudentComponent implements OnInit {
               role: 'student',
               password: formValue.password,
               fullName: formValue.fullName,
-              class: formValue.class,
+              class: formValue.class.value,
               school: formValue.school,
               address: formValue.address,
               createdAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -93,7 +93,7 @@ export class AddStudentComponent implements OnInit {
                 teleNo: formValue.teleNo,
                 userId: formValue.userId,
                 school: formValue.school,
-                class: formValue.class,
+                class: formValue.class.value,
               })
               .then(() => {
                 setTimeout(() => this.formGroupDirective.resetForm(), 0);
