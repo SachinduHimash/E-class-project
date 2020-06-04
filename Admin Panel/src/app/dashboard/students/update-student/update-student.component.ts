@@ -73,7 +73,7 @@ export class UpdateStudentComponent implements OnInit, OnChanges {
     formValue.password = this._authService.hashString(formValue.password);
     this._af.firestore.doc(`users/${this.uid}`)
       .update({
-        Teeeepassword: formValue.password
+        password: formValue.password
       }).then(r => this._notification.NotificationMessage('Updated Password'))
       .catch(e => this._notification.ErrorMessage('Failed to update Password'));
   }
