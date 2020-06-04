@@ -133,18 +133,6 @@ app.post('/registration', (req, res) => {
   });
 });
 
-
-function formatPaperNumber(paperNumber: Number) {
-
-  let num = paperNumber;
-
-  if (paperNumber < 10) {
-    num = Number('0'.concat(paperNumber.toString()));
-  }
-  return num.toString();
-}
-
-
 app.post('/marks', (req, res) => {
   // res.json(req.body);
   const reqData = req.body.data;
