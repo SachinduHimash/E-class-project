@@ -1,1 +1,69 @@
-<p>rank works!</p>
+<style>
+    .highlight{
+        background: #42A948; /* green */
+    }
+</style>
+<button color="primary" mat-raised-button style="margin: 5%;" (click)="home()">
+    <mat-icon>home</mat-icon>
+    home
+</button>
+
+<mat-table [dataSource]="dataSource" matSort *ngIf="!ismobile()">
+
+    <ng-container matColumnDef="rank">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Rank</mat-header-cell>
+        <mat-cell *matCellDef="let row" style="margin-left: 1%"> {{row.rank}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="mark">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Mark</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.mark}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Id</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.id}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="fullName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Full name</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.name}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="school">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> School</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.school}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="class">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Class</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.class}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row  [ngClass]="{ 'highlight': userID == row.id}" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
+
+<mat-table   [dataSource]="dataSource1" matSort *ngIf="ismobile()">
+
+    <ng-container matColumnDef="rank">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Rank</mat-header-cell>
+        <mat-cell *matCellDef="let row" style="margin-left: 1%"> {{row.rank}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="mark">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Mark</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.mark}} </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="fullName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Full name</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.name}}</mat-cell>
+    </ng-container>
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+    <mat-row [ngClass]="{ 'highlight': userID == row.id}" *matRowDef="let row; columns: displayedColumns1;"></mat-row>
+</mat-table>
