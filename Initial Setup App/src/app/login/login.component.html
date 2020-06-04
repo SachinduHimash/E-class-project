@@ -1,1 +1,42 @@
-<p>login works!</p>
+
+<div class="row" style="margin: 0;background-image: url(../../assets/science-background-png-3.png); height: 100vh;">
+    <div class="col-md-4 col-1"></div>
+    <div class="col-md-4 col-10">
+      <mat-card style="margin-top: 20%;border-radius: 5%;padding-bottom: 10%;background-color: rgb(255, 255, 255);">
+  
+        <div class="headtitle">
+          <h4 style="font-weight: 900;">Login</h4>
+        </div>
+        <mat-card-content>
+          <form class="formbox"  [formGroup]="myform">
+  
+            <mat-form-field appearance="outline">
+              <mat-label>User ID</mat-label>
+              <input formControlName="userID" pattern="202+([0-9]){4}([A-Z]){1}" matInput type="text">
+              <mat-error
+                *ngIf="myform.controls['userID'].invalid && (myform.controls['userID'].dirty || myform.controls['userID'].touched)"
+                >
+                <div *ngIf="myform.controls['userID'].errors.required">User ID is required</div>
+              </mat-error>
+            </mat-form-field>
+            <br>
+  
+        <mat-form-field appearance="outline" >
+              <mat-label>Password</mat-label>
+              <mat-pass-toggle-visibility #toggle matSuffix></mat-pass-toggle-visibility>
+              <input formControlName="password" matInput #password [type]="toggle.type" required placeholder="Password">
+              
+            </mat-form-field>
+            
+            <br>
+            <a href="signup">Don't have an account? Sign up here</a>
+            <br>
+            <button [disabled]="myform.invalid" class="button" (click)="submit(myform.value)"  mat-raised-button
+              color="primary">Submit</button>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-4 col-1"></div>
+  </div>
+  

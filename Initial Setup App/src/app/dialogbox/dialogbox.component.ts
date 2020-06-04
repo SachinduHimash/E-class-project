@@ -25,6 +25,7 @@ export class DialogboxComponent implements OnInit {
   toggle: any;
   paper: any;
   data$: any;
+  school: string;
   constructor(private router: Router,
               private af: AngularFirestore,
               private _math: MathsService,
@@ -36,6 +37,7 @@ export class DialogboxComponent implements OnInit {
        this.classN = localStorage.getItem('class');
        this.userID = localStorage.getItem('userID');
        this.name = localStorage.getItem('name');
+       this.school = localStorage.getItem('school');
        const retrivedToggle = localStorage.getItem('toggleKey');
        this.toggle = JSON.parse(retrivedToggle);
 
@@ -100,7 +102,9 @@ export class DialogboxComponent implements OnInit {
         name: this.name,
         class: this.classN,
         grade: localStorage.getItem('grade'),
-        paperNumber: (new Date().getFullYear()).toString().concat(this._math.formatPaperNumber(1)),
+        paperNumber: localStorage.getItem('paperNumber'),
+        photo: '',
+        school: this.school
       });
       this.data$.subscribe(async res => {
         if (res){
