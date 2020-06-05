@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scrolling_page_indicator/scrolling_page_indicator.dart';
 import 'package:studentapp/screens/qustionSelcet.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 
 import '../main.dart';
 
@@ -37,6 +38,9 @@ class _PaperPageState extends State<PaperPage> {
  
   @override
   Widget build(BuildContext context) {
+    final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
+      functionName: 'YOUR_CALLABLE_FUNCTION_NAME',
+    );
     _controller.addListener(() {
     setState(() {
       PaperPage.qNumber = _controller.page;
@@ -187,37 +191,43 @@ class _PaperPageState extends State<PaperPage> {
                                             marks+=5;
                                           }
                                         }
+                                        // dynamic resp = await callable.call(<String, dynamic>{
+                                        //     'YOUR_PARAMETER_NAME': 'YOUR_PARAMETER_VALUE',
+                                        // });
                                         
                                         showDialog<void>(
                                           context: context,
                                           barrierDismissible: false, // user must tap button!
                                           builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              title: Text('Marks'),
-                                              content: SingleChildScrollView(
-                                                child: ListBody(
-                                                  children: <Widget>[
-                                                    Text('you marks is $marks'),
-                                                  ],
+                                            return WillPopScope(
+                                              onWillPop: () {},
+                                              child: new AlertDialog(
+                                                title: Text('Marks'),
+                                                content: SingleChildScrollView(
+                                                  child: ListBody(
+                                                    children: <Widget>[
+                                                      Text('you marks is $marks'),
+                                                    ],
+                                                  ),
                                                 ),
+                                                actions: <Widget>[
+                                                  FlatButton(
+                                                    child: Text('Ok'),
+                                                    onPressed: () {
+                                                      Navigator.of(context).push(CupertinoPageRoute(
+                                                            fullscreenDialog: true,
+                                                            builder: (BuildContext context) {
+                                                              MyApp.page = 'myapp';
+                                                              PaperPage.qNumber = 0;
+                                                              return MyApp();
+                                                            },
+                                                        ),
+                                                      );
+                                          
+                                                    },
+                                                  ),
+                                                ],
                                               ),
-                                              actions: <Widget>[
-                                                FlatButton(
-                                                  child: Text('Ok'),
-                                                  onPressed: () {
-                                                    Navigator.of(context).push(CupertinoPageRoute(
-                                                          fullscreenDialog: true,
-                                                          builder: (BuildContext context) {
-                                                            MyApp.page = 'myapp';
-                                                            PaperPage.qNumber = 0;
-                                                            return MyApp();
-                                                          },
-                                                      ),
-                                                    );
-                                        
-                                                  },
-                                                ),
-                                              ],
                                             );
                                           }
                                         );

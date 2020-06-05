@@ -30,13 +30,15 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
               RaisedButton(
                 onPressed: () async{
                   DefaultAppBarDemo.pr.show();
-                  await Firestore.instance.collection('paperAccess').document('9.1').collection('day').document(PaperAccessPage.today)
+                  await Firestore.instance.collection('paperAccess').document('9.1').collection('day').document('20200414')
                   .get().then((x) async=> {
+                    print(x.data),
                     if(x.data["access"]){
-                      await Firestore.instance.collection('paperAccess').document('9.1').collection('day').document(PaperAccessPage.today).collection('students').document('202020001')
-                      .get().then((y) async => {
-                        if(y.data["access"]){
-                          await DefaultAppBarDemo.pr.hide(),
+                      await Firestore.instance.collection('class').document('11.3').collection('students').document('2021300A').collection('marks').document('2020202001')
+                      .get().then( (y) async {
+                        if (y == null || !y.exists) {
+                          // Document with id == docId doesn't exist.
+                          await DefaultAppBarDemo.pr.hide();
                           Navigator.of(context).push(CupertinoPageRoute(
                               fullscreenDialog: true,
                               builder: (BuildContext context) {
@@ -44,6 +46,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                                   PaperPage40.qNumber = 0;
                                   MyApp.page = 'PaperPage40';
                                   PaperPage40.answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+                                   PaperPage40.endTime = DateTime.now().add(new Duration(seconds:60*30));
                                   return new StreamBuilder(
                                     stream: Firestore.instance.collection('papers').document('11').collection('paperNumbers').document('202001').snapshots(),
                                     builder: (context, snapshot) {
@@ -59,10 +62,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                                   PaperPage.qNumber = 0;
                                   MyApp.page = 'PaperPage';
                                   PaperPage.answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-                                  PaperPage.endTime = DateTime.parse(x.data["endTime"].toDate().toString());
-                                  print(PaperPage.endTime);
-                                  print(DateTime.now());
-                                  print( PaperPage.endTime.difference(DateTime.now()));
+                                  PaperPage.endTime = DateTime.now().add(new Duration(seconds:60*30));
                                   return new StreamBuilder(
                                     stream: Firestore.instance.collection('papers').document('11').collection('paperNumbers').document('202001').snapshots(),
                                     builder: (context, snapshot) {
@@ -78,20 +78,19 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                                           
                               },
                             ),
-                          ),
-                       
-                        } else{
-                          await DefaultAppBarDemo.pr.hide(),
+                          );
+                        } else {
+                          await DefaultAppBarDemo.pr.hide();
                           showDialog<void>(
                           context: context,
                           barrierDismissible: false, // user must tap button!
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text('your not in a class'),
+                              title: Text('atemped'),
                               content: SingleChildScrollView(
                               child: ListBody(
                                 children: <Widget>[
-                                  Text('pleass mark your attendance'),
+                                  Text('only 1 attempt'),
                                   ],
                                 ),
                               ),
@@ -105,11 +104,93 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                               ],
                             );
                           },
-                        )
-                        
-                        }                 
+                        );
+                        }
+                      }
+                      
+                       
 
-                      }).catchError((e) async =>{
+                      // (y) 
+                      
+                      // async => {
+                      //   print(y.data),
+                      //   if(y.data.isEmpty){
+                      //     await DefaultAppBarDemo.pr.hide(),
+                      //     Navigator.of(context).push(CupertinoPageRoute(
+                      //         fullscreenDialog: true,
+                      //         builder: (BuildContext context) {
+                      //           if(x.data["questions"] == 40) {
+                      //             PaperPage40.qNumber = 0;
+                      //             MyApp.page = 'PaperPage40';
+                      //             PaperPage40.answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+                      //              PaperPage40.endTime = DateTime.now().add(new Duration(seconds:60*30));
+                      //             return new StreamBuilder(
+                      //               stream: Firestore.instance.collection('papers').document('11').collection('paperNumbers').document('202001').snapshots(),
+                      //               builder: (context, snapshot) {
+                      //               if (!snapshot.hasData) {
+                      //                   return new Text("Loading");
+                      //                 }
+                                                
+                      //               PaperPage40.questions = snapshot.data['questions'];
+                      //               return PaperPage40();
+                      //               }
+                      //             );
+                      //           } else {
+                      //             PaperPage.qNumber = 0;
+                      //             MyApp.page = 'PaperPage';
+                      //             PaperPage.answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+                      //             PaperPage.endTime = DateTime.now().add(new Duration(seconds:60*30));
+                      //             print(PaperPage.endTime);
+                      //             print(DateTime.now());
+                      //             print( PaperPage.endTime.difference(DateTime.now()));
+                      //             return new StreamBuilder(
+                      //               stream: Firestore.instance.collection('papers').document('11').collection('paperNumbers').document('202001').snapshots(),
+                      //               builder: (context, snapshot) {
+                      //               if (!snapshot.hasData) {
+                      //                   return new Text("Loading");
+                      //                 }
+                                                
+                      //               PaperPage.questions = snapshot.data['questions'];
+                      //               return PaperPage();
+                      //               }
+                      //             );
+                      //           }
+                                          
+                      //         },
+                      //       ),
+                      //     ),
+                       
+                      //   } else{
+                      //     await DefaultAppBarDemo.pr.hide(),
+                      //     showDialog<void>(
+                      //     context: context,
+                      //     barrierDismissible: false, // user must tap button!
+                      //     builder: (BuildContext context) {
+                      //       return AlertDialog(
+                      //         title: Text('atemped'),
+                      //         content: SingleChildScrollView(
+                      //         child: ListBody(
+                      //           children: <Widget>[
+                      //             Text('only 1 attempt'),
+                      //             ],
+                      //           ),
+                      //         ),
+                      //         actions: <Widget>[
+                      //           FlatButton(
+                      //             child: Text('Ok'),
+                      //             onPressed: () {
+                      //               Navigator.of(context).pop();
+                      //             },
+                      //           ),
+                      //         ],
+                      //       );
+                      //     },
+                      //   )
+                        
+                      //   }                 
+
+                      // }
+                      ).catchError((e) async =>{
                         print(e),
                         await DefaultAppBarDemo.pr.hide(),
                         showDialog<void>(
@@ -136,7 +217,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                             );
                           },
                         )
-                      }),
+                      })
                          
                     } else {
                         await DefaultAppBarDemo.pr.hide(),
@@ -149,7 +230,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                               content: SingleChildScrollView(
                               child: ListBody(
                                 children: <Widget>[
-                                  Text('wait for start'),
+                                  Text("today hven't any paper"),
                                   ],
                                 ),
                               ),
@@ -177,7 +258,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                               content: SingleChildScrollView(
                               child: ListBody(
                                 children: <Widget>[
-                                  Text('wait for strat'),
+                                  Text("today hven't any paper"),
                                   ],
                                 ),
                               ),

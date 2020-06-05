@@ -7,10 +7,12 @@ import '../main.dart';
 class User{
   final String name;
   final int rank;
+  final int mark;
 
   const User({
     this.name,
-    this.rank
+    this.rank,
+    this.mark
   });
 }
 
@@ -23,36 +25,51 @@ class Rank extends MyApp {
 
 class _RankState extends State<Rank> {
   List data;
+  String id = '2020001A';
   @override
   void initState() {
     super.initState();
-    _calculation();
+    
+      _calculation();
+    
   }
 
   Future _calculation() async {
-    print(DateTime.now());
-    await Firestore.instance.collection('ranking').getDocuments().then((h) =>{
-      h.documents.forEach((e) async =>{
-        
-        e.data['rank'].forEach((s)=>{
-           Rank.ranks.add(User(name: s['name'],rank: s['rank']))
-          //print(s.toString())
-        }),
-        print(DateTime.now())
-      })
-    }).then((value) => {
-       setState(() {
-          DefaultAppBarDemo.pr.hide();
-           data =  Rank.ranks;
-        }),
+    if(Rank.ranks.isEmpty){
+      await Firestore.instance.collection('ranking').document('11').collection('rank').orderBy('createdAt',descending: true).limit(1).getDocuments().then((h) =>{
+        h.documents.forEach((e) async =>{
+          e.data['rank'].forEach((s)=>{
+            if(s['rank']<=10){
+              Rank.ranks.add(User(name: s['name'],rank: s['rank'],mark: s['mark'])),
+              if('2020025A' == s['id']){
+                this.id = s['name']
+              }
+            } else {
+              
+              Rank.ranks.add(User(name: s['id'],rank: s['rank'],mark: s['mark']))
+            }
+          }),
+          
+        })
+      }).then((value) => {
+        setState(() {
+            DefaultAppBarDemo.pr.hide();
+            data =  Rank.ranks;
+          }),
+      }
+      );
+    } else {
+      setState(() {
+        DefaultAppBarDemo.pr.hide();
+        data =  Rank.ranks;
+        print('dd');
+      });
     }
-    );
     
   }
   
   @override
   Widget build(BuildContext context) {
-    print(Rank.ranks);
      if(data == null){
       return SafeArea(
         child: Container(
@@ -70,7 +87,6 @@ class _RankState extends State<Rank> {
 
     } else {
       data = data.toList();
-      print('gg');
       
       return SafeArea(
           child: LayoutBuilder(
@@ -89,26 +105,29 @@ class _RankState extends State<Rank> {
                         padding: EdgeInsets.symmetric(vertical: 30),
                         child: DataTable(
                           columns: [
-                            DataColumn(label: Text('Patch')),
-                            DataColumn(label: Text('Version')),
+                            DataColumn(label: Text('rank')),
+                            DataColumn(label: Text('name')),
+                            DataColumn(label: Text('marks')),
                           ],
                           rows:
                               data // Loops through dataColumnText, each iteration assigning the value to element
                                   .map(
                                     ((element) => 
-                                        element.name == 'Maciunas' ?
+                                        element.name == this.id ?
                                         DataRow(
                                           selected: true,
                                           cells: <DataCell>[
-                                            DataCell(Text(element.name,style: TextStyle(fontWeight:FontWeight.bold,fontSize: 18),)), //Extracting from Map element the value
-                                            DataCell(Text(element.rank.toString(),style: TextStyle(fontWeight:FontWeight.bold,fontSize: 18),)),
+                                            DataCell(Text(element.rank.toString(),style: TextStyle(fontWeight:FontWeight.bold,fontSize: 22,color: Colors.greenAccent[700]),)),
+                                            DataCell(Text(element.name,style: TextStyle(fontWeight:FontWeight.bold,fontSize: 20,color: Colors.greenAccent[700]),)), //Extracting from Map element the value
+                                            DataCell(Text(element.mark.toString(),style: TextStyle(fontWeight:FontWeight.bold,fontSize: 22,color: Colors.greenAccent[700]),)),
                                           ],
                                         ):
                                         DataRow(
                                       
                                           cells: <DataCell>[
-                                            DataCell(Text(element.name,style: TextStyle(fontWeight:FontWeight.bold,fontSize: 18),)), //Extracting from Map element the value
-                                            DataCell(Text(element.rank.toString(),style: TextStyle(fontWeight:FontWeight.bold,fontSize: 18),)),
+                                            DataCell(Text(element.rank.toString(),style: TextStyle(fontWeight:FontWeight.w700,fontSize: 17),)),
+                                            DataCell(Text(element.name,style: TextStyle(fontWeight:FontWeight.w700,fontSize: 16),)), //Extracting from Map element the value
+                                            DataCell(Text(element.mark.toString(),style: TextStyle(fontWeight:FontWeight.w700,fontSize: 17),)),
                                           ],
                                         )
                                       ),
