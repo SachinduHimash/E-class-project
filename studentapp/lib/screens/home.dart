@@ -3,9 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../main.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class Home extends MyApp {
-  static List<charts.Series<OrdinalSales, String>>  seriesList =List<charts.Series<OrdinalSales, String>>();
+  static List<ColumnSeries<OrdinalSales, String>>  seriesList =List<ColumnSeries<OrdinalSales, String>>();
   @override
   _HomeState createState() {
     var homeState = _HomeState();
@@ -39,19 +40,20 @@ class _HomeState extends State<Home> {
         })}).then((value) => {
           setState(() {
               //print('dd');
-              Home.seriesList= [
-              new charts.Series<OrdinalSales, String>(
-                id: 'Sales',
-                colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-                domainFn: (OrdinalSales sales, _) => sales.year,
-                measureFn: (OrdinalSales sales, _) => sales.sales,
-                labelAccessorFn: (OrdinalSales sales, _) =>
-                      '${sales.sales.toString()}',
-                data: data,
-                
-              )
-              
-            ];
+              // Home.seriesList= [
+              //     ColumnSeries<OrdinalSales, String>(
+              //         dataSource:  data,
+              //         isTrackVisible: true,
+              //         trackColor: const Color.fromRGBO(198, 201, 207, 1),
+              //         borderRadius: BorderRadius.circular(15),
+              //         xValueMapper: (OrdinalSales sales, _) => sales.year,
+              //         yValueMapper: (OrdinalSales sales, _) => sales.sales,
+              //         name: 'Marks',
+              //         dataLabelSettings: DataLabelSettings(
+              //             isVisible: true,
+              //             labelAlignment: ChartDataLabelAlignment.top,
+              //             textStyle: ChartTextStyle(fontSize: 10, color: Colors.white)))
+              //   ];
             }),
         }
       );
@@ -73,22 +75,39 @@ class _HomeState extends State<Home> {
                Text('Marks of Last 5 Paper'),
                Container(
                  height: 400,
-                 child: charts.BarChart(
-                          Home.seriesList,
-                          animate: animate,
-                          barGroupingType: charts.BarGroupingType.stacked,
-                          // Configures a [PercentInjector] behavior that will calculate measure
-                          // values as the percentage of the total of all data that shares a
-                          // domain value.
-                          behaviors: [
-                            // new charts.PercentInjector<String>(
-                            //     totalType: charts.PercentInjectorTotalType.domain)
-                          ],
-                          // Configure the axis spec to show percentage values.
-                          primaryMeasureAxis: new charts.PercentAxisSpec(),
-                          
-                      ),
-               )
+                 child:  SfCartesianChart(
+                        // Initialize category axis
+                        primaryXAxis: CategoryAxis(),
+                        series: <ChartSeries>[
+                            // Initialize line series
+                            LineSeries<OrdinalSales, String>(
+                                dataSource: [
+                                    // Bind data source
+                                    OrdinalSales('Jan', 35),
+                                    OrdinalSales('Feb', 28),
+                                    OrdinalSales('Mar', 34),
+                                    OrdinalSales('Apr', 32),
+                                    OrdinalSales('May', 40)
+                                ],
+                                xValueMapper: (OrdinalSales sales, _) => sales.year,
+                                yValueMapper: (OrdinalSales sales, _) => sales.sales
+                            )
+                        ]
+                    )
+                 
+                //  SfCartesianChart(
+                //     series: Home.seriesList,
+                //     plotAreaBorderWidth: 0,
+                //     title: ChartTitle(text: 'Marks of a student'),
+                //     primaryXAxis: CategoryAxis(majorGridLines: MajorGridLines(width: 0)),
+                //     primaryYAxis: NumericAxis(
+                //         minimum: 0,
+                //         maximum: 100,
+                //         axisLine: AxisLine(width: 0),
+                //         majorGridLines: MajorGridLines(width: 0),
+                //         majorTickLines: MajorTickLines(size: 0)),
+                //   ),
+                )
             ],
           ),
         ),
