@@ -42,35 +42,9 @@ export class CreateAccessComponent implements OnInit {
     this.firstFormGroup = this._fb.group({
       grade: ['', Validators.required]
     });
-    this.secondFormGroup = this._fb.group({
-      class: ['', Validators.required]
-    });
-    this.thirdFormGroup = this._fb.group({
-      time: ['', Validators.required]
-    });
     this.fourthFormGroup = this._fb.group({
       paperNumber: ['', Validators.required]
     });
-  }
-
-  getClassByGrade(stepper: MatVerticalStepper) {
-    // console.log(this.firstFormGroup.value);
-    const grade = Number(this.firstFormGroup.value.grade);
-    // console.log(grade);
-    this.progress = true;
-    this._af.collection('class', ref => ref.where('grade', '==', grade))
-      .valueChanges({idField: 'id'})
-      .subscribe(docs => {
-        // console.log(docs);
-        if (docs.length === 0) {
-          this._message.ErrorMessage('No papers data Found');
-          this.progress = false;
-          return;
-        }
-        this.classes = docs;
-        this.progress = false;
-        stepper.next();
-      });
   }
 
   formatPaperNumber = (paperNumber: Number): string => {
@@ -81,6 +55,7 @@ export class CreateAccessComponent implements OnInit {
   }
 
   getPaperByGrade(stepper: MatVerticalStepper) {
+    this.progress = true;
     const grade = this.firstFormGroup.value.grade;
     const collectionRef = `papers/${grade}/paperNumbers/`;
     this._af.collection(collectionRef)
@@ -88,7 +63,7 @@ export class CreateAccessComponent implements OnInit {
       .subscribe(docs => {
         if (docs.length === 0) {
           this._message.ErrorMessage('No class data Found');
-          this.progress2 = false;
+          this.progress = false;
           return;
         }
         this.papers = docs.map(r => {
@@ -97,7 +72,7 @@ export class CreateAccessComponent implements OnInit {
             paperNumber: r.id
           };
         });
-        this.progress2 = false;
+        this.progress = false;
         stepper.next();
       });
   }
@@ -122,27 +97,13 @@ export class CreateAccessComponent implements OnInit {
   async submit(stepper: MatVerticalStepper) {
     try {
       this.progress3 = true;
-
-      if(!this.thirdFormGroup.value.time){
-        this.progress3 = false;
-        this._message.NotificationMessage('Time is not provide');
-        return ;
-      }
-
       const grade = this.firstFormGroup.value.grade;
-      const className = this.secondFormGroup.value.class;
-      const time = this.thirdFormGroup.value.time;
       const paperNumber = this.fourthFormGroup.value.paperNumber;
 
-      const moments = moment(time);
-      const day = moments.year().toString()
-        .concat(this.formatPaperNumber(Number(moments.month())))
-        .concat(this.formatPaperNumber(Number(moments.date())));
-
-      const databasePath = `paperAccess/${className}/day/${day}`;
+      const databasePath = `paperAccess/${grade}/paper/${this.formatPaperNumber(paperNumber)}`;
 
       const ClassPaperAccessExists = await this._af.firestore
-        .doc(`paperAccess/${className}`)
+        .doc(`paperAccess/${grade}`)
         .get();
 
       const DayPaperAccessExists = await this._af.firestore
@@ -150,13 +111,17 @@ export class CreateAccessComponent implements OnInit {
         .get();
 
       if (DayPaperAccessExists.exists) {
-        throw {
-          message: 'Paper access is already exists'
-        };
+        await this._af.doc(databasePath).update({
+          access: true,
+        });
+        this.endMessage = 'Access enable successfully';
+        stepper.next();
+        this.progress3 = false;
+        return this._message.NotificationMessage('Access enable successfully');
       }
 
       if (!ClassPaperAccessExists.exists) {
-        await this._af.doc(`paperAccess/${className}`).set({
+        await this._af.doc(`paperAccess/${grade}`).set({
           createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
       }
@@ -165,15 +130,15 @@ export class CreateAccessComponent implements OnInit {
         .doc(`papers/${grade}/paperNumbers/${paperNumber}`)
         .get();
 
-      const studentData = await this._af.firestore
-        .collection(`class/${className}/students`)
-        .get();
+      // const studentData = await this._af.firestore
+      //   .collection(`class/${className}/students`)
+      //   .get();
 
       const questions = PaperData.data().questions.length;
 
       const object = {
         access: true,
-        endTime: time,
+        endTime: firebase.firestore.FieldValue.serverTimestamp(),
         paper: paperNumber,
         pastPaper: false,
         questions: questions,
@@ -181,16 +146,16 @@ export class CreateAccessComponent implements OnInit {
 
       await this._af.doc(databasePath).set(object);
 
-      const references = studentData.docs.map(d => this._af.firestore.collection(`${databasePath}/students`).doc(d.id));
-
-      while (references.length) {
-        const referencesBatch = references.splice(0, 500);
-        const batch = this._af.firestore.batch();
-        for (const reference of referencesBatch) {
-          batch.set(reference, {access: true});
-        }
-        await batch.commit();
-      }
+      // const references = studentData.docs.map(d => this._af.firestore.collection(`${databasePath}/students`).doc(d.id));
+      //
+      // while (references.length) {
+      //   const referencesBatch = references.splice(0, 500);
+      //   const batch = this._af.firestore.batch();
+      //   for (const reference of referencesBatch) {
+      //     batch.set(reference, {access: true});
+      //   }
+      //   await batch.commit();
+      // }
 
       this._message.NotificationMessage('Access enable successfully');
       this.endMessage = 'Access enable successfully';
