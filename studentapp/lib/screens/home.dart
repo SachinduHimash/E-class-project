@@ -76,6 +76,7 @@ class _HomeState extends State<Home> {
                Container(
                  height: 400,
                  child:  
+                  Text('dd')
                     // SfCartesianChart(
                     //     // Initialize category axis
                     //     primaryXAxis: CategoryAxis(),
