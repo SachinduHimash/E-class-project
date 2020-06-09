@@ -10,7 +10,7 @@
           </mat-form-field>
           <div>
             <mat-progress-bar *ngIf="progress" mode="indeterminate"></mat-progress-bar>
-            <button (click)="getClassByGrade(stepper)"
+            <button (click)="getPaperByGrade(stepper)"
                     *ngIf="!progress"
                     color="primary"
                     mat-button
@@ -19,27 +19,27 @@
           </div>
         </form>
       </mat-step>
-      <mat-step [editable]="editable" [stepControl]="secondFormGroup">
-        <form [formGroup]="secondFormGroup">
-          <ng-template matStepLabel>Select class</ng-template>
-          <mat-form-field>
-            <mat-label>class</mat-label>
-            <mat-select formControlName="class">
-              <mat-option *ngFor="let class of classes" [value]="class.id">
-                {{class?.name}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <div>
-            <mat-progress-bar *ngIf="progress2" mode="indeterminate"></mat-progress-bar>
-            <button (click)="getPaperByGrade(stepper)"
-                    *ngIf="!progress2"
-                    mat-button
-                    type="submit">Next
-            </button>
-          </div>
-        </form>
-      </mat-step>
+<!--      <mat-step [editable]="editable" [stepControl]="secondFormGroup">-->
+<!--        <form [formGroup]="secondFormGroup">-->
+<!--          <ng-template matStepLabel>Select class</ng-template>-->
+<!--          <mat-form-field>-->
+<!--            <mat-label>class</mat-label>-->
+<!--            <mat-select formControlName="class">-->
+<!--              <mat-option *ngFor="let class of classes" [value]="class.id">-->
+<!--                {{class?.name}}-->
+<!--              </mat-option>-->
+<!--            </mat-select>-->
+<!--          </mat-form-field>-->
+<!--          <div>-->
+<!--            <mat-progress-bar *ngIf="progress2" mode="indeterminate"></mat-progress-bar>-->
+<!--            <button (click)="getPaperByGrade(stepper)"-->
+<!--                    *ngIf="!progress2"-->
+<!--                    mat-button-->
+<!--                    type="submit">Next-->
+<!--            </button>-->
+<!--          </div>-->
+<!--        </form>-->
+<!--      </mat-step>-->
       <mat-step [editable]="editable" [stepControl]="fourthFormGroup">
         <form [formGroup]="fourthFormGroup">
           <ng-template matStepLabel>Select Paper</ng-template>
@@ -52,47 +52,48 @@
             </mat-select>
           </mat-form-field>
           <div>
-            <button (click)="stepper.next()"
-                    mat-button
-                    type="submit">Next
-            </button>
-          </div>
-        </form>
-      </mat-step>
-      <mat-step [editable]="editable" [stepControl]="thirdFormGroup">
-        <form [formGroup]="thirdFormGroup">
-          <ng-template matStepLabel>Select paper end Time</ng-template>
-          <mat-form-field>
-            <mat-form-field>
-              <input [ngxMatDatetimePicker]="picker" formControlName="time" matInput>
-              <!--                             [formControl]="dateControl" [min]="minDate" [max]="maxDate" [disabled]="disabled"-->
-              <!--                      >-->
-              <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
-              <ngx-mat-datetime-picker #picker>
-                <!--                                               [showSpinners]="showSpinners" -->
-                <!--                                               [showSeconds]="showSeconds"-->
-                <!--                                               [stepHour]="stepHour" -->
-                <!--                                               [stepMinute]="stepMinute" -->
-                <!--                                               [stepSecond]="stepSecond"-->
-                <!--                                               [touchUi]="touchUi" -->
-                <!--                                               [color]="color" -->
-                <!--                                               [enableMeridian]="enableMeridian"-->
-                <!--                                               [disableMinute]="disableMinute" -->
-                <!--                                               [hideTime]="hideTime"-->
-                <!--                      >-->
-              </ngx-mat-datetime-picker>
-            </mat-form-field>
-          </mat-form-field>
-          <div>
             <mat-progress-bar *ngIf="progress3" mode="indeterminate"></mat-progress-bar>
             <button (click)="submit(stepper)"
-                    *ngIf="!progress3"
                     mat-button
                     type="submit">Next
             </button>
           </div>
         </form>
       </mat-step>
+<!--      <mat-step [editable]="editable" [stepControl]="thirdFormGroup">-->
+<!--        <form [formGroup]="thirdFormGroup">-->
+<!--          <ng-template matStepLabel>Select paper end Time</ng-template>-->
+<!--          <mat-form-field>-->
+<!--            <mat-form-field>-->
+<!--              <input [ngxMatDatetimePicker]="picker" formControlName="time" matInput>-->
+<!--              &lt;!&ndash;                             [formControl]="dateControl" [min]="minDate" [max]="maxDate" [disabled]="disabled"&ndash;&gt;-->
+<!--              &lt;!&ndash;                      >&ndash;&gt;-->
+<!--              <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>-->
+<!--              <ngx-mat-datetime-picker #picker>-->
+<!--                &lt;!&ndash;                                               [showSpinners]="showSpinners" &ndash;&gt;-->
+<!--                &lt;!&ndash;                                               [showSeconds]="showSeconds"&ndash;&gt;-->
+<!--                &lt;!&ndash;                                               [stepHour]="stepHour" &ndash;&gt;-->
+<!--                &lt;!&ndash;                                               [stepMinute]="stepMinute" &ndash;&gt;-->
+<!--                &lt;!&ndash;                                               [stepSecond]="stepSecond"&ndash;&gt;-->
+<!--                &lt;!&ndash;                                               [touchUi]="touchUi" &ndash;&gt;-->
+<!--                &lt;!&ndash;                                               [color]="color" &ndash;&gt;-->
+<!--                &lt;!&ndash;                                               [enableMeridian]="enableMeridian"&ndash;&gt;-->
+<!--                &lt;!&ndash;                                               [disableMinute]="disableMinute" &ndash;&gt;-->
+<!--                &lt;!&ndash;                                               [hideTime]="hideTime"&ndash;&gt;-->
+<!--                &lt;!&ndash;                      >&ndash;&gt;-->
+<!--              </ngx-mat-datetime-picker>-->
+<!--            </mat-form-field>-->
+<!--          </mat-form-field>-->
+<!--          <div>-->
+<!--            <mat-progress-bar *ngIf="progress3" mode="indeterminate"></mat-progress-bar>-->
+<!--            <button (click)="submit(stepper)"-->
+<!--                    *ngIf="!progress3"-->
+<!--                    mat-button-->
+<!--                    type="submit">Next-->
+<!--            </button>-->
+<!--          </div>-->
+<!--        </form>-->
+<!--      </mat-step>-->
       <mat-step>
         <ng-template matStepLabel>Done</ng-template>
         <div>
