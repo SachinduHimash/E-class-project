@@ -75,25 +75,27 @@ class _HomeState extends State<Home> {
                Text('Marks of Last 5 Paper'),
                Container(
                  height: 400,
-                 child:  SfCartesianChart(
-                        // Initialize category axis
-                        primaryXAxis: CategoryAxis(),
-                        series: <ChartSeries>[
-                            // Initialize line series
-                            LineSeries<OrdinalSales, String>(
-                                dataSource: [
-                                    // Bind data source
-                                    OrdinalSales('Jan', 35),
-                                    OrdinalSales('Feb', 28),
-                                    OrdinalSales('Mar', 34),
-                                    OrdinalSales('Apr', 32),
-                                    OrdinalSales('May', 40)
-                                ],
-                                xValueMapper: (OrdinalSales sales, _) => sales.year,
-                                yValueMapper: (OrdinalSales sales, _) => sales.sales
-                            )
-                        ]
-                    )
+                 child:  
+                  Text('dd')
+                    // SfCartesianChart(
+                    //     // Initialize category axis
+                    //     primaryXAxis: CategoryAxis(),
+                    //     series: <ChartSeries>[
+                    //         // Initialize line series
+                    //         LineSeries<OrdinalSales, String>(
+                    //             dataSource: [
+                    //                 // Bind data source
+                    //                 OrdinalSales('Jan', 35),
+                    //                 OrdinalSales('Feb', 28),
+                    //                 OrdinalSales('Mar', 34),
+                    //                 OrdinalSales('Apr', 32),
+                    //                 OrdinalSales('May', 40)
+                    //             ],
+                    //             xValueMapper: (OrdinalSales sales, _) => sales.year,
+                    //             yValueMapper: (OrdinalSales sales, _) => sales.sales
+                    //         )
+                    //     ]
+                    // )
                  
                 //  SfCartesianChart(
                 //     series: Home.seriesList,
