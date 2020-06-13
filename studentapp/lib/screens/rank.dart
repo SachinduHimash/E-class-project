@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:studentapp/screens/welcome_page.dart';
 import '../default_appbar_demo.dart';
 import '../main.dart';
 
@@ -25,7 +26,7 @@ class Rank extends MyApp {
 
 class _RankState extends State<Rank> {
   List data;
-  String id = '2020001A';
+  String id = StaticStudent.studentId;
   @override
   void initState() {
     super.initState();
@@ -36,12 +37,12 @@ class _RankState extends State<Rank> {
 
   Future _calculation() async {
     if(Rank.ranks.isEmpty){
-      await Firestore.instance.collection('ranking').document('11').collection('rank').orderBy('createdAt',descending: true).limit(1).getDocuments().then((h) =>{
+      await Firestore.instance.collection('ranking').document(StaticStudent.studentClass.split('.')[0]).collection('rank').orderBy('createdAt',descending: true).limit(1).getDocuments().then((h) =>{
         h.documents.forEach((e) async =>{
           e.data['rank'].forEach((s)=>{
             if(s['rank']<=10){
               Rank.ranks.add(User(name: s['name'],rank: s['rank'],mark: s['mark'])),
-              if('2020025A' == s['id']){
+              if(StaticStudent.studentId == s['id']){
                 this.id = s['name']
               }
             } else {
