@@ -43,10 +43,21 @@ export class CreateComponent implements OnInit {
     },
   ];
 
+  noOfQuestions = [
+    {
+      count: 20
+    },
+    {
+      count: 40
+    }
+  ];
+  progress = false;
+
   constructor(private _fb: FormBuilder,
               private _af: AngularFirestore,
               public dialog: MatDialog,
-              public notification: NotificationService) { }
+              public notification: NotificationService) {
+  }
 
   ngOnInit(): void {
     this.buildForm();
@@ -57,11 +68,10 @@ export class CreateComponent implements OnInit {
     this.formGroup = this._fb.group({
       grade: new FormControl('', Validators.required),
       paperNumber: new FormControl('', Validators.required),
+      noOfQuestions: new FormControl(0, Validators.required),
       form: this._fb.array([])
     });
-    for (let i = 0; i < 20; i++) {
-      this.addItem(i + 1);
-    }
+
   }
 
   // initialize_sub_form
@@ -90,7 +100,8 @@ export class CreateComponent implements OnInit {
       paperNumber = '0'.concat(paperNumber.toString());
     }
     return paperNumber;
-  }
+  };
+
 
   submit() {
 
@@ -114,8 +125,8 @@ export class CreateComponent implements OnInit {
           .then(() => {
             this.notification.NotificationMessage('paper submit successfully');
             this.showCreatePaper = false;
-            this.formGroup.reset();
-            this.formGroup.clearValidators();
+            this.buildForm();
+            setTimeout(() => this.formGroupDirective.resetForm(), 0)
           })
           .catch(console.log);
       }
@@ -123,14 +134,20 @@ export class CreateComponent implements OnInit {
   }
 
   showPaper() {
+    this.progress = true;
+    const questionsCount = this.formGroup.value.noOfQuestions;
+    console.log(questionsCount);
+    for (let i = 0; i < questionsCount; i++) {
+      this.addItem(i + 1);
+    }
 
-    // docRef_'papers/9/paperNumbers/202001
     // tslint:disable-next-line:max-line-length
     const docRef = `papers/${this.formGroup.value.grade}/paperNumbers/${new Date().getFullYear().toString().concat(this.formatPaperNumber(this.formGroup.value.paperNumber))}`;
     this._af.firestore
       .doc(docRef)
       .get()
       .then(documentSnapshot => {
+        this.progress = false;
         if (documentSnapshot.exists) {
           this.notification.NotificationMessage('paper already exist');
           // console.log('document exists');
@@ -160,6 +177,7 @@ export class CreateComponent implements OnInit {
   closeWindow() {
     this.showCreatePaper = false;
     this.formGroup.reset();
+    this.buildForm();
     setTimeout(() => this.formGroupDirective.resetForm(), 0)
   }
 }

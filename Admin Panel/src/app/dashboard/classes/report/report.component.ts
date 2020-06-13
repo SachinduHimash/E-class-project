@@ -77,8 +77,11 @@ export class ReportComponent implements OnInit {
     this.fetchStudentData(this.dataReceive.grade, this.dataReceive.id);
   }
 
-  fetchStudentData(grade, studentId) {
+  async fetchStudentData(grade, studentId) {
     // console.log(this.studentId);
+
+    this.studentId = (await this._af.firestore.doc(`class/${grade}/students/${studentId}`).get()).data();
+    this.studentId.grade = grade;
     this.studentDataSubscribe = this._af.collection(`class/${grade}/students/${studentId}/marks`)
       .valueChanges({idField: 'id'})
       .subscribe((value: ClassStudentMarks[]) => {
@@ -93,7 +96,7 @@ export class ReportComponent implements OnInit {
         this.lastPaperMarks = value.map(r => r.mark).pop();
         this.NoOfPapers = this.lineChartLabels.length;
         this.averageMarks = Math.round(value.reduce((acc, item) => acc + item.mark, 0) / this.lineChartLabels.length);
-        if(this.lineChartLabels.length > 0){
+        if (this.lineChartLabels.length > 0) {
           this.progress = false;
         }
       });

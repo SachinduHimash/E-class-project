@@ -1,97 +1,88 @@
-<ng-template [ngIf]="lineChartLabels.length > 0">
-  <mat-card class="oh text-center little-profile">
-    <div class=" bg-info position-relative">
-      <h4 class="card-title text-white m-0 p-10">{{studentName}}</h4>
-    </div>
-    <div class="p-20 bg-info position-relative">
-      <div class="m-t-2" fxLayout="row" fxLayoutWrap="wrap">
-        <div fxFlex="100" fxFlex.gt-sm="33.33%" fxFlex.gt-xs="33.33%">
-          <h4 class="card-title text-white m-0">{{NoOfPapers}}</h4><br>
-          <h5 class="card-title text-white m-0">No of Papers</h5>
-        </div>
-        <mat-divider [vertical]="true"></mat-divider>
-        <div fxFlex="100" fxFlex.gt-sm="33.33%" fxFlex.gt-xs="33.33%">
-          <h4 class="card-title text-white m-0">{{averageMarks}}</h4><br>
-          <h5 class="card-title text-white m-0">Average Marks</h5>
-        </div>
-        <mat-divider [vertical]="true"></mat-divider>
-        <div fxFlex="100" fxFlex.gt-sm="33.33%" fxFlex.gt-xs="33.33%">
-          <h4 class="card-title text-white m-0">{{lastPaperMarks}}</h4><br>
-          <h4 class="card-title text-white m-0">Last Paper</h4>
-        </div>
+<mat-card class="oh text-center little-profile">
+  <div class=" bg-info position-relative">
+    <h4 class="card-title text-white m-0 p-10">{{studentName}}</h4>
+  </div>
+  <div class="p-20 bg-info position-relative">
+    <div class="m-t-2" fxLayout="row" fxLayoutWrap="wrap">
+      <div fxFlex="100" fxFlex.gt-sm="33.33%" fxFlex.gt-xs="33.33%">
+        <h4 class="card-title text-white m-0">{{NoOfPapers}}</h4><br>
+        <h5 class="card-title text-white m-0">No of Papers</h5>
+      </div>
+      <mat-divider [vertical]="true"></mat-divider>
+      <div fxFlex="100" fxFlex.gt-sm="33.33%" fxFlex.gt-xs="33.33%">
+        <h4 class="card-title text-white m-0">{{averageMarks}}</h4><br>
+        <h5 class="card-title text-white m-0">Average Marks</h5>
+      </div>
+      <mat-divider [vertical]="true"></mat-divider>
+      <div fxFlex="100" fxFlex.gt-sm="33.33%" fxFlex.gt-xs="33.33%">
+        <h4 class="card-title text-white m-0">{{lastPaperMarks}}</h4><br>
+        <h4 class="card-title text-white m-0">Last Paper</h4>
       </div>
     </div>
+  </div>
 
 
-    <div class="" style="width: 100%; padding: 5%">
-      <canvas [chartType]="lineChartType"
-              [colors]="lineChartColors"
-              [datasets]="lineChartData"
-              [labels]="lineChartLabels"
-              [legend]="lineChartLegend"
-              [options]="lineChartOptions"
-              [plugins]="lineChartPlugins"
-              baseChart>
-      </canvas>
-    </div>
+  <div class="" style="width: 100%; padding: 5%">
+    <canvas [chartType]="lineChartType"
+            [colors]="lineChartColors"
+            [datasets]="lineChartData"
+            [labels]="lineChartLabels"
+            [legend]="lineChartLegend"
+            [options]="lineChartOptions"
+            [plugins]="lineChartPlugins"
+            baseChart>
+    </canvas>
+  </div>
 
-    <mat-divider></mat-divider>
-    <div class="p-20 bg-info position-relative" style="">
-      <div class="m-t-2" fxLayout="row" fxLayoutWrap="wrap">
-        <div fxFlex="100" fxFlex.gt-sm="50%" fxFlex.gt-xs="33.33%">
-          <h5 class="card-title text-white m-0">School</h5>
-        </div>
-        <mat-divider [vertical]="true"></mat-divider>
-        <div fxFlex="100" fxFlex.gt-sm="50%" fxFlex.gt-xs="33.33%">
-          <h5 class="card-title text-white m-0">{{studentId?.school}}</h5>
-        </div>
+  <mat-divider></mat-divider>
+  <div class="p-20 bg-info position-relative" style="">
+    <div class="m-t-2" fxLayout="row" fxLayoutWrap="wrap">
+      <div fxFlex="100" fxFlex.gt-sm="50%" fxFlex.gt-xs="33.33%">
+        <h5 class="card-title text-white m-0">School</h5>
+      </div>
+      <mat-divider [vertical]="true"></mat-divider>
+      <div fxFlex="100" fxFlex.gt-sm="50%" fxFlex.gt-xs="33.33%">
+        <h5 class="card-title text-white m-0">{{studentId?.school}}</h5>
       </div>
     </div>
-    <mat-divider></mat-divider>
-    <div class="p-20 bg-info position-relative" style="">
-      <div class="m-t-2" fxLayout="row" fxLayoutWrap="wrap">
-        <div fxFlex="100" fxFlex.gt-sm="50%" fxFlex.gt-xs="33.33%">
-          <h5 class="card-title text-white m-0">Telephone</h5>
-        </div>
-        <mat-divider [vertical]="true"></mat-divider>
-        <div fxFlex="100" fxFlex.gt-sm="50%" fxFlex.gt-xs="33.33%">
-          <h5 class="card-title text-white m-0">{{studentId?.teleNo}}</h5>
-        </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="p-20 bg-info position-relative" style="">
+    <div class="m-t-2" fxLayout="row" fxLayoutWrap="wrap">
+      <div fxFlex="100" fxFlex.gt-sm="50%" fxFlex.gt-xs="33.33%">
+        <h5 class="card-title text-white m-0">Telephone</h5>
+      </div>
+      <mat-divider [vertical]="true"></mat-divider>
+      <div fxFlex="100" fxFlex.gt-sm="50%" fxFlex.gt-xs="33.33%">
+        <h5 class="card-title text-white m-0">{{studentId?.teleNo}}</h5>
       </div>
     </div>
-    <mat-divider></mat-divider>
-    <div class="p-20 bg-info position-relative" style="">
-      <div class="m-t-2" fxLayout="row" fxLayoutWrap="wrap">
-        <div fxFlex="100" fxFlex.gt-sm="50%" fxFlex.gt-xs="33.33%">
-          <h5 class="card-title text-white m-0">Grade</h5>
-        </div>
-        <mat-divider [vertical]="true"></mat-divider>
-        <div fxFlex="100" fxFlex.gt-sm="50%" fxFlex.gt-xs="33.33%">
-          <h5 class="card-title text-white m-0">{{studentId?.grade.toString().split('.')[0]}}</h5>
-        </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="p-20 bg-info position-relative" style="">
+    <div class="m-t-2" fxLayout="row" fxLayoutWrap="wrap">
+      <div fxFlex="100" fxFlex.gt-sm="50%" fxFlex.gt-xs="33.33%">
+        <h5 class="card-title text-white m-0">Grade</h5>
+      </div>
+      <mat-divider [vertical]="true"></mat-divider>
+      <div fxFlex="100" fxFlex.gt-sm="50%" fxFlex.gt-xs="33.33%">
+        <h5 class="card-title text-white m-0">{{studentId?.grade.toString().split('.')[0]}}</h5>
       </div>
     </div>
+  </div>
 
-    <mat-divider></mat-divider>
-    <div class="p-20 bg-info position-relative" style="">
-      <div class="m-t-2" fxLayout="row" fxLayoutWrap="wrap">
-        <div fxFlex="100" fxFlex.gt-sm="50%" fxFlex.gt-xs="33.33%">
-          <h5 class="card-title text-white m-0">Address</h5>
-        </div>
-        <mat-divider [vertical]="true"></mat-divider>
-        <div fxFlex="100" fxFlex.gt-sm="50%" fxFlex.gt-xs="33.33%">
-          <h5 class="card-title text-white m-0">{{studentId?.address}}</h5>
-        </div>
+  <mat-divider></mat-divider>
+  <div class="p-20 bg-info position-relative" style="">
+    <div class="m-t-2" fxLayout="row" fxLayoutWrap="wrap">
+      <div fxFlex="100" fxFlex.gt-sm="50%" fxFlex.gt-xs="33.33%">
+        <h5 class="card-title text-white m-0">Address</h5>
+      </div>
+      <mat-divider [vertical]="true"></mat-divider>
+      <div fxFlex="100" fxFlex.gt-sm="50%" fxFlex.gt-xs="33.33%">
+        <h5 class="card-title text-white m-0">{{studentId?.address}}</h5>
       </div>
     </div>
+  </div>
 
-  </mat-card>
+</mat-card>
 
-</ng-template>
-<ng-template [ngIf]="lineChartLabels.length <= 0 && progress">
-  <mat-card class="oh text-center little-profile">
-    <div class=" bg-info position-relative">
-      <h4 class="card-title text-white m-0 p-10">{{studentName}} Marks data not found</h4>
-    </div>
-  </mat-card>
-</ng-template>

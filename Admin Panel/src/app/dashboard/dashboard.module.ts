@@ -38,6 +38,7 @@ import { UpdateStudentComponent } from './students/update-student/update-student
 import { UpdateClassComponent } from './classes/update-class/update-class.component';
 import { ViewTop10Component } from './leaderboard/view-top10/view-top10.component';
 import { ViewAllRanksComponent } from './leaderboard/view-all-ranks/view-all-ranks.component';
+import { DeleteComponent } from './papers/delete/delete.component';
 
 
 
@@ -82,7 +83,8 @@ import { ViewAllRanksComponent } from './leaderboard/view-all-ranks/view-all-ran
     UpdateStudentComponent,
     UpdateClassComponent,
     ViewTop10Component,
-    ViewAllRanksComponent
+    ViewAllRanksComponent,
+    DeleteComponent
   ]
 })
 export class DashboardModule {
