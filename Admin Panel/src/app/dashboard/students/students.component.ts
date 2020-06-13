@@ -34,7 +34,7 @@ export class StudentsComponent implements OnInit, OnDestroy {
   gradeSelected = 10;
   previousGrade = 10;
   // table
-  displayedColumns = ['uid', 'fullName', 'className', 'update', 'view'];
+  displayedColumns = ['uid', 'fullName', 'className', 'update', 'view', 'delete'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

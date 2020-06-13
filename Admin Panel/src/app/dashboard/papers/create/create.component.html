@@ -36,7 +36,16 @@
           </mat-hint>
         </mat-form-field>
 
-        <button mat-raised-button color="primary"  type="submit" [disabled]="formGroup.invalid" (click)="showPaper()" style="margin:0 0 20px 30px">Create Paper</button>
+        <mat-form-field appearance="outline">
+          <mat-label>No of Questions</mat-label>
+          <mat-select formControlName="noOfQuestions" >
+            <mat-option *ngFor="let question of noOfQuestions" [value]="question.count">
+              {{question.count}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-progress-bar *ngIf="progress" mode="indeterminate"></mat-progress-bar>
+        <button *ngIf="!progress" mat-raised-button color="primary"  type="submit" [disabled]="formGroup.invalid" (click)="showPaper()" style="margin:0 0 20px 30px">Create Paper</button>
 
       </mat-card-content>
     </ng-template>
