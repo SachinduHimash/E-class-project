@@ -200,11 +200,11 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                           barrierDismissible: false, // user must tap button!
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text('your not in a class'),
+                              title: Text('You are not in the class'),
                               content: SingleChildScrollView(
                               child: ListBody(
                                 children: <Widget>[
-                                  Text('pleass mark your attendance'),
+                                  Text('Please mark your attendance'),
                                   ],
                                 ),
                               ),
@@ -232,7 +232,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                               content: SingleChildScrollView(
                               child: ListBody(
                                 children: <Widget>[
-                                  Text("today hven't any paper"),
+                                  Text("You don't have any papers today"),
                                   ],
                                 ),
                               ),
@@ -260,7 +260,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                               content: SingleChildScrollView(
                               child: ListBody(
                                 children: <Widget>[
-                                  Text("today hven't any paper"),
+                                  Text("You don't have any papers today"),
                                   ],
                                 ),
                               ),
@@ -283,9 +283,10 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                 padding: EdgeInsets.all(30),
                 color: Colors.blue[400],
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('Today Paper',
-                    style: TextStyle(fontWeight:FontWeight.bold,fontSize: 18),)
+                    Text('Do your paper',
+                    style: TextStyle(fontWeight:FontWeight.bold,fontSize: 18,color: Colors.white),)
                     
                   ],
                 )

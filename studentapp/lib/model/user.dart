@@ -11,7 +11,7 @@ class Student {
 
   Student.fromMap(Map snapshot,String id) :
         id = id ?? '',
-        fullname = snapshot['fullname'] ?? '',
+        fullname = snapshot['fullName'] ?? '',
         address = snapshot['address'] ?? '',
         clas = snapshot['class'] ?? '',
         school = snapshot['school']??'',
