@@ -10,6 +10,7 @@ import 'package:studentapp/screens/paperAccess_page.dart';
 import 'package:studentapp/screens/pastPaper.dart';
 import 'package:studentapp/screens/profile.dart';
 import 'package:studentapp/screens/rank.dart';
+import 'package:studentapp/screens/welcome_page.dart';
 
 import 'components/chip_item.dart';
 import 'components/choose_tab_item.dart';
@@ -128,34 +129,15 @@ class _State extends State<DefaultAppBarDemo>
     DefaultAppBarDemo.pr.style(message: "Please wait...");
     
     return Scaffold(
-      appBar: new AppBar(
-        title: new Text(
-          "Second screen",
-          style: new TextStyle(color: Colors.white),
-        ),
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).push(CupertinoPageRoute(
-                fullscreenDialog: true,
-                builder: (BuildContext context) {
-                  MyApp.page = 'myapp';
-                   return MyApp();
-                },
-              ),
-            );
-          },
-        ),
-      ),
       body: TabBarView(
-        physics: NeverScrollableScrollPhysics(),
+       
           controller: _tabController,
           dragStartBehavior: DragStartBehavior.start,
           children: _tabItems.value
               .map((i) => i.title == 'Home' || i.title == 'Happy'
-                  ? Home()
-                  : ( i.title == 'Paper' ?  PaperAccessPage() : ( i.title == 'Profile' ?  Profile() : (i.title == 'Rank' ?  Rank() : PastPaper())))
-                  )
+                  ? Home(): i.title == 'Paper' ? PaperAccessPage(): i.title == 'Rank' ?Rank():i.title == 'Profile' ? Profile() :PastPaper())
+                  // : ( i.title == 'Paper' ?  PaperAccessPage() : ( i.title == 'Profile' ?  Profile() : (i.title == 'Rank' ?  Rank() : PastPaper())))
+                  // )
               .toList(growable: false)),
       bottomNavigationBar: _badge == null
           ? ConvexAppBar(
@@ -184,36 +166,42 @@ class _State extends State<DefaultAppBarDemo>
   }
 
   void _onTabItemTypeChanged(ChoiceValue<List<TabItem>> value) {
+    
     setState(() {
       _tabItems = value;
     });
   }
 
   void _onStyleChanged(ChoiceValue<TabStyle> value) {
+    
     setState(() {
       _style = value;
     });
   }
 
   void _onCurveChanged(ChoiceValue<Curve> value) {
+    
     setState(() {
       _curve = value;
     });
   }
 
   void _onBarColorChanged(Color value) {
+    
     setState(() {
       _barColor = value;
     });
   }
 
   void _onGradientChanged(Gradient value) {
+    
     setState(() {
       _gradient = value;
     });
   }
 
   void _onBadgeChanged(Badge value) {
+    
     setState(() {
       _badge = value;
     });

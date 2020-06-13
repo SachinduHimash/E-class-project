@@ -102,6 +102,7 @@ class _State extends State<CustomAppBarDemo>
   }
 
   void _onColorChanged(Color color) {
+    
     setState(() {
     });
   }

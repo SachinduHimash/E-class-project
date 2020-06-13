@@ -21,7 +21,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
   Widget build(BuildContext context) {
     
     
-    
+     print('f3445');
     return SafeArea(
       child: Container(
         padding: EdgeInsets.all(40),
@@ -31,7 +31,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
               Image.asset("assets/logo1.png"),
               RaisedButton(
                 onPressed: () async{
-                  DefaultAppBarDemo.pr.show();
+                  await DefaultAppBarDemo.pr.show();
                   await Firestore.instance.collection('paperAccess').document(StaticStudent.studentClass.split('.')[0]).collection('day').document(PaperAccessPage.today)
                   .get().then((x) async=> {
                     print(x.data),
@@ -40,15 +40,17 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                       .get().then( (y) async {
                         if (y == null || !y.exists) {
                           // Document with id == docId doesn't exist.
-                          await DefaultAppBarDemo.pr.hide();
+                          DefaultAppBarDemo.pr.hide();
                           Navigator.of(context).push(CupertinoPageRoute(
                               fullscreenDialog: true,
                               builder: (BuildContext context) {
                                 if(x.data["questions"] == 40) {
                                   PaperPage40.qNumber = 0;
+                                  PaperPage.timeout = false;
+                                  PaperPage.paperNumber = x.data['paper'];
                                   MyApp.page = 'PaperPage40';
                                   PaperPage40.answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-                                   PaperPage40.endTime = DateTime.now().add(new Duration(seconds:60*30));
+                                   PaperPage40.endTime = DateTime.now().add(new Duration(seconds:60*60));
                                   return new StreamBuilder(
                                     stream: Firestore.instance.collection('papers').document(StaticStudent.studentClass.split('.')[0]).collection('paperNumbers').document(x.data['paper']).snapshots(),
                                     builder: (context, snapshot) {
@@ -62,9 +64,11 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                                   );
                                 } else {
                                   PaperPage.qNumber = 0;
+                                  PaperPage.timeout = false;
+                                  PaperPage.paperNumber = x.data['paper'];
                                   MyApp.page = 'PaperPage';
                                   PaperPage.answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-                                  PaperPage.endTime = DateTime.now().add(new Duration(seconds:60*30));
+                                  PaperPage.endTime = DateTime.now().add(new Duration(seconds:60*1));
                                   return new StreamBuilder(
                                     stream: Firestore.instance.collection('papers').document(StaticStudent.studentClass.split('.')[0]).collection('paperNumbers').document(x.data['paper']).snapshots(),
                                     builder: (context, snapshot) {
@@ -82,17 +86,17 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                             ),
                           );
                         } else {
-                          await DefaultAppBarDemo.pr.hide();
+                          DefaultAppBarDemo.pr.hide();
                           showDialog<void>(
                           context: context,
                           barrierDismissible: false, // user must tap button!
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text('atemped'),
+                              title: Text('Atemped'),
                               content: SingleChildScrollView(
                               child: ListBody(
                                 children: <Widget>[
-                                  Text('only 1 attempt'),
+                                  Text('Only 1 attempt'),
                                   ],
                                 ),
                               ),
@@ -194,7 +198,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                       // }
                       ).catchError((e) async =>{
                         print(e),
-                        await DefaultAppBarDemo.pr.hide(),
+                        DefaultAppBarDemo.pr.hide(),
                         showDialog<void>(
                           context: context,
                           barrierDismissible: false, // user must tap button!
@@ -222,7 +226,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                       })
                          
                     } else {
-                        await DefaultAppBarDemo.pr.hide(),
+                        DefaultAppBarDemo.pr.hide(),
                         showDialog<void>(
                           context: context,
                           barrierDismissible: false, // user must tap button!
@@ -250,7 +254,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                                     
                     }
                     }).catchError((e) async =>{
-                      await DefaultAppBarDemo.pr.hide(),
+                      DefaultAppBarDemo.pr.hide(),
                         showDialog<void>(
                           context: context,
                           barrierDismissible: false, // user must tap button!

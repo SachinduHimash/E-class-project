@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:studentapp/screens/welcome_page.dart';
 import '../default_appbar_demo.dart';
 import '../main.dart';
@@ -30,6 +31,7 @@ class _RankState extends State<Rank> {
   String id = StaticStudent.studentId;
   @override
   void initState() {
+   
     super.initState();
     
       _calculation();
@@ -38,6 +40,7 @@ class _RankState extends State<Rank> {
 
   Future _calculation() async {
     if(Rank.ranks.isEmpty){
+      print('1');
       await Firestore.instance.collection('ranking').document(StaticStudent.studentClass.split('.')[0]).collection('rank').orderBy('createdAt',descending: true).limit(1).getDocuments().then((h) =>{
         
         h.documents.forEach((e) async =>{
@@ -57,16 +60,23 @@ class _RankState extends State<Rank> {
         })
       }).then((value) => {
         setState(() {
+          print('4');
             DefaultAppBarDemo.pr.hide();
+            print(DefaultAppBarDemo.pr.isShowing());
+            print(DefaultAppBarDemo.load);
             data =  Rank.ranks;
           }),
       }
       );
     } else {
-      setState(() {
+      print('2');
+      setState(()  {
+        print('3');
         DefaultAppBarDemo.pr.hide();
+        print(DefaultAppBarDemo.pr.isShowing());
+        print(DefaultAppBarDemo.load);
         data =  Rank.ranks;
-        print('dd');
+        
       });
     }
     

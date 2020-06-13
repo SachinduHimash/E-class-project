@@ -1,14 +1,18 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flip_panel/flip_panel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scrolling_page_indicator/scrolling_page_indicator.dart';
 import 'package:studentapp/screens/qustionSelcet40.dart';
+import 'package:studentapp/screens/welcome_page.dart';
 import '../main.dart';
 
 class PaperPage40 extends  MyApp{
   static double qNumber;
     static dynamic questions;
     static dynamic endTime;
+    static dynamic paperNumber;
+    static bool timeout;
     static List<int> answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
     @override
     _PaperPage40State createState() => _PaperPage40State();
@@ -35,7 +39,11 @@ class _PaperPage40State extends State<PaperPage40> {
  
   @override
   Widget build(BuildContext context) {
+    final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
+      functionName: 'login/marks',
+    );
     _controller.addListener(() {
+    
     setState(() {
       PaperPage40.qNumber = _controller.page;
     });
@@ -88,24 +96,35 @@ class _PaperPage40State extends State<PaperPage40> {
         child: Container(
           padding: EdgeInsets.all(40),
           child: Center(
-            child: AlertDialog(
-                              title: Text('Time out'),
-                              content: SingleChildScrollView(
-                              child: ListBody(
-                                children: <Widget>[
-                                  Text('paper is over'),
-                                  ],
+            child: WillPopScope(
+              onWillPop: () {  },
+                          child: AlertDialog(
+                                title: Text('Time out'),
+                                content: SingleChildScrollView(
+                                child: ListBody(
+                                  children: <Widget>[
+                                    Text('paper is over'),
+                                    ],
+                                  ),
                                 ),
+                                actions: <Widget>[
+                                  FlatButton(
+                                    child: Text('Ok'),
+                                    onPressed: () {
+                                      timeout();
+                                      Navigator.of(context).push(CupertinoPageRoute(
+                                        fullscreenDialog: true,
+                                        builder: (BuildContext context) {
+                                          MyApp.page = 'myapp';
+                                          return MyApp();
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
                               ),
-                              actions: <Widget>[
-                                FlatButton(
-                                  child: Text('Ok'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
-                            ),
+            ),
           )
         )
       );
@@ -131,7 +150,7 @@ class _PaperPage40State extends State<PaperPage40> {
                                 backgroundColor: Colors.black,
                                 digitSize: 48.0,
                                 borderRadius: const BorderRadius.all(Radius.circular(3.0)),
-                                onDone: () => print('ih'),
+                                onDone: () => timeout(),
                               ),
                             ),
                           ),
@@ -173,7 +192,8 @@ class _PaperPage40State extends State<PaperPage40> {
                                     ),
                                     onPressed: () { 
                                       PaperPage40.qNumber = _controller.page - 1;
-                                      setState(() {
+                                      
+    setState(() {
                                         _controller.previousPage(duration: Duration(microseconds: 150), curve: Curves.ease);
                                       });
                                     },
@@ -212,7 +232,20 @@ class _PaperPage40State extends State<PaperPage40> {
                                           
                                           }
                                           
+                                          
                                         }
+                                        dynamic resp = await callable.call(<String, dynamic>{
+                                          'userID': StaticStudent.studentId,
+                                          'class': StaticStudent.studentClass,
+                                          'grade': StaticStudent.studentClass.split('.')[0],
+                                          'paperNumber': PaperPage40.paperNumber,
+                                          'photo': '',
+                                          'school': StaticStudent.studentSchool,
+                                          'marks':marks,
+                                          'answer' : PaperPage40.answer,
+                                          'name': StaticStudent.studentFullname,
+
+                                        });
                                         
                                         showDialog<void>(
                                           context: context,
@@ -223,7 +256,7 @@ class _PaperPage40State extends State<PaperPage40> {
                                               content: SingleChildScrollView(
                                                 child: ListBody(
                                                   children: <Widget>[
-                                                    Text('you marks is $marks'),
+                                                    Text('Your Marks is $marks'),
                                                   ],
                                                 ),
                                               ),
@@ -258,7 +291,7 @@ class _PaperPage40State extends State<PaperPage40> {
                                               content: SingleChildScrollView(
                                                 child: ListBody(
                                                   children: <Widget>[
-                                                    Text('you must complete every question'),
+                                                    Text('You must complete every question'),
                                                   ],
                                                 ),
                                               ),
@@ -309,7 +342,7 @@ class _PaperPage40State extends State<PaperPage40> {
                                 backgroundColor: Colors.black,
                                 digitSize: 48.0,
                                 borderRadius: const BorderRadius.all(Radius.circular(3.0)),
-                                onDone: () => print('ih'),
+                                onDone: () => timeout(),
                               ),
                             ),
                           ),
@@ -370,7 +403,8 @@ class _PaperPage40State extends State<PaperPage40> {
                                     ),
                                     onPressed: () {
                                       PaperPage40.qNumber = _controller.page + 1;
-                                      setState(() {
+                                      
+    setState(() {
                                         _controller.nextPage(duration: Duration(microseconds: 1), curve: Curves.ease);
                                       });
                                     },
@@ -408,7 +442,7 @@ class _PaperPage40State extends State<PaperPage40> {
                                 backgroundColor: Colors.black,
                                 digitSize: 48.0,
                                 borderRadius: const BorderRadius.all(Radius.circular(3.0)),
-                                onDone: () => print('ih'),
+                                onDone: () => timeout(),
                               ),
                             ),
                           ),
@@ -450,7 +484,8 @@ class _PaperPage40State extends State<PaperPage40> {
                                     ),
                                     onPressed: () { 
                                       PaperPage40.qNumber = _controller.page - 1;
-                                      setState(() {
+                                      
+    setState(() {
                                         _controller.previousPage(duration: Duration(microseconds: 150), curve: Curves.ease);
                                       });
                                     },
@@ -481,7 +516,8 @@ class _PaperPage40State extends State<PaperPage40> {
                                     ),
                                     onPressed: () { 
                                       PaperPage40.qNumber = _controller.page + 1;
-                                      setState(() {
+                                      
+    setState(() {
                                         _controller.nextPage(duration: Duration(microseconds: 1), curve: Curves.ease);
                                       });
                                     },
@@ -540,7 +576,8 @@ class _PaperPage40State extends State<PaperPage40> {
                               child: RaisedButton(
                                   color: PaperPage40.answer[qNumber-1] == 1 ?  Colors.green[400] : Colors.amber,
                                   onPressed: () {
-                                    setState(() {
+                                    
+    setState(() {
                                       PaperPage40.answer[qNumber-1] = 1;
                                     });
                                   },
@@ -563,7 +600,8 @@ class _PaperPage40State extends State<PaperPage40> {
                               child:RaisedButton(
                                   color: PaperPage40.answer[qNumber-1] == 2 ?  Colors.green[400] : Colors.amber,
                                   onPressed: () {
-                                    setState(() {
+                                    
+    setState(() {
                                       PaperPage40.answer[qNumber-1] = 2;
                                     });
                                   },
@@ -586,7 +624,8 @@ class _PaperPage40State extends State<PaperPage40> {
                               child:RaisedButton(
                               color: PaperPage40.answer[qNumber-1] == 3 ?  Colors.green[400] : Colors.amber,
                               onPressed: () {
-                                setState(() {
+                                
+    setState(() {
                                   PaperPage40.answer[qNumber-1] = 3;
                                 });
                               },
@@ -609,7 +648,8 @@ class _PaperPage40State extends State<PaperPage40> {
                               child: RaisedButton(
                               color: PaperPage40.answer[qNumber-1] == 4 ?  Colors.green[400] : Colors.amber,
                               onPressed: () {
-                                setState(() {
+                                
+    setState(() {
                                   PaperPage40.answer[qNumber-1] = 4;
                                 });
                               },
@@ -680,7 +720,8 @@ class _PaperPage40State extends State<PaperPage40> {
                               child: RaisedButton(
                                   color: PaperPage40.answer[qNumber-1] == 1 ?  Colors.green[400] : Colors.amber,
                                   onPressed: () {
-                                    setState(() {
+                                    
+    setState(() {
                                       PaperPage40.answer[qNumber-1] = 1;
                                     });
                                   },
@@ -703,7 +744,8 @@ class _PaperPage40State extends State<PaperPage40> {
                               child:RaisedButton(
                                   color: PaperPage40.answer[qNumber-1] == 2 ?  Colors.green[400] : Colors.amber,
                                   onPressed: () {
-                                    setState(() {
+                                    
+    setState(() {
                                       PaperPage40.answer[qNumber-1] = 2;
                                     });
                                   },
@@ -726,7 +768,8 @@ class _PaperPage40State extends State<PaperPage40> {
                               child:RaisedButton(
                               color: PaperPage40.answer[qNumber-1] == 3 ?  Colors.green[400] : Colors.amber,
                               onPressed: () {
-                                setState(() {
+                                
+    setState(() {
                                   PaperPage40.answer[qNumber-1] = 3;
                                 });
                               },
@@ -749,7 +792,8 @@ class _PaperPage40State extends State<PaperPage40> {
                               child: RaisedButton(
                               color: PaperPage40.answer[qNumber-1] == 4 ?  Colors.green[400] : Colors.amber,
                               onPressed: () {
-                                setState(() {
+                                
+    setState(() {
                                   PaperPage40.answer[qNumber-1] = 4;
                                 });
                               },
@@ -774,6 +818,35 @@ class _PaperPage40State extends State<PaperPage40> {
       
       
       
+    }
+  }
+  void timeout(){
+    print('dd');
+    if(!PaperPage40.timeout){
+       print('dddd');
+      PaperPage40.timeout =true;
+      var marks = 0;
+      final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
+        functionName: 'login/marks',
+      );
+      PaperPage40.qNumber = null;
+      for (var i = 0; i < PaperPage40.answer.length; i++) {
+        if(PaperPage40.answer[i] == PaperPage40.questions[i]['correctAnswer']){
+          marks+=5;
+        }
+      }
+      callable.call(<String, dynamic>{
+        'userID': StaticStudent.studentId,
+        'class': StaticStudent.studentClass,
+        'grade': StaticStudent.studentClass.split('.')[0],
+        'paperNumber': PaperPage40.paperNumber,
+        'photo': '',
+        'school': StaticStudent.studentSchool,
+        'marks':marks,
+        'answer' : PaperPage40.answer,
+        'name': StaticStudent.studentFullname,
+
+      });
     }
   }
 }

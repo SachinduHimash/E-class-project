@@ -37,6 +37,7 @@ class _AnswerPageState extends State<AnswerPage> {
   @override
   Widget build(BuildContext context) {
     _controller.addListener(() {
+    
     setState(() {
       AnswerPage.qNumber = _controller.page;
     });
@@ -126,7 +127,8 @@ class _AnswerPageState extends State<AnswerPage> {
                                     ),
                                     onPressed: () { 
                                       AnswerPage.qNumber = _controller.page - 1;
-                                      setState(() {
+                                      
+    setState(() {
                                         _controller.previousPage(duration: Duration(microseconds: 150), curve: Curves.ease);
                                       });
                                     },
@@ -252,7 +254,8 @@ class _AnswerPageState extends State<AnswerPage> {
                                     ),
                                     onPressed: () {
                                       AnswerPage.qNumber = _controller.page + 1;
-                                      setState(() {
+                                      
+    setState(() {
                                         _controller.nextPage(duration: Duration(microseconds: 1), curve: Curves.ease);
                                       });
                                     },
@@ -323,7 +326,8 @@ class _AnswerPageState extends State<AnswerPage> {
                                     ),
                                     onPressed: () { 
                                       AnswerPage.qNumber = _controller.page - 1;
-                                      setState(() {
+                                      
+    setState(() {
                                         _controller.previousPage(duration: Duration(microseconds: 150), curve: Curves.ease);
                                       });
                                     },
@@ -354,7 +358,8 @@ class _AnswerPageState extends State<AnswerPage> {
                                     ),
                                     onPressed: () { 
                                       AnswerPage.qNumber = _controller.page + 1;
-                                      setState(() {
+                                      
+    setState(() {
                                         _controller.nextPage(duration: Duration(microseconds: 1), curve: Curves.ease);
                                       });
                                     },

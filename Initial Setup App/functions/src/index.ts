@@ -151,6 +151,7 @@ app.post('/marks', (req, res) => {
     .set({
       createdAt: TimeStamp,
       mark: reqData.marks,
+      answer: reqData.answer,
       // date: this.datePipe.transform(new Date(), 'yyyy.MM.dd'),
       date: date,
       name: reqData.name,

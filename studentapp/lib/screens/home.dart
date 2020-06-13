@@ -29,21 +29,20 @@ class _HomeState extends State<Home> {
   }
 
   Future _calculation() async {
-    var i;
+    var i=1;
     List<OrdinalSales> data=[];
     await Firestore.instance.collection('class').document(StaticStudent.studentClass).collection('students').document(StaticStudent.studentId).collection('marks')
-    .orderBy('createdAt',descending: true).limit(1).getDocuments().then((h) =>{
-        for(i=0;i<20;i++ ){
-           data.add(OrdinalSales((i+1).toString(),i*5))
-        },
+    .orderBy('createdAt',descending: true).limit(20).getDocuments().then((h) =>{
+        
         h.documents.forEach((e) async =>{
           print(e.data['mark'].runtimeType),
           print(e.documentID.runtimeType),
           data.add(OrdinalSales(i.toString(),e.data['mark'])),
           i++
         })}).then((value) => {
-          setState(() {
-              print('dd');
+          
+    setState(() {
+              
               Home.seriesList=  [
                 new charts.Series<OrdinalSales, String>(
                   id: 'Desktop',

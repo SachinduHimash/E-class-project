@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:studentapp/screens/welcome_page.dart';
 
 import '../default_appbar_demo.dart';
@@ -34,6 +35,7 @@ class PastPaper extends MyApp {
   static List<dynamic> papers =List<dynamic>();
   static List<String> papersId = List<String>();
   static List<Visible> visible = List<Visible>();
+  static bool val =false;
   @override
   _PastPaperState createState() => _PastPaperState();
   
@@ -53,13 +55,18 @@ class _PastPaperState extends State<PastPaper> {
   
 
   Future _calculation() async {
-    
+    // DefaultAppBarDemo.pr = new ProgressDialog(context,isDismissible: false,);
+    // DefaultAppBarDemo.pr.style(message: "Please wait...");
+    // await DefaultAppBarDemo.pr.show();
     var today;
     var classN = StaticStudent.studentClass;
     var grade = StaticStudent.studentClass.split('.')[0];
-    var studentId = StaticStudent.studentId;
-    
-    if(PastPaper.papers.length == 0 ){
+    var studentId = StaticStudent.studentId; 
+    // PastPaper.papers =List<dynamic>();
+    // PastPaper.papersId = List<String>();
+    // PastPaper.visible = List<Visible>();
+    if(PastPaper.papers.length == 0 && !PastPaper.val){
+      PastPaper.val =true;
       await Firestore.instance.collection('paperAccess').document(grade).collection('day').getDocuments()
         .then((QuerySnapshot snapshot) {
 
@@ -71,7 +78,7 @@ class _PastPaperState extends State<PastPaper> {
             today =new DateTime.now().year.toString()+(new DateTime.now().month.toString().length == 1 ? '0'+new DateTime.now().month.toString():new DateTime.now().month.toString())+new DateTime.now().day.toString();
             print(today);
 
-        }).catchError((ee) => print(ee)).then((e) async => {
+        }).catchError((ee) => {print(ee)}).then((e) async => {
                 
               await Firestore.instance.collection('papers').document(grade).collection('paperNumbers').getDocuments()
                  .then((QuerySnapshot snapshot) async {
@@ -98,8 +105,9 @@ class _PastPaperState extends State<PastPaper> {
 
                           }
                         ).then((value) => setState(() {
-                              DefaultAppBarDemo.pr.hide();
-                              
+                               DefaultAppBarDemo.pr.hide();
+                               print(DefaultAppBarDemo.pr.isShowing());
+                               print(DefaultAppBarDemo.load);
                               data = PastPaper.papers;
                               
                           })
@@ -230,26 +238,28 @@ class _PastPaperState extends State<PastPaper> {
             // }).catchError((ee)=> {})
 
         
-      }).catchError((ee) => {});
+      }).catchError((ee) => { });
       
       
     } else {
       
-      print('dd');
-      print(PastPaper.papers[0].paperId);
-      //print(PastPaper.papers[1].paperId);
-      print(PastPaper.papers[0].paperData);
-      //print(PastPaper.papers[1].paperData);
-      print(PastPaper.papers[0].anwser);
-      //print(PastPaper.papers[1].anwser);
-       setState(() {
-          DefaultAppBarDemo.pr.hide().catchError((e)=>print(e));
-          print(DefaultAppBarDemo.pr.isShowing());
-          data = PastPaper.papers;
-        });
+      if(PastPaper.papers.length != 0){
+        print(PastPaper.papers[0].paperId);
+        //print(PastPaper.papers[1].paperId);
+        print(PastPaper.papers[0].paperData);
+        //print(PastPaper.papers[1].paperData);
+        print(PastPaper.papers[0].anwser);
+        //print(PastPaper.papers[1].anwser);
+        setState(() {
+            DefaultAppBarDemo.pr.hide();
+            print(DefaultAppBarDemo.pr.isShowing());
+            print(DefaultAppBarDemo.load);
+            data = PastPaper.papers;
+          });
+      }
     }
     
-
+    
   }
   
   
