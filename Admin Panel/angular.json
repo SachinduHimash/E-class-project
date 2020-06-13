@@ -26,7 +26,8 @@
               "src/styles.css",
               "src/assets/styles/style.scss",
               "node_modules/angular-instantsearch/bundles/instantsearch.min.css",
-              "node_modules/angular-instantsearch/bundles/instantsearch-theme-algolia.min.css"
+              "node_modules/angular-instantsearch/bundles/instantsearch-theme-algolia.min.css",
+              "node_modules/sweetalert2/src/sweetalert2.scss"
             ],
             "scripts": []
           },

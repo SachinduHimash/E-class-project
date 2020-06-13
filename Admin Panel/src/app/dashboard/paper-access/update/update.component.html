@@ -32,7 +32,41 @@
           </mat-form-field>
           <div>
             <mat-progress-bar *ngIf="progress3" mode="indeterminate"></mat-progress-bar>
+            <button (click)="stepper.next()"
+                    mat-button
+                    type="submit">Next
+            </button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [editable]="editable" [stepControl]="thirdFormGroup">
+        <form [formGroup]="thirdFormGroup">
+          <ng-template matStepLabel>Select paper end Time</ng-template>
+          <mat-form-field>
+            <mat-form-field>
+              <input [ngxMatDatetimePicker]="picker" formControlName="time" matInput>
+              <!--                             [formControl]="dateControl" [min]="minDate" [max]="maxDate" [disabled]="disabled"-->
+              <!--                      >-->
+              <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+              <ngx-mat-datetime-picker #picker>
+                <!--                                               [showSpinners]="showSpinners" -->
+                <!--                                               [showSeconds]="showSeconds"-->
+                <!--                                               [stepHour]="stepHour" -->
+                <!--                                               [stepMinute]="stepMinute" -->
+                <!--                                               [stepSecond]="stepSecond"-->
+                <!--                                               [touchUi]="touchUi" -->
+                <!--                                               [color]="color" -->
+                <!--                                               [enableMeridian]="enableMeridian"-->
+                <!--                                               [disableMinute]="disableMinute" -->
+                <!--                                               [hideTime]="hideTime"-->
+                <!--                      >-->
+              </ngx-mat-datetime-picker>
+            </mat-form-field>
+          </mat-form-field>
+          <div>
+            <mat-progress-bar *ngIf="progress3" mode="indeterminate"></mat-progress-bar>
             <button (click)="submit(stepper)"
+                    *ngIf="!progress3"
                     mat-button
                     type="submit">Next
             </button>

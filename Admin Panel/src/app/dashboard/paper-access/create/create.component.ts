@@ -14,7 +14,6 @@ import {NotificationService} from '../../services/notification.service';
 export class CreateAccessComponent implements OnInit {
 
   endMessage: string;
-  secondFormGroup: FormGroup;
   firstFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
   fourthFormGroup: FormGroup;
@@ -42,6 +41,9 @@ export class CreateAccessComponent implements OnInit {
     this.firstFormGroup = this._fb.group({
       grade: ['', Validators.required]
     });
+    this.thirdFormGroup = this._fb.group({
+      time: ['', Validators.required]
+    });
     this.fourthFormGroup = this._fb.group({
       paperNumber: ['', Validators.required]
     });
@@ -52,7 +54,7 @@ export class CreateAccessComponent implements OnInit {
       return '0'.concat(paperNumber.toString());
     }
     return paperNumber.toString();
-  }
+  };
 
   getPaperByGrade(stepper: MatVerticalStepper) {
     this.progress = true;
@@ -96,11 +98,20 @@ export class CreateAccessComponent implements OnInit {
 
   async submit(stepper: MatVerticalStepper) {
     try {
+
+      const time = this.thirdFormGroup.value.time;
+
+      const moments = moment(time);
+      console.log(moments);
+      const day = moments.year().toString()
+        .concat(this.formatPaperNumber(Number(moments.month()) + 1))
+        .concat(this.formatPaperNumber(Number(moments.date())));
+      console.log(day);
       this.progress3 = true;
       const grade = this.firstFormGroup.value.grade;
       const paperNumber = this.fourthFormGroup.value.paperNumber;
 
-      const databasePath = `paperAccess/${grade}/paper/${this.formatPaperNumber(paperNumber)}`;
+      const databasePath = `paperAccess/${grade}/day/${day}`;
 
       const ClassPaperAccessExists = await this._af.firestore
         .doc(`paperAccess/${grade}`)

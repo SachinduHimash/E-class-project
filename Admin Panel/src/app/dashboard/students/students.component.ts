@@ -10,6 +10,10 @@ import {environment} from '../../../environments/environment';
 
 import algoliaSearch from 'algoliasearch/lite';
 import {NotificationService} from '../services/notification.service';
+import {BackupStructure} from '../interfaces/backup';
+import * as moment from 'moment';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import {BackupService} from '../services/backup.service';
 
 @Component({
   selector: 'app-students',
@@ -34,7 +38,7 @@ export class StudentsComponent implements OnInit, OnDestroy {
   gradeSelected = 10;
   previousGrade = 10;
   // table
-  displayedColumns = ['uid', 'fullName', 'className', 'update', 'view'];
+  displayedColumns = ['uid', 'fullName', 'className', 'update', 'view', 'delete'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -46,7 +50,8 @@ export class StudentsComponent implements OnInit, OnDestroy {
   private search: any;
 
   constructor(private _af: AngularFirestore,
-              private _notification: NotificationService) {
+              private _notification: NotificationService,
+              private _backup: BackupService) {
   }
 
   ngOnInit(): void {
@@ -73,7 +78,7 @@ export class StudentsComponent implements OnInit, OnDestroy {
       .valueChanges()
       .subscribe(async (docs) => {
         // console.log(docs.length)
-        if(docs.length <= 0){
+        if (docs.length <= 0) {
           this._notification.ErrorMessage(`No students found for grade ${grade}`);
           this.dataSource = new MatTableDataSource([]);
           this.dataSource.paginator = this.paginator;
@@ -84,6 +89,7 @@ export class StudentsComponent implements OnInit, OnDestroy {
         this.student = [];
         docs = await docs.map((doc: Class) => {
 
+          // tslint:disable-next-line:no-shadowed-variable
           const grade = doc.grade.toString().concat('.').concat(doc.number.toString());
 
           this.studentSubscribe = this._af.collection(`class/${grade}/students`)
@@ -131,7 +137,7 @@ export class StudentsComponent implements OnInit, OnDestroy {
 
   }
 
-  algolia(){
+  algolia() {
     // this.search = instantSearch({
     //   indexName: environment.algolia.indexName,
     //   searchClient: algoliaSearch(
@@ -187,7 +193,7 @@ export class StudentsComponent implements OnInit, OnDestroy {
   }
 
   async modelChanged($event: any) {
-    if(this.gradeSelected === this.previousGrade){
+    if (this.gradeSelected === this.previousGrade) {
       return;
     }
     this.showDataTables = false;
@@ -195,5 +201,84 @@ export class StudentsComponent implements OnInit, OnDestroy {
     // console.log(this.gradeSelected);
     await this.fetchStudentData(Number($event));
     this.showDataTables = true;
+  }
+
+  async deleteStudent(row: any) {
+    console.log(row);
+    try {
+
+
+      const action = await Swal.fire({
+        title: 'Are you sure?',
+        text: 'You will not be able to recover this student',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, keep it'
+      });
+
+
+      if (action.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Paper is not delete.',
+          'error'
+        );
+        return;
+      }
+
+      // tslint:disable-next-line:max-line-length
+      const docRef = `class/${row.grade}/students/${row.uid}`;
+      const userDocReference = `users/${row.uid}`;
+
+      const data = await this._af.firestore.doc(docRef).get();
+      const userCollectionData = await this._af.firestore.doc(userDocReference).get();
+
+      const backupObject: BackupStructure = {
+        data: data.data(),
+        id: data.id,
+        reference: data.ref
+      };
+
+      const backupUserObject: BackupStructure = {
+        data: userCollectionData.data(),
+        id: userCollectionData.id,
+        reference: userCollectionData.ref
+      };
+
+      const fileName = data.id.toString()
+        .concat('-')
+        .concat(row.fullName)
+        .concat('-')
+        .concat(moment().toISOString());
+
+      const path = `classStudent/${row.uid}/${fileName}`;
+      const pathUser = `users/${row.uid}/${fileName}`;
+
+      const result = await this._backup.backup(backupObject, path);
+      const result2 = await this._backup.backup(backupUserObject, pathUser);
+
+      await this._af.firestore.doc(userDocReference).delete();
+      await this._af.firestore.doc(docRef).delete();
+
+      if (result.state !== 'success' || result2.state !== 'success') {
+        throw new Error('fail to delete');
+      }
+
+      if (action.value) {
+        Swal.fire(
+          'Deleted!',
+          'Your imaginary file has been deleted.',
+          'success'
+        );
+      }
+
+    } catch (error) {
+      Swal.fire(
+        'Failed!',
+        'Fail to delete Plz try again',
+        'error'
+      );
+    }
   }
 }

@@ -9,6 +9,7 @@ import '../default_appbar_demo.dart';
 
 
 class StaticStudent {
+  static bool logged=false;
   static String studentId;
   static String studentFullname;
   static String studentClass;
@@ -177,6 +178,7 @@ class _WelcomePageState extends State<WelcomePage> {
        StaticStudent.studentClass=_student.clas;
        StaticStudent.studentAddress=_student.address;
        StaticStudent.studentSchool=_student.school;
+       StaticStudent.logged=true;
       
       Navigator.push(
           context,
