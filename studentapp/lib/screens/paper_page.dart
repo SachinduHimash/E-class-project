@@ -152,8 +152,10 @@ class _PaperPageState extends State<PaperPage> {
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
                                   RaisedButton(
+                                    color: Colors.blueGrey[900],
                                     child: Text(
-                                      'Back'
+                                      'Back',
+                                    style: TextStyle(color: Colors.white),
                                     ),
                                     onPressed: () { 
                                       PaperPage.qNumber = _controller.page - 1;
@@ -163,8 +165,10 @@ class _PaperPageState extends State<PaperPage> {
                                     },
                                   ),
                                   RaisedButton(
+                                    color: Colors.blueGrey[900],
                                     child: Text(
-                                      'All'
+                                      'All',
+                                    style: TextStyle(color: Colors.white),
                                     ),
                                     onPressed: () { 
                                       Navigator.of(context).push(CupertinoPageRoute(
@@ -179,8 +183,10 @@ class _PaperPageState extends State<PaperPage> {
                                     },
                                   ),
                                   RaisedButton(
+                                    color: Colors.blueGrey[900],
                                     child: Text(
-                                      'submit'
+                                      'submit',
+                                    style: TextStyle(color: Colors.white),
                                     ),
                                     onPressed: () async { 
                                       var marks =0;
@@ -329,8 +335,10 @@ class _PaperPageState extends State<PaperPage> {
                                 children: <Widget>[
                                   SizedBox(width: 90,),
                                   RaisedButton(
+                                    color: Colors.blueGrey[900],
                                     child: Text(
-                                      'All'
+                                      'All',
+                                    style: TextStyle(color: Colors.white),
                                     ),
                                     onPressed: () { 
                                       Navigator.of(context).push(CupertinoPageRoute(
@@ -345,8 +353,10 @@ class _PaperPageState extends State<PaperPage> {
                                     },
                                   ),
                                   RaisedButton(
+                                    color: Colors.blueGrey[900],
                                     child: Text(
-                                      'Next'
+                                      'Next',
+                                    style: TextStyle(color: Colors.white),
                                     ),
                                     onPressed: () {
                                       PaperPage.qNumber = _controller.page + 1;
@@ -423,8 +433,10 @@ class _PaperPageState extends State<PaperPage> {
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
                                   RaisedButton(
+                                    color: Colors.blueGrey[900],
                                     child: Text(
-                                      'Back'
+                                      'Back',
+                                    style: TextStyle(color: Colors.white),
                                     ),
                                     onPressed: () { 
                                       PaperPage.qNumber = _controller.page - 1;
@@ -434,8 +446,10 @@ class _PaperPageState extends State<PaperPage> {
                                     },
                                   ),
                                   RaisedButton(
+                                    color: Colors.blueGrey[900],
                                     child: Text(
-                                      'All'
+                                      'All',
+                                    style: TextStyle(color: Colors.white),
                                     ),
                                     onPressed: () { 
                                       Navigator.of(context).push(CupertinoPageRoute(
@@ -450,8 +464,10 @@ class _PaperPageState extends State<PaperPage> {
                                     },
                                   ),
                                   RaisedButton(
+                                    color: Colors.blueGrey[900],
                                     child: Text(
-                                      'Next'
+                                      'Next',
+                                    style: TextStyle(color: Colors.white),
                                     ),
                                     onPressed: () { 
                                       PaperPage.qNumber = _controller.page + 1;

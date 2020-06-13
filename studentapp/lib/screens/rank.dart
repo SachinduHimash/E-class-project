@@ -19,6 +19,7 @@ class User{
 
 class Rank extends MyApp {
   static List<dynamic> ranks =List<dynamic>();
+  static dynamic paper;
   @override
   _RankState createState() => _RankState();
 
@@ -38,7 +39,9 @@ class _RankState extends State<Rank> {
   Future _calculation() async {
     if(Rank.ranks.isEmpty){
       await Firestore.instance.collection('ranking').document(StaticStudent.studentClass.split('.')[0]).collection('rank').orderBy('createdAt',descending: true).limit(1).getDocuments().then((h) =>{
+        
         h.documents.forEach((e) async =>{
+          Rank.paper=e.data['paper'],
           e.data['rank'].forEach((s)=>{
             if(s['rank']<=10){
               Rank.ranks.add(User(name: s['name'],rank: s['rank'],mark: s['mark'])),
@@ -103,7 +106,13 @@ class _RankState extends State<Rank> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 30),
+                        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                        child: Text(Rank.paper.toString() + " Paper Ranks",
+                          style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(0, 10, 0, 30),
                         child: DataTable(
                           columns: [
                             DataColumn(label: Text('rank')),
@@ -118,9 +127,9 @@ class _RankState extends State<Rank> {
                                         DataRow(
                                           selected: true,
                                           cells: <DataCell>[
-                                            DataCell(Text(element.rank.toString(),style: TextStyle(fontWeight:FontWeight.bold,fontSize: 22,color: Colors.greenAccent[700]),)),
-                                            DataCell(Text(element.name,style: TextStyle(fontWeight:FontWeight.bold,fontSize: 20,color: Colors.greenAccent[700]),)), //Extracting from Map element the value
-                                            DataCell(Text(element.mark.toString(),style: TextStyle(fontWeight:FontWeight.bold,fontSize: 22,color: Colors.greenAccent[700]),)),
+                                            DataCell(Text(element.rank.toString(),style: TextStyle(fontWeight:FontWeight.bold,fontSize: 22,color: Colors.blue[900]),)),
+                                            DataCell(Text(element.name,style: TextStyle(fontWeight:FontWeight.bold,fontSize: 20,color: Colors.blue[900]),)), //Extracting from Map element the value
+                                            DataCell(Text(element.mark.toString(),style: TextStyle(fontWeight:FontWeight.bold,fontSize: 22,color: Colors.blue[900]),)),
                                           ],
                                         ):
                                         DataRow(

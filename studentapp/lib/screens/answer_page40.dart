@@ -139,8 +139,10 @@ class _AnswerPage40State extends State<AnswerPage40> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 RaisedButton(
+                                  color: Colors.blueGrey[900],
                                   child: Text(
-                                    'Back'
+                                    'Back',
+                                    style: TextStyle(color: Colors.white),
                                   ),
                                   onPressed: () { 
                                     AnswerPage40.qNumber = _controller.page - 1;
@@ -150,8 +152,10 @@ class _AnswerPage40State extends State<AnswerPage40> {
                                   },
                                 ),
                                 RaisedButton(
+                                  color: Colors.blueGrey[900],
                                   child: Text(
-                                    'All'
+                                    'All',
+                                    style: TextStyle(color: Colors.white),
                                   ),
                                   onPressed: () { 
                                     Navigator.of(context).push(CupertinoPageRoute(
@@ -166,8 +170,11 @@ class _AnswerPage40State extends State<AnswerPage40> {
                                   },
                                 ),
                                 RaisedButton(
+                                  color: Colors.blueGrey[900],
                                   child: Text(
-                                    'finish'
+                                    'Finish',
+                                    style: TextStyle(color: Colors.white),
+
                                   ),
                                   onPressed: () { 
                                     Navigator.of(context).push(CupertinoPageRoute(
@@ -211,24 +218,6 @@ class _AnswerPage40State extends State<AnswerPage40> {
                           ),
                         )
                       ],),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                          child: Center(
-                            heightFactor: 1.4,
-                            child: FlipClock.countdown(
-                              duration: Duration(minutes: 25),
-                              digitColor: Colors.white,
-                              backgroundColor: Colors.black,
-                              digitSize: 48.0,
-                              borderRadius: const BorderRadius.all(Radius.circular(3.0)),
-                              onDone: () => print('ih'),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
                     Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -259,8 +248,10 @@ class _AnswerPage40State extends State<AnswerPage40> {
                               children: <Widget>[
                                 SizedBox(width: 90,),
                                 RaisedButton(
+                                  color: Colors.blueGrey[900],
                                   child: Text(
-                                    'All'
+                                    'All',
+                                    style: TextStyle(color: Colors.white),
                                   ),
                                   onPressed: () { 
                                     Navigator.of(context).push(CupertinoPageRoute(
@@ -275,8 +266,10 @@ class _AnswerPage40State extends State<AnswerPage40> {
                                   },
                                 ),
                                 RaisedButton(
+                                  color: Colors.blueGrey[900],
                                   child: Text(
-                                    'Next'
+                                    'Next',
+                                    style: TextStyle(color: Colors.white),
                                   ),
                                   onPressed: () {
                                     AnswerPage40.qNumber = _controller.page + 1;
@@ -314,23 +307,6 @@ class _AnswerPage40State extends State<AnswerPage40> {
                             ),
                           ),
                         )
-                      ],),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                          child: Center(
-                            heightFactor: 1.4,
-                            child: FlipClock.countdown(
-                              duration: Duration(minutes: 25),
-                              digitColor: Colors.white,
-                              backgroundColor: Colors.black,
-                              digitSize: 48.0,
-                              borderRadius: const BorderRadius.all(Radius.circular(3.0)),
-                              onDone: () => print('ih'),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                     Expanded(
@@ -362,8 +338,10 @@ class _AnswerPage40State extends State<AnswerPage40> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 RaisedButton(
+                                  color: Colors.blueGrey[900],
                                   child: Text(
-                                    'Back'
+                                    'Back',
+                                    style: TextStyle(color: Colors.white),
                                   ),
                                   onPressed: () { 
                                     AnswerPage40.qNumber = _controller.page - 1;
@@ -373,8 +351,10 @@ class _AnswerPage40State extends State<AnswerPage40> {
                                   },
                                 ),
                                 RaisedButton(
+                                  color: Colors.blueGrey[900],
                                   child: Text(
-                                    'All'
+                                    'All',
+                                    style: TextStyle(color: Colors.white),
                                   ),
                                   onPressed: () { 
                                     Navigator.of(context).push(CupertinoPageRoute(
@@ -389,8 +369,10 @@ class _AnswerPage40State extends State<AnswerPage40> {
                                   },
                                 ),
                                 RaisedButton(
+                                  color: Colors.blueGrey[900],
                                   child: Text(
-                                    'Next'
+                                    'Next',
+                                    style: TextStyle(color: Colors.white),
                                   ),
                                   onPressed: () { 
                                     AnswerPage40.qNumber = _controller.page + 1;

@@ -48,7 +48,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('1'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[0] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[0] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -64,7 +64,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('2'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[1] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[1] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -80,7 +80,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('3'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[2] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[2] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                             ],
                           ),
@@ -104,7 +104,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('4'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[3] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[3] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -120,7 +120,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('5'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[4] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[4] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -136,7 +136,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('6'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[5] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[5] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                             ],
                           ),
@@ -160,7 +160,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('7'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[6] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[6] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -176,7 +176,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('8'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[7] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[7] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -192,7 +192,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('9'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[8] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[8] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                             ],
                           ),
@@ -216,7 +216,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('10'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[9] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[9] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -232,7 +232,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('11'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[10] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[10] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -248,7 +248,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('12'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[11] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[11] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                             ],
                           ),
@@ -272,7 +272,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('13'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[12] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[12] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -288,7 +288,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('14'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[13] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[13] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -304,7 +304,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('15'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[14] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[14] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                             ],
                           ),
@@ -328,7 +328,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('16'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[15] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[15] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -344,7 +344,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('17'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[16] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[16] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -360,7 +360,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('18'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[17] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[17] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                             ],
                           ),
@@ -384,7 +384,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('19'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[18] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[18] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -400,7 +400,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('20'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[19] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[19] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -416,7 +416,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('21'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[19] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[19] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                             ],
                           ),
@@ -440,7 +440,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('22'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[21] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[21] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -456,7 +456,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('23'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[22] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[22] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -472,7 +472,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('24'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[23] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[23] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                             ],
                           ),
@@ -496,7 +496,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('25'),
                                 padding: EdgeInsets.all(24),
-                                color: AnswerPage40.answer[3] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[3] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -512,7 +512,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('26'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[25] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[25] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -528,7 +528,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('27'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[26] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[26] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                             ],
                           ),
@@ -552,7 +552,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('28'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[27] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[27] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -568,7 +568,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('29'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[28] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[28] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -584,7 +584,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('30'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[29] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[29] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                             ],
                           ),
@@ -608,7 +608,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('31'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[30] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[30] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -624,7 +624,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('32'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[31] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[31] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -640,7 +640,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('33'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[32] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[32] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                             ],
                           ),
@@ -664,7 +664,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('34'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[33] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[33] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -680,7 +680,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('35'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[34] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[34] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -696,7 +696,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('36'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[35] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[35] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                             ],
                           ),
@@ -720,7 +720,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('37'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[36] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[36] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -736,7 +736,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('38'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[37] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[37] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
@@ -752,7 +752,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('39'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[38] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[38] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                             ],
                           ),
@@ -776,7 +776,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('40'),
                                 padding: EdgeInsets.all(25),
-                                color: AnswerPage40.answer[39] == 0 ? Colors.orange[900] : Colors.green[700],
+                                color: AnswerPage40.answer[39] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               
                               RaisedButton(
@@ -792,7 +792,7 @@ class _AnswerQustionSelect40State extends State<AnswerQustionSelect40> {
                                 },
                                 child: Text('back'),
                                 padding: EdgeInsets.all(25),
-                                color:Colors.orange[900],
+                                color:Colors.blue[400],
                               ),
                             ],
                           ),

@@ -283,6 +283,7 @@ class _PastPaperState extends State<PastPaper> {
               PastPaper.papers.map((i) => Container(
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: new RaisedButton(
+                  color: Colors.blue[400],
                   onPressed:() => { 
                    
                     
@@ -316,8 +317,12 @@ class _PastPaperState extends State<PastPaper> {
                   padding: EdgeInsets.all(30),
                   child: Row(
                     children: <Widget>[
-                      Text(i.paperId.toString(),
-                      style: TextStyle(fontWeight:FontWeight.bold,fontSize: 18),)
+                      Container(
+                        child: Center(
+                          child: Text(i.paperId.toString(),
+                          style: TextStyle(fontWeight:FontWeight.bold,fontSize: 18),),
+                        ),
+                      )
                       
                     ],
                   )

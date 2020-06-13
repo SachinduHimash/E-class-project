@@ -1,4 +1,5 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ import 'components/gradient_item.dart';
 import 'components/heading.dart';
 import 'components/radio_item.dart';
 import 'data.dart';
+import 'main.dart';
 import 'model/badge.dart';
 import 'model/choice_value.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -126,6 +128,25 @@ class _State extends State<DefaultAppBarDemo>
     DefaultAppBarDemo.pr.style(message: "Please wait...");
     
     return Scaffold(
+      appBar: new AppBar(
+        title: new Text(
+          "Second screen",
+          style: new TextStyle(color: Colors.white),
+        ),
+        leading: new IconButton(
+          icon: new Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).push(CupertinoPageRoute(
+                fullscreenDialog: true,
+                builder: (BuildContext context) {
+                  MyApp.page = 'myapp';
+                   return MyApp();
+                },
+              ),
+            );
+          },
+        ),
+      ),
       body: TabBarView(
         physics: NeverScrollableScrollPhysics(),
           controller: _tabController,

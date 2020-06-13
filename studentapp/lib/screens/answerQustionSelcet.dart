@@ -35,7 +35,7 @@ class _AnswerQustionSelectState extends State<AnswerQustionSelect> {
                       },
                       child: Text('1'),
                       padding: EdgeInsets.all(25),
-                      color: AnswerPage.answer[0] == 0 ? Colors.orange[900] : Colors.green[700],
+                      color: AnswerPage.answer[0] == 0 ? Colors.blue[400] : Colors.green[700],
                     ),
                     RaisedButton(
                       onPressed: () {
@@ -51,7 +51,7 @@ class _AnswerQustionSelectState extends State<AnswerQustionSelect> {
                       },
                       child: Text('2'),
                       padding: EdgeInsets.all(25),
-                      color: AnswerPage.answer[1] == 0 ? Colors.orange[900] : Colors.green[700],
+                      color: AnswerPage.answer[1] == 0 ? Colors.blue[400] : Colors.green[700],
                     ),
                     RaisedButton(
                       onPressed: () {
@@ -67,7 +67,7 @@ class _AnswerQustionSelectState extends State<AnswerQustionSelect> {
                       },
                       child: Text('3'),
                       padding: EdgeInsets.all(25),
-                      color: AnswerPage.answer[2] == 0 ? Colors.orange[900] : Colors.green[700],
+                      color: AnswerPage.answer[2] == 0 ? Colors.blue[400] : Colors.green[700],
                     ),
                   ],
                 ),
@@ -88,7 +88,7 @@ class _AnswerQustionSelectState extends State<AnswerQustionSelect> {
                       },
                       child: Text('4'),
                       padding: EdgeInsets.all(25),
-                      color: AnswerPage.answer[3] == 0 ? Colors.orange[900] : Colors.green[700],
+                      color: AnswerPage.answer[3] == 0 ? Colors.blue[400] : Colors.green[700],
                     ),
                     RaisedButton(
                       onPressed: () {
@@ -104,7 +104,7 @@ class _AnswerQustionSelectState extends State<AnswerQustionSelect> {
                       },
                       child: Text('5'),
                       padding: EdgeInsets.all(25),
-                      color: AnswerPage.answer[4] == 0 ? Colors.orange[900] : Colors.green[700],
+                      color: AnswerPage.answer[4] == 0 ? Colors.blue[400] : Colors.green[700],
                     ),
                     RaisedButton(
                       onPressed: () {
@@ -120,7 +120,7 @@ class _AnswerQustionSelectState extends State<AnswerQustionSelect> {
                       },
                       child: Text('6'),
                       padding: EdgeInsets.all(25),
-                      color: AnswerPage.answer[5] == 0 ? Colors.orange[900] : Colors.green[700],
+                      color: AnswerPage.answer[5] == 0 ? Colors.blue[400] : Colors.green[700],
                     ),
                   ],
                 ),
@@ -141,7 +141,7 @@ class _AnswerQustionSelectState extends State<AnswerQustionSelect> {
                       },
                       child: Text('7'),
                       padding: EdgeInsets.all(25),
-                      color: AnswerPage.answer[6] == 0 ? Colors.orange[900] : Colors.green[700],
+                      color: AnswerPage.answer[6] == 0 ? Colors.blue[400] : Colors.green[700],
                     ),
                     RaisedButton(
                       onPressed: () {
@@ -157,7 +157,7 @@ class _AnswerQustionSelectState extends State<AnswerQustionSelect> {
                       },
                       child: Text('8'),
                       padding: EdgeInsets.all(25),
-                      color: AnswerPage.answer[7] == 0 ? Colors.orange[900] : Colors.green[700],
+                      color: AnswerPage.answer[7] == 0 ? Colors.blue[400] : Colors.green[700],
                     ),
                     RaisedButton(
                       onPressed: () {
@@ -173,7 +173,7 @@ class _AnswerQustionSelectState extends State<AnswerQustionSelect> {
                       },
                       child: Text('9'),
                       padding: EdgeInsets.all(25),
-                      color: AnswerPage.answer[8] == 0 ? Colors.orange[900] : Colors.green[700],
+                      color: AnswerPage.answer[8] == 0 ? Colors.blue[400] : Colors.green[700],
                     ),
                   ],
                 ),
@@ -194,7 +194,7 @@ class _AnswerQustionSelectState extends State<AnswerQustionSelect> {
                       },
                       child: Text('10'),
                       padding: EdgeInsets.all(25),
-                      color: AnswerPage.answer[9] == 0 ? Colors.orange[900] : Colors.green[700],
+                      color: AnswerPage.answer[9] == 0 ? Colors.blue[400] : Colors.green[700],
                     ),
                     RaisedButton(
                       onPressed: () {
@@ -210,7 +210,7 @@ class _AnswerQustionSelectState extends State<AnswerQustionSelect> {
                       },
                       child: Text('11'),
                       padding: EdgeInsets.all(25),
-                      color: AnswerPage.answer[10] == 0 ? Colors.orange[900] : Colors.green[700],
+                      color: AnswerPage.answer[10] == 0 ? Colors.blue[400] : Colors.green[700],
                     ),
                     RaisedButton(
                       onPressed: () {
@@ -226,7 +226,7 @@ class _AnswerQustionSelectState extends State<AnswerQustionSelect> {
                       },
                       child: Text('12'),
                       padding: EdgeInsets.all(25),
-                      color: AnswerPage.answer[11] == 0 ? Colors.orange[900] : Colors.green[700],
+                      color: AnswerPage.answer[11] == 0 ? Colors.blue[400] : Colors.green[700],
                     ),
                   ],
                 ),
@@ -247,7 +247,7 @@ class _AnswerQustionSelectState extends State<AnswerQustionSelect> {
                       },
                       child: Text('13'),
                       padding: EdgeInsets.all(25),
-                      color: AnswerPage.answer[12] == 0 ? Colors.orange[900] : Colors.green[700],
+                      color: AnswerPage.answer[12] == 0 ? Colors.blue[400] : Colors.green[700],
                     ),
                     RaisedButton(
                       onPressed: () {
@@ -263,7 +263,7 @@ class _AnswerQustionSelectState extends State<AnswerQustionSelect> {
                       },
                       child: Text('14'),
                       padding: EdgeInsets.all(25),
-                      color: AnswerPage.answer[13] == 0 ? Colors.orange[900] : Colors.green[700],
+                      color: AnswerPage.answer[13] == 0 ? Colors.blue[400] : Colors.green[700],
                     ),
                     RaisedButton(
                       onPressed: () {
@@ -279,7 +279,7 @@ class _AnswerQustionSelectState extends State<AnswerQustionSelect> {
                       },
                       child: Text('15'),
                       padding: EdgeInsets.all(25),
-                      color: AnswerPage.answer[14] == 0 ? Colors.orange[900] : Colors.green[700],
+                      color: AnswerPage.answer[14] == 0 ? Colors.blue[400] : Colors.green[700],
                     ),
                   ],
                 ),
@@ -300,7 +300,7 @@ class _AnswerQustionSelectState extends State<AnswerQustionSelect> {
                       },
                       child: Text('16'),
                       padding: EdgeInsets.all(25),
-                      color: AnswerPage.answer[15] == 0 ? Colors.orange[900] : Colors.green[700],
+                      color: AnswerPage.answer[15] == 0 ? Colors.blue[400] : Colors.green[700],
                     ),
                     RaisedButton(
                       onPressed: () {
@@ -316,7 +316,7 @@ class _AnswerQustionSelectState extends State<AnswerQustionSelect> {
                       },
                       child: Text('17'),
                       padding: EdgeInsets.all(25),
-                      color: AnswerPage.answer[16] == 0 ? Colors.orange[900] : Colors.green[700],
+                      color: AnswerPage.answer[16] == 0 ? Colors.blue[400] : Colors.green[700],
                     ),
                     RaisedButton(
                       onPressed: () {
@@ -332,7 +332,7 @@ class _AnswerQustionSelectState extends State<AnswerQustionSelect> {
                       },
                       child: Text('18'),
                       padding: EdgeInsets.all(25),
-                      color: AnswerPage.answer[17] == 0 ? Colors.orange[900] : Colors.green[700],
+                      color: AnswerPage.answer[17] == 0 ? Colors.blue[400] : Colors.green[700],
                     ),
                   ],
                 ),
@@ -353,7 +353,7 @@ class _AnswerQustionSelectState extends State<AnswerQustionSelect> {
                       },
                       child: Text('19'),
                       padding: EdgeInsets.all(25),
-                      color: AnswerPage.answer[18] == 0 ? Colors.orange[900] : Colors.green[700],
+                      color: AnswerPage.answer[18] == 0 ? Colors.blue[400] : Colors.green[700],
                     ),
                     RaisedButton(
                       onPressed: () {
@@ -369,7 +369,7 @@ class _AnswerQustionSelectState extends State<AnswerQustionSelect> {
                       },
                       child: Text('20'),
                       padding: EdgeInsets.all(25),
-                      color: AnswerPage.answer[19] == 0 ? Colors.orange[900] : Colors.green[700],
+                      color: AnswerPage.answer[19] == 0 ? Colors.blue[400] : Colors.green[700],
                     ),
                     RaisedButton(
                       onPressed: () {
@@ -384,7 +384,7 @@ class _AnswerQustionSelectState extends State<AnswerQustionSelect> {
                       },
                       child: Text('back'),
                       padding: EdgeInsets.all(25),
-                      color:Colors.orange[900],
+                      color:Colors.blue[400],
                     ),
                   ],
                 ),

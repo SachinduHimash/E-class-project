@@ -29,15 +29,18 @@ class _HomeState extends State<Home> {
   }
 
   Future _calculation() async {
-    
+    var i;
     List<OrdinalSales> data=[];
     await Firestore.instance.collection('class').document(StaticStudent.studentClass).collection('students').document(StaticStudent.studentId).collection('marks')
     .orderBy('createdAt',descending: true).limit(1).getDocuments().then((h) =>{
-         
+        for(i=0;i<20;i++ ){
+           data.add(OrdinalSales((i+1).toString(),i*5))
+        },
         h.documents.forEach((e) async =>{
           print(e.data['mark'].runtimeType),
           print(e.documentID.runtimeType),
-          data.add(OrdinalSales(e.documentID,e.data['mark']))
+          data.add(OrdinalSales(i.toString(),e.data['mark'])),
+          i++
         })}).then((value) => {
           setState(() {
               print('dd');
@@ -46,8 +49,8 @@ class _HomeState extends State<Home> {
                   id: 'Desktop',
                   domainFn: (OrdinalSales sales, _) => sales.year,
                   measureFn: (OrdinalSales sales, _) => sales.sales,
-                  data: data,
-                  labelAccessorFn: (OrdinalSales sales, _) =>'${sales.sales.toString()}')
+                  data: data
+                  )
                     
               ];
             }),
@@ -66,7 +69,7 @@ class _HomeState extends State<Home> {
       child: SingleChildScrollView(
          
         child: Container(
-          padding: EdgeInsets.fromLTRB(25, 15, 25, 0),
+          padding: EdgeInsets.fromLTRB(15, 15, 15, 0),
           child: Center(
             child: Column(
               children: <Widget>[
@@ -89,7 +92,7 @@ class _HomeState extends State<Home> {
                           ],
                         ),
                       ),
-                    barRendererDecorator: new charts.BarLabelDecorator<String>(),
+                    
                     domainAxis: new charts.OrdinalAxisSpec(),
                     // Configure the axis spec to show percentage values.
                      
