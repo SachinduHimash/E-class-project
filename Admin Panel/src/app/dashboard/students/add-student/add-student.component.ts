@@ -88,7 +88,7 @@ export class AddStudentComponent implements OnInit {
             this._af.doc(`class/${formValue.class.value}/students/${formValue.userId}`)
               .set({
                 fullName: formValue.fullName,
-                year: Number(new Date().getFullYear()) + 11 - formValue.grade,
+                year: Number(new Date().getFullYear()) + 11 - formValue.class.grade,
                 address: formValue.address,
                 teleNo: formValue.teleNo,
                 userId: formValue.userId,

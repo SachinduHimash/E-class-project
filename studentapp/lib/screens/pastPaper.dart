@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:studentapp/screens/welcome_page.dart';
 
 import '../default_appbar_demo.dart';
 import '../main.dart';
@@ -54,16 +55,17 @@ class _PastPaperState extends State<PastPaper> {
   Future _calculation() async {
     
     var today;
-    var classN = '9.1';
-    var year = '11';
-    var studentId = '2022001A';
+    var classN = StaticStudent.studentClass;
+    var grade = StaticStudent.studentClass.split('.')[0];
+    var studentId = StaticStudent.studentId;
     
     if(PastPaper.papers.length == 0 ){
-      await Firestore.instance.collection('paperAccess').document(classN).collection('day').getDocuments()
+      await Firestore.instance.collection('paperAccess').document(grade).collection('day').getDocuments()
         .then((QuerySnapshot snapshot) {
 
             snapshot.documents.forEach((f)=> {
               PastPaper.papersId.add( f.data['paper']),
+              print(f.documentID),
               PastPaper.visible.add(Visible(paperId: f.data['paper'],visible: f.data['pastPaper'])),
             });
             today =new DateTime.now().year.toString()+(new DateTime.now().month.toString().length == 1 ? '0'+new DateTime.now().month.toString():new DateTime.now().month.toString())+new DateTime.now().day.toString();
@@ -71,7 +73,7 @@ class _PastPaperState extends State<PastPaper> {
 
         }).catchError((ee) => print(ee)).then((e) async => {
                 
-              await Firestore.instance.collection('papers').document(year).collection('paperNumbers').getDocuments()
+              await Firestore.instance.collection('papers').document(grade).collection('paperNumbers').getDocuments()
                  .then((QuerySnapshot snapshot) async {
                    
                   snapshot.documents.forEach((f) async => {
@@ -84,9 +86,14 @@ class _PastPaperState extends State<PastPaper> {
                         ).catchError( (e) => {
                             
                             if(PastPaper.visible[PastPaper.visible.indexOf(PastPaper.visible.firstWhere((e) => e.paperId == f.documentID) )].visible == true){
-                              print('7'),     
-                              PastPaper.papers.add(PaperList(paperData: f.data,paperId: f.documentID,anwser: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]))
+                              if(f.data['questions'].length == 20){
+                                 PastPaper.papers.add(PaperList(paperData: f.data,paperId: f.documentID,anwser: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]))
 
+                              } else {
+                                 PastPaper.papers.add(PaperList(paperData: f.data,paperId: f.documentID,anwser: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]))
+
+                              }
+                             
                             }
 
                           }
