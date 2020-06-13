@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:studentapp/screens/welcome_page.dart';
 import 'custom_appbar_sample.dart';
 import 'default_appbar_demo.dart';
 
@@ -17,11 +17,13 @@ class _State extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-     initialRoute: "/",
+     initialRoute: "/welcome",
       routes: {
+        "/welcome":(BuildContext context)=>WelcomePage(),
         "/": (BuildContext context) => DefaultAppBarDemo(),
         "/custom": (BuildContext context) => CustomAppBarDemo(),
       },
+      
     );
   }
 }
