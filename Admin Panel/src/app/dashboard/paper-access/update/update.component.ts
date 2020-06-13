@@ -42,6 +42,9 @@ export class UpdateAccessComponent implements OnInit {
     this.firstFormGroup = this._fb.group({
       grade: ['', Validators.required]
     });
+    this.thirdFormGroup = this._fb.group({
+      time: ['', Validators.required]
+    });
     this.fourthFormGroup = this._fb.group({
       paperNumber: ['', Validators.required]
     });
@@ -96,9 +99,14 @@ export class UpdateAccessComponent implements OnInit {
 
       const grade = this.firstFormGroup.value.grade;
       const paperNumber = this.fourthFormGroup.value.paperNumber;
+      const time = this.thirdFormGroup.value.time;
 
+      const moments = moment(time);
+      const day = moments.year().toString()
+        .concat(this.formatPaperNumber(Number(moments.month())))
+        .concat(this.formatPaperNumber(Number(moments.date())));
 
-      const databasePath =  `paperAccess/${grade}/paper/${this.formatPaperNumber(paperNumber)}`;
+      const databasePath = `paperAccess/${grade}/day/${day}`;
 
       const DayPaperAccessExists = await this._af.firestore
         .doc(databasePath)
