@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:studentapp/service/database.dart';
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
+import 'package:studentapp/model/user.dart';
+
+import '../default_appbar_demo.dart';
 
 class WelcomePage extends  StatefulWidget {
   WelcomePage({Key key}) : super(key: key);
@@ -141,15 +147,27 @@ class _WelcomePageState extends State<WelcomePage> {
     );
   }
 
+ //submit
 
   Future<void> _submit() async {
   if (_formKey.currentState.validate()) {
 
     _formKey.currentState.save();
+   final _password2=generateMd5(_password);
+   
+   Student _student = await DatabaseService().getUserById(_userID);
 
-    
+   if(_student != null){
+     if(_password2==_student.password){
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DefaultAppBarDemo()),
+        );
+     }
+   }
       
-    } else {
+  } else {
     //    If all data are not valid then start auto validation.
         setState(() {
           _autoValidate = true;
@@ -176,3 +194,6 @@ String validatePassword(String value) {
       return null;
   }
 
+ String generateMd5(String input) {
+  return md5.convert(utf8.encode(input)).toString();
+}
