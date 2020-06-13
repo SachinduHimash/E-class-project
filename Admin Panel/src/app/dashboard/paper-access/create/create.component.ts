@@ -102,10 +102,11 @@ export class CreateAccessComponent implements OnInit {
       const time = this.thirdFormGroup.value.time;
 
       const moments = moment(time);
+      console.log(moments);
       const day = moments.year().toString()
-        .concat(this.formatPaperNumber(Number(moments.month())))
+        .concat(this.formatPaperNumber(Number(moments.month()) + 1))
         .concat(this.formatPaperNumber(Number(moments.date())));
-      console.log(day)
+      console.log(day);
       this.progress3 = true;
       const grade = this.firstFormGroup.value.grade;
       const paperNumber = this.fourthFormGroup.value.paperNumber;

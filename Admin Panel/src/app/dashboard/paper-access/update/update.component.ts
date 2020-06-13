@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {NotificationService} from '../../services/notification.service';
@@ -56,7 +56,7 @@ export class UpdateAccessComponent implements OnInit {
       return '0'.concat(paperNumber.toString());
     }
     return paperNumber.toString();
-  }
+  };
 
   getPaperByGrade(stepper: MatVerticalStepper) {
     const grade = this.firstFormGroup.value.grade;
@@ -92,7 +92,6 @@ export class UpdateAccessComponent implements OnInit {
   }
 
 
-
   async submit(stepper: MatVerticalStepper) {
     try {
       this.progress3 = true;
@@ -103,7 +102,7 @@ export class UpdateAccessComponent implements OnInit {
 
       const moments = moment(time);
       const day = moments.year().toString()
-        .concat(this.formatPaperNumber(Number(moments.month())))
+        .concat(this.formatPaperNumber(Number(moments.month()) + 1))
         .concat(this.formatPaperNumber(Number(moments.date())));
 
       const databasePath = `paperAccess/${grade}/day/${day}`;
