@@ -7,6 +7,17 @@ import 'package:studentapp/model/user.dart';
 
 import '../default_appbar_demo.dart';
 
+
+class StaticStudent {
+  static String studentId;
+  static String studentFullname;
+  static String studentClass;
+  static String studentSchool;
+  static String studentAddress;
+  
+}
+
+
 class WelcomePage extends  StatefulWidget {
   WelcomePage({Key key}) : super(key: key);
   @override
@@ -40,7 +51,7 @@ class _WelcomePageState extends State<WelcomePage> {
            child: Column(
             children: <Widget>[
             SizedBox(
-              height: _height*0.03,
+              height: _height*0.01,
             ),
             Container(
                      
@@ -48,16 +59,16 @@ class _WelcomePageState extends State<WelcomePage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         AutoSizeText("Welcome",
-                        style:TextStyle(color: Colors.blue[600],fontSize: _height*0.09)),
-                        SizedBox(height: _height*0.02,),
+                        style:TextStyle(color: Colors.blue[900],fontSize: _height*0.075,fontFamily: 'Pacifico')),
+                        
                         AutoSizeText("Please login to access your paper",
                         maxLines: 2,
-                        style:TextStyle(color: Colors.blue[600],fontSize: _height*0.035))
+                        style:TextStyle(color: Colors.blue[700],fontSize: _height*0.03))
                       ]
                      )
                     ),
             SizedBox(
-                     height:_height*0.41,
+                     height:_height*0.43,
                    ),
             Form(
               key: _formKey,
@@ -108,10 +119,12 @@ class _WelcomePageState extends State<WelcomePage> {
                        Container(
                           width:_width*0.53,
                           child:TextFormField(
+                            obscureText: true,
                             keyboardType: TextInputType.text,
                             decoration: InputDecoration(
                             labelText: 'Password',
                             fillColor: Colors.blue,
+                            
                             
                           ),
                           validator:validatePassword,
@@ -159,8 +172,13 @@ class _WelcomePageState extends State<WelcomePage> {
 
    if(_student != null){
      if(_password2==_student.password){
-
-        Navigator.push(
+       StaticStudent.studentId=_student.id;
+       StaticStudent.studentFullname=_student.fullname;
+       StaticStudent.studentClass=_student.clas;
+       StaticStudent.studentAddress=_student.address;
+       StaticStudent.studentSchool=_student.school;
+      
+      Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => DefaultAppBarDemo()),
         );
@@ -179,7 +197,7 @@ class _WelcomePageState extends State<WelcomePage> {
 }
 String validateUserId(String value) {
     Pattern pattern =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+        "202+([0-9]){4}([A-Z]){1}";
     RegExp regex = new RegExp(pattern);
     if (!regex.hasMatch(value))
       return 'Enter a valid UserID';
