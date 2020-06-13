@@ -133,18 +133,6 @@ app.post('/registration', (req, res) => {
   });
 });
 
-
-function formatPaperNumber(paperNumber: Number) {
-
-  let num = paperNumber;
-
-  if (paperNumber < 10) {
-    num = Number('0'.concat(paperNumber.toString()));
-  }
-  return num.toString();
-}
-
-
 app.post('/marks', (req, res) => {
   // res.json(req.body);
   const reqData = req.body.data;
@@ -154,7 +142,7 @@ app.post('/marks', (req, res) => {
     .concat(currentDate.getMonth().toString()).concat('.')
     .concat(currentDate.getDate().toString());
 
-  const fullPaperNumber = (new Date().getFullYear()).toString().concat(formatPaperNumber(reqData.paperNumber));
+  const fullPaperNumber = (reqData.paperNumber);
 
 
   firestore.collection('class').doc(reqData.class)
@@ -224,7 +212,11 @@ app.post('/marks', (req, res) => {
           createdAt: TimeStamp,
           mark: reqData.marks,
           date: date,
-          name: reqData.name
+          name: reqData.name,
+          class: reqData.class,
+          school: reqData.school,
+          photo: reqData.photo
+
         }).catch((err) => {
         res.json(
           {
@@ -271,13 +263,36 @@ export const onCreateAdmin = functions.firestore.document('users/{userId}')
     // @ts-ignore
     if(snap.data().role === 'admin'){
       auth.setCustomUserClaims(snap.id, {admin: true}).catch(console.error);
-      const data = snap.data() ;
+    }
+    // @ts-ignore
+    const year = Number(snap.data().class.toString().split('.')[0]);
+    // @ts-ignore
+    const data = snap.data();
+
+    // @ts-ignore
+    if(snap.data().role === 'student'){
       // @ts-ignore
-      admin.firestore().collection('testClaims').add(data).catch(console.log);
+      admin.firestore().doc(`class/${snap.data().class}/students/${snap.id}`).set({
+        // @ts-ignore
+        address: data.address,
+        // @ts-ignore
+        class: data.class,
+        // @ts-ignore
+        fullName: data.fullName,
+        // @ts-ignore
+        school: data.school,
+        // @ts-ignore
+        teleNo: data.teleNo,
+        // @ts-ignore
+        userId: snap.id,
+        // @ts-ignore
+        year:  Number(new Date().getFullYear()) + 11 - year
+      }).catch(console.error);
     }
 
-
   });
+
+
 
 
 export const login = functions.https.onRequest(app);

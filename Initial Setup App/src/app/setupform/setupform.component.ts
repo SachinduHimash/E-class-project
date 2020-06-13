@@ -159,10 +159,8 @@ export class SetupformComponent implements OnInit {
     private router: Router,
     private fns: AngularFireFunctions,
   ) {
-    if (localStorage.getItem('first') === '1' && localStorage.getItem('second') === '1' ){
-      router.navigate(['markingsheet']);
-    } else if (localStorage.getItem('first') === '1') {
-      router.navigate(['paper']);
+    if (localStorage.getItem('userID')) {
+      router.navigate(['home']);
     }
   }
 
@@ -202,10 +200,7 @@ export class SetupformComponent implements OnInit {
     const formValue = this.myform.value;
     const userID = formValue.userID;
     const newClass = (formValue.grade.toString()).concat('.').concat(this.myform.value.class.number);
-    localStorage.setItem('class', newClass);
-    localStorage.setItem('userID', userID);
-    localStorage.setItem('name', formValue.fullName);
-    this.test1 = 'test1';
+    
 
     // try {
     //   this.af.firestore.collection('users').doc(userID).get().then(docSnapshot => {
@@ -295,38 +290,33 @@ export class SetupformComponent implements OnInit {
     this.test1 = 'test1';
     try {
       await this.data$.subscribe(res => {
-        this.test2 = 'test2';
         if (!res.err) {
-          this.test3 = 'test3';
-          localStorage.setItem('first', '1');
           localStorage.setItem('grade', this.myform.value.grade);
-          this.isPaper = true;
-          localStorage.setItem('onKey', JSON.stringify(this.isPaper));
-          this.dialog.open(DialogboxComponent);
+          localStorage.setItem('class', newClass);
+          localStorage.setItem('userID', userID);
+          localStorage.setItem('name', formValue.fullName);
+          localStorage.setItem('grade', formValue.grade);
+          localStorage.setItem('school', formValue.school);
+          this.router.navigate(['home']);
         } else {
           if (res.err === 'user already exists') {
-            this.test4 = 'test4';
-            this.isPaper = true;
-            localStorage.setItem('onKey', JSON.stringify(this.isPaper));
-            localStorage.setItem('first', '1');
             this.af.collection('users').doc(userID).valueChanges().subscribe((doc) => {
-              localStorage.setItem('grade', doc['class'].split('.')[0]);
-              this.router.navigate(['paper']);
+              //localStorage.setItem('grade', doc['class'].split('.')[0]);
+              this.router.navigate(['']);
             });
           }
         }
-        this.test5 = 'test5';
+       
       });
     } catch (error) {
       this.error1 =error;
     }
 
-    this.test6 = 'test6';
+   
 
 
     this.isPaper = true;
-    localStorage.setItem('onKey', JSON.stringify(this.isPaper));
-    this.test6 = 'test6';
+    
   }
 }
 

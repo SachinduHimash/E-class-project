@@ -9,7 +9,7 @@ import {Subscription} from 'rxjs';
 import {environment} from '../../../environments/environment';
 
 import algoliaSearch from 'algoliasearch/lite';
-import {NotificationService} from "../services/notification.service";
+import {NotificationService} from '../services/notification.service';
 
 @Component({
   selector: 'app-students',

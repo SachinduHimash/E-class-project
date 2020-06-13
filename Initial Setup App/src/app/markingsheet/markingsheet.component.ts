@@ -18,13 +18,11 @@ export class MarkingsheetComponent implements OnInit {
 
 
   constructor(private fb: FormBuilder, private router: Router,) {
-    if (localStorage.getItem('first') === '1' && localStorage.getItem('second') === '1') {
-      this.getData();
-    } else if (localStorage.getItem('first') === '1') {
-      router.navigate(['paper']);
-    } else {
+    if (!localStorage.getItem('userID')) {
       router.navigate(['']);
     }
+    this.getData();
+
    }
 
   ngOnInit(): void {
@@ -32,15 +30,17 @@ export class MarkingsheetComponent implements OnInit {
 
     });
   }
+  home(){
+    this.router.navigate(['home']);
+  }
   getData(){
 
-  const retrivedToggle = localStorage.getItem('toggleKey');
-  this.toggle = JSON.parse(retrivedToggle);
+    const retrivedToggle = localStorage.getItem('toggleKey');
+    this.toggle = JSON.parse(retrivedToggle);
 
-  const retrivedPaper = localStorage.getItem('paperKey');
-  this.paper = JSON.parse(retrivedPaper);
-  this.checkMarks();
-  localStorage.removeItem('marksKey');
+    const retrivedPaper = localStorage.getItem('paperKey');
+    this.paper = JSON.parse(retrivedPaper);
+    this.checkMarks();
 
   }
 

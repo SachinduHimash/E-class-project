@@ -29,7 +29,11 @@ export class LoginComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router,
     
-  ) { }
+  ) {
+    if(localStorage.getItem('userID')){
+      router.navigate(['home']);
+    }
+   }
 
   ngOnInit(): void {
     this.myform = this.fb.group({
@@ -41,16 +45,21 @@ export class LoginComponent implements OnInit {
     }
 
     submit(value){
+      localStorage.clear();
       this.af.collection('users').doc(value.userID).valueChanges().subscribe((doc) => {
-        localStorage.setItem('grade', doc['class'].split('.')[0]);
-        this.correctPass=doc['password'];
+        console.log(doc)
+        this.correctPass = doc['password'];
         this.pass= Md5.hashStr(value.password);
 
-       if(this.pass==this.correctPass){
-        this.isPaper = true;
-        localStorage.setItem('onKey', JSON.stringify(this.isPaper));
-        localStorage.setItem('first', '1');
-          this.dialog.open(DialogboxComponent);
+        if(this.pass== this.correctPass){
+          localStorage.setItem('grade', doc['class'].split('.')[0]);
+          localStorage.setItem('class', doc['class']);
+          localStorage.setItem('userID', value.userID );
+          localStorage.setItem('name', doc['fullName']);
+          localStorage.setItem('school', doc['school']);
+          this.router.navigate(['home'])
+       } else {
+         alert('wrong password');
        }
         
       });

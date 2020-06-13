@@ -42,36 +42,11 @@ export class UpdateAccessComponent implements OnInit {
     this.firstFormGroup = this._fb.group({
       grade: ['', Validators.required]
     });
-    this.secondFormGroup = this._fb.group({
-      class: ['', Validators.required]
-    });
-    this.thirdFormGroup = this._fb.group({
-      time: ['', Validators.required]
-    });
     this.fourthFormGroup = this._fb.group({
       paperNumber: ['', Validators.required]
     });
   }
 
-  getClassByGrade(stepper: MatVerticalStepper) {
-    // console.log(this.firstFormGroup.value);
-    const grade = Number(this.firstFormGroup.value.grade);
-    // console.log(grade);
-    this.progress = true;
-    this._af.collection('class', ref => ref.where('grade', '==', grade))
-      .valueChanges({idField: 'id'})
-      .subscribe(docs => {
-        // console.log(docs);
-        if (docs.length === 0) {
-          this._message.ErrorMessage('No papers data Found');
-          this.progress = false;
-          return;
-        }
-        this.classes = docs;
-        this.progress = false;
-        stepper.next();
-      });
-  }
 
   formatPaperNumber = (paperNumber: Number): string => {
     if (paperNumber < 10) {
@@ -113,32 +88,17 @@ export class UpdateAccessComponent implements OnInit {
     }
   }
 
-  getTime(stepper: MatVerticalStepper) {
-    console.log('here');
-    stepper.next();
-  }
 
 
   async submit(stepper: MatVerticalStepper) {
     try {
       this.progress3 = true;
 
-      if(!this.thirdFormGroup.value.time){
-        this.progress3 = false;
-        this._message.NotificationMessage('Time is not provide');
-        return ;
-      }
-
-      const className = this.secondFormGroup.value.class;
-      const time = this.thirdFormGroup.value.time;
+      const grade = this.firstFormGroup.value.grade;
       const paperNumber = this.fourthFormGroup.value.paperNumber;
 
-      const moments = moment(time);
-      const day = moments.year().toString()
-        .concat(this.formatPaperNumber(Number(moments.month())))
-        .concat(this.formatPaperNumber(Number(moments.date())));
 
-      const databasePath = `paperAccess/${className}/day/${day}`;
+      const databasePath =  `paperAccess/${grade}/paper/${this.formatPaperNumber(paperNumber)}`;
 
       const DayPaperAccessExists = await this._af.firestore
         .doc(databasePath)
@@ -151,15 +111,14 @@ export class UpdateAccessComponent implements OnInit {
       }
 
       const object = {
-        endTime: time,
-        paper: paperNumber,
+        access: false,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       };
 
       await this._af.doc(databasePath).update(object);
 
 
-      this._message.NotificationMessage('Update successfully');
+      this._message.NotificationMessage('Disable access successfully');
       this.endMessage = 'Update successfully';
       stepper.next();
       this.progress3 = false;
