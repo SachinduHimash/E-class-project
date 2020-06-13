@@ -88,7 +88,7 @@ class _State extends State<DefaultAppBarDemo>
 
   ChoiceValue<TabStyle> _style = kStyles.first;
   ChoiceValue<Curve> _curve = Data.curves.first;
-  Color _barColor = Data.namedColors.first.color;
+  Color _barColor = Colors.blue[900];
   Gradient _gradient = Data.gradients.first;
   Badge _badge;
   TabController _tabController;

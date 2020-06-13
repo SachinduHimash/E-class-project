@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:studentapp/screens/welcome_page.dart';
 import '../main.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class Home extends MyApp {
-  static List<ColumnSeries<OrdinalSales, String>>  seriesList =List<ColumnSeries<OrdinalSales, String>>();
+  static List<charts.Series<dynamic, String>>  seriesList =List<charts.Series<dynamic, String>>();
   @override
   _HomeState createState() {
     var homeState = _HomeState();
@@ -31,29 +31,25 @@ class _HomeState extends State<Home> {
   Future _calculation() async {
     
     List<OrdinalSales> data=[];
-    await Firestore.instance.collection('class').document('11.3').collection('students').document('2022003A').collection('marks')
+    await Firestore.instance.collection('class').document(StaticStudent.studentClass).collection('students').document(StaticStudent.studentId).collection('marks')
     .orderBy('createdAt',descending: true).limit(1).getDocuments().then((h) =>{
+         
         h.documents.forEach((e) async =>{
           print(e.data['mark'].runtimeType),
           print(e.documentID.runtimeType),
-          data.add(OrdinalSales(e.documentID,50))
+          data.add(OrdinalSales(e.documentID,e.data['mark']))
         })}).then((value) => {
           setState(() {
-              //print('dd');
-              // Home.seriesList= [
-              //     ColumnSeries<OrdinalSales, String>(
-              //         dataSource:  data,
-              //         isTrackVisible: true,
-              //         trackColor: const Color.fromRGBO(198, 201, 207, 1),
-              //         borderRadius: BorderRadius.circular(15),
-              //         xValueMapper: (OrdinalSales sales, _) => sales.year,
-              //         yValueMapper: (OrdinalSales sales, _) => sales.sales,
-              //         name: 'Marks',
-              //         dataLabelSettings: DataLabelSettings(
-              //             isVisible: true,
-              //             labelAlignment: ChartDataLabelAlignment.top,
-              //             textStyle: ChartTextStyle(fontSize: 10, color: Colors.white)))
-              //   ];
+              print('dd');
+              Home.seriesList=  [
+                new charts.Series<OrdinalSales, String>(
+                  id: 'Desktop',
+                  domainFn: (OrdinalSales sales, _) => sales.year,
+                  measureFn: (OrdinalSales sales, _) => sales.sales,
+                  data: data,
+                  labelAccessorFn: (OrdinalSales sales, _) =>'${sales.sales.toString()}')
+                    
+              ];
             }),
         }
       );
@@ -67,54 +63,49 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     print(Home.seriesList.runtimeType);
     return SafeArea(
-      child: Container(
-        padding: EdgeInsets.all(40),
-        child: Center(
-          child: Column(
-            children: <Widget>[
-               Text('Marks of Last 5 Paper'),
-               Container(
-                 height: 400,
-                 child:  
-                  Text('dd')
-                    // SfCartesianChart(
-                    //     // Initialize category axis
-                    //     primaryXAxis: CategoryAxis(),
-                    //     series: <ChartSeries>[
-                    //         // Initialize line series
-                    //         LineSeries<OrdinalSales, String>(
-                    //             dataSource: [
-                    //                 // Bind data source
-                    //                 OrdinalSales('Jan', 35),
-                    //                 OrdinalSales('Feb', 28),
-                    //                 OrdinalSales('Mar', 34),
-                    //                 OrdinalSales('Apr', 32),
-                    //                 OrdinalSales('May', 40)
-                    //             ],
-                    //             xValueMapper: (OrdinalSales sales, _) => sales.year,
-                    //             yValueMapper: (OrdinalSales sales, _) => sales.sales
-                    //         )
-                    //     ]
-                    // )
-                 
-                //  SfCartesianChart(
-                //     series: Home.seriesList,
-                //     plotAreaBorderWidth: 0,
-                //     title: ChartTitle(text: 'Marks of a student'),
-                //     primaryXAxis: CategoryAxis(majorGridLines: MajorGridLines(width: 0)),
-                //     primaryYAxis: NumericAxis(
-                //         minimum: 0,
-                //         maximum: 100,
-                //         axisLine: AxisLine(width: 0),
-                //         majorGridLines: MajorGridLines(width: 0),
-                //         majorTickLines: MajorTickLines(size: 0)),
-                //   ),
-                )
-            ],
+      child: SingleChildScrollView(
+         
+        child: Container(
+          padding: EdgeInsets.fromLTRB(25, 15, 25, 0),
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                Text('Marks of Last 5 Paper',style: TextStyle(fontSize: 24,fontWeight: FontWeight.w800),),
+                Container(
+                  height: 300,
+                  child:  charts.BarChart(
+                    Home.seriesList,
+                    animate: true,
+                    barGroupingType: charts.BarGroupingType.stacked,
+                    primaryMeasureAxis: new charts.NumericAxisSpec(
+                        tickProviderSpec: new charts.StaticNumericTickProviderSpec(
+                          <charts.TickSpec<num>>[
+                            charts.TickSpec<num>(0),
+                            charts.TickSpec<num>(20),
+                            charts.TickSpec<num>(40),
+                            charts.TickSpec<num>(60),
+                            charts.TickSpec<num>(80),
+                            charts.TickSpec<num>(100),
+                          ],
+                        ),
+                      ),
+                    barRendererDecorator: new charts.BarLabelDecorator<String>(),
+                    domainAxis: new charts.OrdinalAxisSpec(),
+                    // Configure the axis spec to show percentage values.
+                     
+                  )
+                    
+
+                ),
+                Container(
+                  height: 170,
+                  child: Image.asset("assets/logo2.png")
+                  ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      ));
   
   }
 

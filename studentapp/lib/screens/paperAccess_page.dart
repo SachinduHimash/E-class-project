@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:studentapp/default_appbar_demo.dart';
+import 'package:studentapp/screens/welcome_page.dart';
 
 import '../main.dart';
 import 'paper_page.dart';
@@ -27,14 +28,15 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
         child: Center(
           child: Column(
             children: <Widget>[
+              Image.asset("assets/logo1.png"),
               RaisedButton(
                 onPressed: () async{
                   DefaultAppBarDemo.pr.show();
-                  await Firestore.instance.collection('paperAccess').document('9.1').collection('day').document('20200414')
+                  await Firestore.instance.collection('paperAccess').document(StaticStudent.studentClass.split('.')[0]).collection('day').document(PaperAccessPage.today)
                   .get().then((x) async=> {
                     print(x.data),
                     if(x.data["access"]){
-                      await Firestore.instance.collection('class').document('11.3').collection('students').document('2021300A').collection('marks').document('2020202001')
+                      await Firestore.instance.collection('class').document(StaticStudent.studentClass).collection('students').document(StaticStudent.studentId).collection('marks').document(x.data['paper'])
                       .get().then( (y) async {
                         if (y == null || !y.exists) {
                           // Document with id == docId doesn't exist.
@@ -48,7 +50,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                                   PaperPage40.answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
                                    PaperPage40.endTime = DateTime.now().add(new Duration(seconds:60*30));
                                   return new StreamBuilder(
-                                    stream: Firestore.instance.collection('papers').document('11').collection('paperNumbers').document('202001').snapshots(),
+                                    stream: Firestore.instance.collection('papers').document(StaticStudent.studentClass.split('.')[0]).collection('paperNumbers').document(x.data['paper']).snapshots(),
                                     builder: (context, snapshot) {
                                     if (!snapshot.hasData) {
                                         return new Text("Loading");
@@ -64,7 +66,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                                   PaperPage.answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
                                   PaperPage.endTime = DateTime.now().add(new Duration(seconds:60*30));
                                   return new StreamBuilder(
-                                    stream: Firestore.instance.collection('papers').document('11').collection('paperNumbers').document('202001').snapshots(),
+                                    stream: Firestore.instance.collection('papers').document(StaticStudent.studentClass.split('.')[0]).collection('paperNumbers').document(x.data['paper']).snapshots(),
                                     builder: (context, snapshot) {
                                     if (!snapshot.hasData) {
                                         return new Text("Loading");
@@ -279,9 +281,10 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                 
                 },
                 padding: EdgeInsets.all(30),
+                color: Colors.blue[400],
                 child: Row(
                   children: <Widget>[
-                    Text('2020.05.12    Waruna    11',
+                    Text('Today Paper',
                     style: TextStyle(fontWeight:FontWeight.bold,fontSize: 18),)
                     
                   ],
