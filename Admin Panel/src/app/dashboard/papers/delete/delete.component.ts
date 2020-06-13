@@ -53,7 +53,7 @@ export class DeleteComponent implements OnInit {
 
       const action = await Swal.fire({
         title: 'Are you sure?',
-        text: 'You will not be able to recover this imaginary file!',
+        text: 'You will not be able to recover this paper',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Yes, delete it!',
@@ -106,7 +106,7 @@ export class DeleteComponent implements OnInit {
       if (action.value) {
         Swal.fire(
           'Deleted!',
-          'Your imaginary file has been deleted.',
+          'Your paper has been deleted.',
           'success'
         );
       }
