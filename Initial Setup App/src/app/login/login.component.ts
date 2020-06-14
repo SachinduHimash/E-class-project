@@ -56,6 +56,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('userID', value.userID );
           localStorage.setItem('name', doc['fullName']);
           localStorage.setItem('school', doc['school']);
+          location.reload();
           this.router.navigate(['home'])
        } else {
          alert('wrong password');
