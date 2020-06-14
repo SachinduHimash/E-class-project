@@ -246,7 +246,7 @@ export class PaperComponent implements OnInit {
         console.log('su');
       }
     });
-    this.router.navigate(['markingsheet']);
+    this.router.navigate(['home']);
 
   }
 
