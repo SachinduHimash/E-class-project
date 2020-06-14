@@ -134,14 +134,23 @@ export class RankComponent implements OnInit {
     this._af.collection('ranking').doc(localStorage.getItem('grade')).collection('rank', ref => ref.orderBy('createdAt', 'desc').limit(1))
       .valueChanges({ idField: 'paperNumber' })
       .subscribe((doc) => {
-        console.log(doc[0].rank);
         let data = doc[0].rank;
+        let data1 = doc[0].rank;
         data.forEach(element => {
-          if(element.class)
-          element.class = this.getclass(element.class)
+          if (element.class) {
+          element.class = this.getclass(element.class);
+          }
+        });
+        data1.forEach(element => {
+          if (element.rank > 10){
+            element.name = element.id;
+          }
+          // if (element.class) {
+          //   element.class = this.getclass(element.class);
+          // }
         });
         this.dataSource = new MatTableDataSource(data);
-        this.dataSource1 = new MatTableDataSource(data);
+        this.dataSource1 = new MatTableDataSource(data1);
       });
 
   }
@@ -150,7 +159,6 @@ export class RankComponent implements OnInit {
   }
 
   getclass(x){
-    console.log(x);
     const grade = x.split('.')[0];
     const classn = +x.split('.')[1];
 

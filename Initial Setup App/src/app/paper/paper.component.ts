@@ -71,7 +71,7 @@ export class PaperComponent implements OnInit {
     //   const retrivedToggle = localStorage.getItem('toggleKey');
     //   this.toggle = JSON.parse(retrivedToggle);
     // }
-   
+
 
   }
 
@@ -101,30 +101,53 @@ export class PaperComponent implements OnInit {
   async getPaper() {
 
     // const formValue = this.updateFormGroup.value;
-
-    // tslint:disable-next-line: max-line-length
-    console.log(this.name)
-    await this._af.collection('papers').doc(this.grade).
-      collection('paperNumbers', ref => ref.orderBy('createdAt', 'desc').limit(1))
-      .valueChanges({ idField: 'paperNumber' })
-      .subscribe( (doc) => {
-        this.paper = doc[0].questions;
-        this.paperNumber = doc[0].paperNumber;
-        localStorage.setItem('paperNumber', this.paperNumber);
-        this._af.collection('class').doc(this.classN).collection('students').doc(this.userID).collection('marks').doc(this.paperNumber)
-          .valueChanges()
-          .subscribe((doc) => {
-            if (doc) {
-              alert('paper allredy done');
-              this.router.navigate(['home']);
-            }
-            else{
-              localStorage.removeItem('toggleKey');
-            }
-          });
-      });
-
     
+    // tslint:disable-next-line: max-line-length
+    this._af.collection('paperAccess').doc(this.grade).collection('day').doc(this.datePipe.transform(new Date(), 'yyyyMMdd')).valueChanges().subscribe((doc) => {
+      if (doc == null){
+        alert('You don\'t have any papers today');
+        this.router.navigate(['home']);
+      } else {
+        this._af.collection('papers').doc(this.grade).collection('paperNumbers').doc(doc['paper']).valueChanges()
+          .subscribe((doc1) => {
+            this.paper = doc1['questions'];
+            this.paperNumber = doc1['paperNumber'];
+            localStorage.setItem('paperNumber', doc['paper']);
+            this._af.collection('class').doc(this.classN).collection('students').doc(this.userID).collection('marks').doc(doc['paper'])
+              .valueChanges()
+              .subscribe((doc2) => {
+                if (doc2) {
+                  alert('paper allredy done');
+                  this.router.navigate(['home']);
+                }
+                else {
+                  localStorage.removeItem('toggleKey');
+                }
+              });
+          });
+      }
+    });
+    // await this.af.collection('papers').doc(this.grade).
+    //   collection('paperNumbers', ref => ref.orderBy('createdAt', 'desc').limit(1))
+    //   .valueChanges({ idField: 'paperNumber' })
+    //   .subscribe( (doc) => {
+    //     this.paper = doc[0].questions;
+    //     this.paperNumber = doc[0].paperNumber;
+    //     localStorage.setItem('paperNumber', this.paperNumber);
+    //     this._af.collection('class').doc(this.classN).collection('students').doc(this.userID).collection('marks').doc(this.paperNumber)
+    //       .valueChanges()
+    //       .subscribe((doc) => {
+    //         if (doc) {
+    //           alert('paper allredy done');
+    //           this.router.navigate(['home']);
+    //         }
+    //         else{
+    //           localStorage.removeItem('toggleKey');
+    //         }
+    //       });
+    //   });
+
+
 
   }
 
@@ -223,12 +246,12 @@ export class PaperComponent implements OnInit {
         console.log('su');
       }
     });
-    this.router.navigate(['markingsheet']);
+    this.router.navigate(['home']);
 
   }
 
   checkMarks() {
-    if(!this.val){
+    if (!this.val){
       this.val = true;
       for (let index = 0; index < 20; index++) {
         if (this.toggle[index] === this.paper[index].correctAnswer) {
@@ -236,7 +259,7 @@ export class PaperComponent implements OnInit {
         }
       }
     }
-    
+
   }
 
 }

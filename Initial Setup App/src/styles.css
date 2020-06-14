@@ -3,3 +3,24 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(122, 122, 122) rgb(255, 255, 255);
+}
+
+/* Works on Chrome/Edge/Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255);
+
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(122, 122, 122);
+  border-radius: 20px;
+  border: 3px solid rgba(255, 255, 255);
+}

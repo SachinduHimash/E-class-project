@@ -113,7 +113,7 @@ export class DialogboxComponent implements OnInit {
          console.log('su')
         }
       });
-      this.router.navigate(['markingsheet']);
+      this.router.navigate(['home']);
     } else{
       this.router.navigate([`${paper}`]);
     }
