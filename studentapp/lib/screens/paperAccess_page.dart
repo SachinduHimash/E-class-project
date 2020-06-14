@@ -19,7 +19,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
   
   @override
   Widget build(BuildContext context) {
-    
+  PaperAccessPage.today = new DateTime.now().year.toString()+(new DateTime.now().month.toString().length == 1 ? '0'+new DateTime.now().month.toString():new DateTime.now().month.toString())+new DateTime.now().day.toString();
     
     return SafeArea(
       child: Container(
@@ -67,7 +67,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                                   PaperPage.paperNumber = x.data['paper'];
                                   MyApp.page = 'PaperPage';
                                   PaperPage.answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-                                  PaperPage.endTime = DateTime.now().add(new Duration(seconds:60*1));
+                                  PaperPage.endTime = DateTime.now().add(new Duration(seconds:60*30));
                                   return new StreamBuilder(
                                     stream: Firestore.instance.collection('papers').document(StaticStudent.studentClass.split('.')[0]).collection('paperNumbers').document(x.data['paper']).snapshots(),
                                     builder: (context, snapshot) {

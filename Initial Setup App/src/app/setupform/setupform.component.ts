@@ -287,34 +287,25 @@ export class SetupformComponent implements OnInit {
       password: Md5.hashStr(formValue.password),
       grade: formValue.grade
     });
-    this.test1 = 'test1';
-    try {
-      await this.data$.subscribe(res => {
+    await this.data$.subscribe(res => {
         if (!res.err) {
-          localStorage.setItem('grade', this.myform.value.grade);
-          localStorage.setItem('class', newClass);
-          localStorage.setItem('userID', userID);
-          localStorage.setItem('name', formValue.fullName);
-          localStorage.setItem('grade', formValue.grade);
-          localStorage.setItem('school', formValue.school);
-          this.router.navigate(['home']);
+          this.router.navigate(['']);
         } else {
           if (res.err === 'user already exists') {
-            this.af.collection('users').doc(userID).valueChanges().subscribe((doc) => {
-              //localStorage.setItem('grade', doc['class'].split('.')[0]);
-              this.router.navigate(['']);
-            });
+            alert('user already exists')
+            this.router.navigate(['']);
+            // this.af.collection('users').doc(userID).valueChanges().subscribe((doc) => {
+            //   this.router.navigate(['']);
+            // });
           }
         }
-       
+
       });
-    } catch (error) {
-      this.error1 =error;
-    }
+    
 
    
 
-
+    this.router.navigate(['']);
     this.isPaper = true;
     
   }
