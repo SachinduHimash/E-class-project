@@ -38,126 +38,129 @@ class _WelcomePageState extends State<WelcomePage> {
    final _height=MediaQuery.of(context).size.height;
    final _width=MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/background.png"),
-              fit: BoxFit.fill)
-          ),
-          width: _width,
-          height: _height,
-          child: SafeArea(
-           child: Column(
-            children: <Widget>[
-            SizedBox(
-              height: _height*0.01,
+    return WillPopScope(
+         onWillPop: () async => false,
+        child: Scaffold(
+        body: SingleChildScrollView(
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/background.png"),
+                fit: BoxFit.fill)
             ),
-            Container(
+            width: _width,
+            height: _height,
+            child: SafeArea(
+             child: Column(
+              children: <Widget>[
+              SizedBox(
+                height: _height*0.01,
+              ),
+              Container(
+                       
+                       child:Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          AutoSizeText("Welcome",
+                          style:TextStyle(color: Colors.blue[900],fontSize: _height*0.075,fontFamily: 'Pacifico')),
+                          
+                          AutoSizeText("Please login to access your paper",
+                          maxLines: 2,
+                          style:TextStyle(color: Colors.blue[700],fontSize: _height*0.03))
+                        ]
+                       )
+                      ),
+              SizedBox(
+                       height:_height*0.43,
+                     ),
+              Form(
+                key: _formKey,
+                autovalidate: _autoValidate,
+                child: Column(
+                  children: <Widget>[
+                     Container(
+                       margin: EdgeInsets.only(bottom:_height*0.01),
+                       width: _width*0.75 ,
+                       color: Colors.lightBlue[50],
+                       child:Row(
+                         children: <Widget>[
+                            SizedBox(width:_width*0.05),
+                            Icon(
+                              Icons.person,
+                              color: Colors.blue[900],),
+                            SizedBox(width:_width*0.05),
+                            Container(
                      
-                     child:Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        AutoSizeText("Welcome",
-                        style:TextStyle(color: Colors.blue[900],fontSize: _height*0.075,fontFamily: 'Pacifico')),
-                        
-                        AutoSizeText("Please login to access your paper",
-                        maxLines: 2,
-                        style:TextStyle(color: Colors.blue[700],fontSize: _height*0.03))
-                      ]
-                     )
-                    ),
-            SizedBox(
-                     height:_height*0.43,
-                   ),
-            Form(
-              key: _formKey,
-              autovalidate: _autoValidate,
-              child: Column(
-                children: <Widget>[
-                   Container(
-                     margin: EdgeInsets.only(bottom:_height*0.01),
-                     width: _width*0.75 ,
-                     color: Colors.lightBlue[50],
-                     child:Row(
-                       children: <Widget>[
-                          SizedBox(width:_width*0.05),
-                          Icon(
-                            Icons.person,
+                              width: _width*0.53,
+                              child:TextFormField(
+                               keyboardType: TextInputType.emailAddress,
+                               decoration: InputDecoration(
+                               labelText: 'UserID',
+                               fillColor: Colors.blue,
+                               ),
+                               validator: validateUserId,
+                                onSaved: (String val) {
+                                  _userID = val;
+                                },
+                              ),
+                            )
+                          ]
+                       )
+                     ),
+              
+                     Container(
+                       width:_width*0.75 ,
+                       margin: EdgeInsets.only(bottom:_height*0.02),
+                       color: Colors.lightBlue[50],
+                       child:Row(
+                         children: <Widget>[
+                         SizedBox(width:_width*0.05),
+                         Icon(
+                            Icons.lock,
                             color: Colors.blue[900],),
-                          SizedBox(width:_width*0.05),
-                          Container(
-                   
-                            width: _width*0.53,
+                         SizedBox(width:_width*0.05),
+                         Container(
+                            width:_width*0.53,
                             child:TextFormField(
-                             keyboardType: TextInputType.emailAddress,
-                             decoration: InputDecoration(
-                             labelText: 'UserID',
-                             fillColor: Colors.blue,
-                             ),
-                             validator: validateUserId,
-                              onSaved: (String val) {
-                                _userID = val;
-                              },
+                              obscureText: true,
+                              keyboardType: TextInputType.text,
+                              decoration: InputDecoration(
+                              labelText: 'Password',
+                              fillColor: Colors.blue,
+                              
+                              
+                            ),
+                            validator:validatePassword,
+                            onSaved: (String val) {
+                              _password = val;}
                             ),
                           )
-                        ]
-                     )
-                   ),
+                         ]
+                       )
+                     ),
+                     RaisedButton(
+                       padding: EdgeInsets.fromLTRB(_width*0.1,_height*0.02,_width*0.1,_height*0.02),
+                       shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(30)),
+                       onPressed: _submit,
+                       color: Colors.blue[900],
+                       child: Text(
+                         "Login",
+                         style: TextStyle(
+                           color: Colors.white,
+                           fontSize: 20.0,
+                         ),
+                       ),)
+                  ],))
+              
+             ],
+              
             
-                   Container(
-                     width:_width*0.75 ,
-                     margin: EdgeInsets.only(bottom:_height*0.02),
-                     color: Colors.lightBlue[50],
-                     child:Row(
-                       children: <Widget>[
-                       SizedBox(width:_width*0.05),
-                       Icon(
-                          Icons.lock,
-                          color: Colors.blue[900],),
-                       SizedBox(width:_width*0.05),
-                       Container(
-                          width:_width*0.53,
-                          child:TextFormField(
-                            obscureText: true,
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                            labelText: 'Password',
-                            fillColor: Colors.blue,
-                            
-                            
-                          ),
-                          validator:validatePassword,
-                            onSaved: (String val) {
-                            _password = val;}
-                          ),
-                        )
-                       ]
-                     )
-                   ),
-                   RaisedButton(
-                     padding: EdgeInsets.fromLTRB(_width*0.1,_height*0.02,_width*0.1,_height*0.02),
-                     shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(30)),
-                     onPressed: _submit,
-                     color: Colors.blue[900],
-                     child: Text(
-                       "Login",
-                       style: TextStyle(
-                         color: Colors.white,
-                         fontSize: 20.0,
-                       ),
-                     ),)
-                ],))
-            
-           ],
-            
-          
+            ),
+          ),
           ),
         ),
-        ),
+        
       ),
-      
     );
   }
 
@@ -189,7 +192,8 @@ class _WelcomePageState extends State<WelcomePage> {
       
   } else {
     //    If all data are not valid then start auto validation.
-        setState(() {
+        
+    setState(() {
           _autoValidate = true;
         });
       }

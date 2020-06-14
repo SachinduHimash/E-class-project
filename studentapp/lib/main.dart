@@ -17,13 +17,12 @@ class _State extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-     initialRoute: StaticStudent.studentId == null?"/welcome":"/",
+      initialRoute: StaticStudent.studentId == null?"/welcome":"/",
       routes: {
         "/welcome":(BuildContext context)=>WelcomePage(),
         "/": (BuildContext context) => DefaultAppBarDemo(),
         "/custom": (BuildContext context) => CustomAppBarDemo(),
       },
-      
     );
   }
 }

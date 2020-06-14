@@ -18,6 +18,7 @@ export class DialogboxComponent implements OnInit {
 
 
   isPaper;
+  val = false;
   classN: string;
   userID: string;
   name: string;
@@ -101,6 +102,7 @@ export class DialogboxComponent implements OnInit {
         marks: this.marks,
         name: this.name,
         class: this.classN,
+        answer: this.toggle,
         grade: localStorage.getItem('grade'),
         paperNumber: localStorage.getItem('paperNumber'),
         photo: '',
@@ -124,9 +126,12 @@ export class DialogboxComponent implements OnInit {
   }
 
   checkMarks() {
-    for (let index = 0; index < this.toggle.length; index++) {
-      if (this.toggle[index] === this.paper[index].correctAnswer) {
-        this.marks += 5;
+    if (!this.val){
+      this.val = true;
+      for (let index = 0; index < 20; index++) {
+        if (this.toggle[index] === this.paper[index].correctAnswer) {
+          this.marks += 5;
+        }
       }
     }
   }

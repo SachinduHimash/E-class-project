@@ -37,6 +37,7 @@ class _AnswerPageState extends State<AnswerPage> {
   @override
   Widget build(BuildContext context) {
     _controller.addListener(() {
+    
     setState(() {
       AnswerPage.qNumber = _controller.page;
     });
@@ -119,19 +120,24 @@ class _AnswerPageState extends State<AnswerPage> {
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
                                   RaisedButton(
+                                    color: Colors.blueGrey[900],
                                     child: Text(
-                                      'Back'
+                                      'Back',
+                                    style: TextStyle(color: Colors.white),
                                     ),
                                     onPressed: () { 
                                       AnswerPage.qNumber = _controller.page - 1;
-                                      setState(() {
+                                      
+    setState(() {
                                         _controller.previousPage(duration: Duration(microseconds: 150), curve: Curves.ease);
                                       });
                                     },
                                   ),
                                   RaisedButton(
+                                    color: Colors.blueGrey[900],
                                     child: Text(
-                                      'All'
+                                      'All',
+                                    style: TextStyle(color: Colors.white),
                                     ),
                                     onPressed: () { 
                                       Navigator.of(context).push(CupertinoPageRoute(
@@ -146,8 +152,10 @@ class _AnswerPageState extends State<AnswerPage> {
                                     },
                                   ),
                                   RaisedButton(
+                                    color: Colors.blueGrey[900],
                                     child: Text(
-                                      'finsh'
+                                      'Finsh',
+                                    style: TextStyle(color: Colors.white),
                                     ),
                                     onPressed: () { 
                                       Navigator.of(context).push(CupertinoPageRoute(
@@ -221,8 +229,10 @@ class _AnswerPageState extends State<AnswerPage> {
                                 children: <Widget>[
                                   SizedBox(width: 90,),
                                   RaisedButton(
+                                    color: Colors.blueGrey[900],
                                     child: Text(
-                                      'All'
+                                      'All',
+                                    style: TextStyle(color: Colors.white),
                                     ),
                                     onPressed: () { 
                                       Navigator.of(context).push(CupertinoPageRoute(
@@ -237,12 +247,15 @@ class _AnswerPageState extends State<AnswerPage> {
                                     },
                                   ),
                                   RaisedButton(
+                                    color: Colors.blueGrey[900],
                                     child: Text(
-                                      'Next'
+                                      'Next',
+                                    style: TextStyle(color: Colors.white),
                                     ),
                                     onPressed: () {
                                       AnswerPage.qNumber = _controller.page + 1;
-                                      setState(() {
+                                      
+    setState(() {
                                         _controller.nextPage(duration: Duration(microseconds: 1), curve: Curves.ease);
                                       });
                                     },
@@ -306,19 +319,24 @@ class _AnswerPageState extends State<AnswerPage> {
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
                                   RaisedButton(
+                                    color: Colors.blueGrey[900],
                                     child: Text(
-                                      'Back'
+                                      'Back',
+                                    style: TextStyle(color: Colors.white),
                                     ),
                                     onPressed: () { 
                                       AnswerPage.qNumber = _controller.page - 1;
-                                      setState(() {
+                                      
+    setState(() {
                                         _controller.previousPage(duration: Duration(microseconds: 150), curve: Curves.ease);
                                       });
                                     },
                                   ),
                                   RaisedButton(
+                                    color: Colors.blueGrey[900],
                                     child: Text(
-                                      'All'
+                                      'All',
+                                    style: TextStyle(color: Colors.white),
                                     ),
                                     onPressed: () { 
                                       Navigator.of(context).push(CupertinoPageRoute(
@@ -333,12 +351,15 @@ class _AnswerPageState extends State<AnswerPage> {
                                     },
                                   ),
                                   RaisedButton(
+                                    color: Colors.blueGrey[900],
                                     child: Text(
-                                      'Next'
+                                      'Next',
+                                    style: TextStyle(color: Colors.white),
                                     ),
                                     onPressed: () { 
                                       AnswerPage.qNumber = _controller.page + 1;
-                                      setState(() {
+                                      
+    setState(() {
                                         _controller.nextPage(duration: Duration(microseconds: 1), curve: Curves.ease);
                                       });
                                     },
