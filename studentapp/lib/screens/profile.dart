@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:studentapp/screens/pastPaper.dart';
+import 'package:studentapp/screens/rank.dart';
 import 'dart:convert';
 import '../main.dart';
 import 'package:crypto/crypto.dart';
@@ -151,6 +153,12 @@ class _ProfileState extends State<Profile> {
     StaticStudent.studentClass=null;
     StaticStudent.studentFullname=null;
     StaticStudent.studentSchool=null;
+    PastPaper.papers =List<dynamic>();
+    PastPaper.papersId = List<String>();
+    PastPaper.visible = List<Visible>();
+    PastPaper.val =false;
+    Rank.ranks =List<dynamic>();
+    Rank. paper = null;
      Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => WelcomePage()),
