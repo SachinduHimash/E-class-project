@@ -305,7 +305,7 @@ export class SetupformComponent implements OnInit {
 
    
 
-    this.router.navigate(['']);
+    await this.router.navigate(['']);
     this.isPaper = true;
     
   }
