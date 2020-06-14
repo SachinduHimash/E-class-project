@@ -47,7 +47,6 @@ export class LoginComponent implements OnInit {
     submit(value){
       localStorage.clear();
       this.af.collection('users').doc(value.userID).valueChanges().subscribe((doc) => {
-        console.log(doc)
         this.correctPass = doc['password'];
         this.pass= Md5.hashStr(value.password);
 

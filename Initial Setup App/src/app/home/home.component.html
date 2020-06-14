@@ -1,6 +1,6 @@
 
 <div class="row" style="overflow: hidden;width: 100%;"  *ngIf="!ismobile()">
-    <img src="../../assets/science-background-png-3.png" alt="" style="height: 100vh;position: fixed;width: 100%;">
+    <img src="../../assets/science-background-png-3.png" alt="" style="height: 100vh;position: fixed;width: 100vw;">
     <div class="clo-md-9 col-8"></div>
     <div class="col-md-3 col-4">
         <button color="primary" mat-raised-button style="margin: 5%;margin-left: 80%;" (click)="logout()">
@@ -31,11 +31,11 @@
 </div>
 
 <div class="row" style="overflow: hidden;width: 100%;" *ngIf="ismobile()">
-    <img src="../../assets/science-background-png-3.png" alt="" style="height: 100vh;position: fixed;width: 100%;">
+    <img src="../../assets/science-background-png-3.png" alt="" style="height: 100vh;position: fixed;width: 100vw;">
     <div class="clo-md-9 col-8"></div>
     <div class="col-md-3 col-4">
         <button color="primary" mat-raised-button style="margin: 5%;" (click)="logout()">
-            <mat-icon></mat-icon>
+            <mat-icon>person</mat-icon>
             log out
         </button></div>
     <div class="col-md-4 col-2" style="padding-top: 20%;"></div>

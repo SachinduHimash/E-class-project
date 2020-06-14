@@ -21,7 +21,6 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
   Widget build(BuildContext context) {
     
     
-     print('f3445');
     return SafeArea(
       child: Container(
         padding: EdgeInsets.all(40),
