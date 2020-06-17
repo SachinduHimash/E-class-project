@@ -33,7 +33,6 @@ class _HomeState extends State<Home> {
     List<OrdinalSales> data=[];
     await Firestore.instance.collection('class').document(StaticStudent.studentClass).collection('students').document(StaticStudent.studentId).collection('marks')
     .orderBy('createdAt',descending: true).limit(20).getDocuments().then((h) =>{
-        
         h.documents.forEach((e) async =>{
           print(e.data['mark'].runtimeType),
           print(e.documentID.runtimeType),
@@ -48,7 +47,7 @@ class _HomeState extends State<Home> {
                   id: 'Desktop',
                   domainFn: (OrdinalSales sales, _) => sales.year,
                   measureFn: (OrdinalSales sales, _) => sales.sales,
-                  data: data
+                  data: new List.from(data.reversed)
                   )
                     
               ];
@@ -64,7 +63,7 @@ class _HomeState extends State<Home> {
 
   Widget build(BuildContext context) {
     print(Home.seriesList.runtimeType);
-    Home.seriesList = Home.seriesList.reversed.toList();
+    
     return SafeArea(
       child: SingleChildScrollView(
          

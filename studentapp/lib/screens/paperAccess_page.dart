@@ -92,7 +92,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                           barrierDismissible: false, // user must tap button!
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text('Atemped'),
+                              title: Text('Atemped',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                               content: SingleChildScrollView(
                               child: ListBody(
                                 children: <Widget>[
@@ -101,7 +101,9 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                                 ),
                               ),
                               actions: <Widget>[
-                                FlatButton(
+                                RaisedButton(
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                                  color: Colors.blue[900],
                                   child: Text('Ok'),
                                   onPressed: () {
                                     Navigator.of(context).pop();
@@ -204,7 +206,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                           barrierDismissible: false, // user must tap button!
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text('You are not in the class'),
+                              title: Text('You are not in the class',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                               content: SingleChildScrollView(
                               child: ListBody(
                                 children: <Widget>[
@@ -213,7 +215,9 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                                 ),
                               ),
                               actions: <Widget>[
-                                FlatButton(
+                                RaisedButton(
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                                  color: Colors.blue[900],
                                   child: Text('Ok'),
                                   onPressed: () {
                                     Navigator.of(context).pop();
@@ -232,7 +236,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                           barrierDismissible: false, // user must tap button!
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text('Paper not distributed'),
+                              title: Text('Paper not distributed',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                               content: SingleChildScrollView(
                               child: ListBody(
                                 children: <Widget>[
@@ -241,7 +245,9 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                                 ),
                               ),
                               actions: <Widget>[
-                                FlatButton(
+                                RaisedButton(
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                                  color: Colors.blue[900],
                                   child: Text('Ok'),
                                   onPressed: () {
                                     Navigator.of(context).pop();
@@ -260,7 +266,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                           barrierDismissible: false, // user must tap button!
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text('Paper not distributed'),
+                              title: Text('Paper not distributed',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                               content: SingleChildScrollView(
                               child: ListBody(
                                 children: <Widget>[
@@ -269,7 +275,9 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                                 ),
                               ),
                               actions: <Widget>[
-                                FlatButton(
+                                RaisedButton(
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                                  color: Colors.blue[900],
                                   child: Text('Ok'),
                                   onPressed: () {
                                     Navigator.of(context).pop();

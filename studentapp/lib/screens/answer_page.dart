@@ -85,7 +85,7 @@ class _AnswerPageState extends State<AnswerPage> {
                         Center(
                           child: Container(
                             padding: EdgeInsets.symmetric(vertical: 10,horizontal: 40),
-                            child: Text("your marks is  " +AnswerPage.marks.toString()+' %',
+                            child: Text("Your Mark is  " +AnswerPage.marks.toString()+' %',
                               style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.black87),
                             ),
                           ),
@@ -193,7 +193,7 @@ class _AnswerPageState extends State<AnswerPage> {
                         Center(
                           child: Container(
                             padding: EdgeInsets.symmetric(vertical: 10,horizontal: 40),
-                            child: Text("your marks is  " +AnswerPage.marks.toString()+' %',
+                            child: Text("Your Mark is  " +AnswerPage.marks.toString()+' %',
                               style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.black87),
                             ),
                           ),
@@ -284,7 +284,7 @@ class _AnswerPageState extends State<AnswerPage> {
                         Center(
                           child: Container(
                             padding: EdgeInsets.symmetric(vertical: 10,horizontal: 40),
-                            child: Text("your marks is  " +AnswerPage.marks.toString()+' %',
+                            child: Text("Your Mark is  " +AnswerPage.marks.toString()+' %',
                               style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.black87),
                             ),
                           ),
