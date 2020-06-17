@@ -265,7 +265,8 @@ class _PastPaperState extends State<PastPaper> {
   
   @override
   Widget build(BuildContext context) {
-      
+    
+     final _width=MediaQuery.of(context).size.width;
     
     if(data == null){
       return SafeArea(
@@ -291,9 +292,9 @@ class _PastPaperState extends State<PastPaper> {
           child: Column(
             children: 
               PastPaper.papers.map((i) => Container(
-                margin: EdgeInsets.symmetric(vertical: 10),
+                margin: EdgeInsets.symmetric(vertical: 7),
                 child: new RaisedButton(
-                  color: Colors.blue[400],
+                  color: Colors.blue[900],
                   onPressed:() => { 
                    
                     
@@ -324,18 +325,14 @@ class _PastPaperState extends State<PastPaper> {
                     }        
 
                   },
-                  padding: EdgeInsets.all(30),
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        child: Center(
-                          child: Text(i.paperId.toString(),
-                          style: TextStyle(fontWeight:FontWeight.bold,fontSize: 18),),
-                        ),
+                  padding: EdgeInsets.all(18),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                  child:Container(
+                        padding: EdgeInsets.symmetric(horizontal: _width*0.2),
+                        child: Text(i.paperId.toString(),
+                        style: TextStyle(fontWeight:FontWeight.bold,fontSize: 18,color: Colors.white),),
                       )
                       
-                    ],
-                  )
 
                 ),
               )).toList(),

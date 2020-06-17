@@ -64,6 +64,7 @@ class _HomeState extends State<Home> {
 
   Widget build(BuildContext context) {
     print(Home.seriesList.runtimeType);
+    Home.seriesList = Home.seriesList.reversed.toList();
     return SafeArea(
       child: SingleChildScrollView(
          
