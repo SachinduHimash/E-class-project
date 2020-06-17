@@ -6,6 +6,7 @@ import 'package:scrolling_page_indicator/scrolling_page_indicator.dart';
 import 'package:studentapp/screens/qustionSelcet40.dart';
 import 'package:studentapp/screens/welcome_page.dart';
 import '../main.dart';
+import 'package:studentapp/screens/pastPaper.dart';
 
 class PaperPage40 extends  MyApp{
   static double qNumber;
@@ -248,6 +249,10 @@ class _PaperPage40State extends State<PaperPage40> {
                                           'name': StaticStudent.studentFullname,
 
                                         });
+                                         PastPaper.papers =List<dynamic>();
+                                          PastPaper.papersId = List<String>();
+                                          PastPaper.visible = List<Visible>();
+                                          PastPaper.val =false;
                                         
                                         showDialog<void>(
                                           context: context,

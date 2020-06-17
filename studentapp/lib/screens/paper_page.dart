@@ -5,6 +5,7 @@ import 'package:scrolling_page_indicator/scrolling_page_indicator.dart';
 import 'package:studentapp/screens/qustionSelcet.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:studentapp/screens/welcome_page.dart';
+import 'package:studentapp/screens/pastPaper.dart';
 
 import '../main.dart';
 
@@ -228,6 +229,10 @@ class _PaperPageState extends State<PaperPage> {
                                           'name': StaticStudent.studentFullname,
 
                                         });
+                                          PastPaper.papers =List<dynamic>();
+                                          PastPaper.papersId = List<String>();
+                                          PastPaper.visible = List<Visible>();
+                                          PastPaper.val =false;
                                         
                                         showDialog<void>(
                                           context: context,
