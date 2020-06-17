@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:studentapp/service/database.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
@@ -188,7 +189,22 @@ class _WelcomePageState extends State<WelcomePage> {
           MaterialPageRoute(builder: (context) => DefaultAppBarDemo()),
         );
      }else{
-       
+       Alert(
+          context: context,
+          type: AlertType.error,
+          title: "Your Password is incorrect",
+          
+          buttons: [
+            DialogButton(
+              child: Text(
+                "OK",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              width: 120,
+            )
+          ],
+        ).show();
      }
    }
       
@@ -214,6 +230,7 @@ String validateUserId(String value) {
   }
 
 String validatePassword(String value) {
+    
     if (value.length < 8)
       return 'Invalid Password';
     else
