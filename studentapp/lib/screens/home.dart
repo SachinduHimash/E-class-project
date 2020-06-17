@@ -73,7 +73,7 @@ class _HomeState extends State<Home> {
           child: Center(
             child: Column(
               children: <Widget>[
-                Text('Marks of Last 5 Paper',style: TextStyle(fontSize: 24,fontWeight: FontWeight.w800),),
+                Text('Your Progress',style: TextStyle(fontSize: 30,fontWeight: FontWeight.w800),),
                 Container(
                   height: 300,
                   child:  charts.BarChart(
