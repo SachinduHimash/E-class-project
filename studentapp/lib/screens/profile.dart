@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:studentapp/screens/pastPaper.dart';
 import 'package:studentapp/screens/rank.dart';
 import 'dart:convert';
@@ -37,7 +38,7 @@ class _ProfileState extends State<Profile> {
               children: <Widget>[
                 
                 Container(
-                  margin: EdgeInsets.all(_height*0.06),
+                  margin: EdgeInsets.only(left:_height*0.06,right:_height*0.06,top:_height*0.03,bottom: _height*0.03 ),
                   height:_height*0.2,
                   width:_width*0.8,
                   decoration:BoxDecoration(
@@ -55,10 +56,10 @@ class _ProfileState extends State<Profile> {
                         padding: const EdgeInsets.all(10.0),
                         child: AutoSizeText(StaticStudent.studentFullname,
                         textAlign: TextAlign.center,
-                        style: TextStyle( fontSize:_height*0.0275,color:Colors.black),
+                        style: TextStyle( fontSize:_height*0.0275,color:Colors.black,fontWeight:FontWeight.bold),
                         maxLines: 2,),
                       ),
-                      Text("Your User ID :"+StaticStudent.studentId),
+                      Text("Your User ID :"+StaticStudent.studentId,style: TextStyle(fontWeight:FontWeight.bold),),
                       SizedBox(height:_height*0.01),
                       RaisedButton(
                         shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(30)),
@@ -77,7 +78,7 @@ class _ProfileState extends State<Profile> {
                   autovalidate: _autoValidate,
                   child: Container(
                     // margin: EdgeInsets.all(_height*0.06),
-                    height:_height*0.5,
+                    height:_height*0.53,
                     width:_width*0.8,
                     decoration:BoxDecoration(
                        color:Colors.blue[50],
@@ -90,7 +91,7 @@ class _ProfileState extends State<Profile> {
                     child: Column(
                      children: <Widget>[
                        SizedBox(height:_height*0.03),
-                       Text("Change your Password",style: TextStyle(fontSize:_height*0.035,fontWeight:FontWeight.w400),),
+                       Text("Change your Password",style: TextStyle(fontSize:_height*0.035,fontWeight:FontWeight.bold),),
                        SizedBox(height:_height*0.03),
                        Container(
                             width:_width*0.53,
@@ -168,33 +169,43 @@ class _ProfileState extends State<Profile> {
   dynamic changePassword() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      print('dd');
-      print(_password);
-      print(_compassword);
+     
       if(_password == _compassword){
        
         await Firestore.instance.collection('users').document(StaticStudent.studentId).updateData({"password": md5.convert(utf8.encode(_password)).toString()});
-        
-      } else {
-        print('ssss');
-          return  AlertDialog(
-            title: Text('Password Dose not match'),
-            content: SingleChildScrollView(
-              child: ListBody(
-                  children: <Widget>[
-                    Text('Try Again'),
-                  ],
-                ),
+        Alert(
+          context: context,
+          type: AlertType.success,
+          title: "Your Password Has been Changed",
+          
+          buttons: [
+            DialogButton(
+              child: Text(
+                "OK",
+                style: TextStyle(color: Colors.white, fontSize: 20),
               ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Ok'),
-                onPressed: () {
-                Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
+              onPressed: () => Navigator.pop(context),
+              width: 120,
+            )
+          ],
+        ).show();
+      } else {
+        Alert(
+          context: context,
+          type: AlertType.error,
+          title: "Your Password Has not been Changed",
+          desc: "Passwords doesn't match",
+          buttons: [
+            DialogButton(
+              child: Text(
+                "OK",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              width: 120,
+            )
+          ],
+        ).show();
     }
   }
  }
