@@ -105,7 +105,7 @@ class _AnswerPage40State extends State<AnswerPage40> {
                         Center(
                           child: Container(
                             padding: EdgeInsets.symmetric(vertical: 10,horizontal: 40),
-                            child: Text("your marks is  " +AnswerPage40.marks.toString()+' %',
+                            child: Text("Your Mark is  " +AnswerPage40.marks.toString()+' %',
                               style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.black87),
                             ),
                           ),
@@ -214,7 +214,7 @@ class _AnswerPage40State extends State<AnswerPage40> {
                         Center(
                           child: Container(
                             padding: EdgeInsets.symmetric(vertical: 10,horizontal: 40),
-                            child: Text("your marks is  " +AnswerPage40.marks.toString()+' %',
+                            child: Text("Your Mark is  " +AnswerPage40.marks.toString()+' %',
                               style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.black87),
                             ),
                           ),
@@ -305,7 +305,7 @@ class _AnswerPage40State extends State<AnswerPage40> {
                         Center(
                           child: Container(
                             padding: EdgeInsets.symmetric(vertical: 10,horizontal: 40),
-                            child: Text("your marks is  " +AnswerPage40.marks.toString()+' %',
+                            child: Text("Your Mark is  " +AnswerPage40.marks.toString()+' %',
                               style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.black87),
                             ),
                           ),

@@ -117,7 +117,7 @@ class _RankState extends State<Rank> {
                     children: <Widget>[
                       Container(
                         padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                        child: Text(Rank.paper.toString() + " Paper Ranks",
+                        child: Text(Rank.paper.toString() + " Paper Rank",
                           style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),
                         ),
                       ),

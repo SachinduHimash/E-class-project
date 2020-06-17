@@ -128,40 +128,43 @@ class _State extends State<DefaultAppBarDemo>
     DefaultAppBarDemo.pr = new ProgressDialog(context,isDismissible: false,);
     DefaultAppBarDemo.pr.style(message: "Please wait...");
     
-    return Scaffold(
-      body: TabBarView(
-       
-          controller: _tabController,
-          dragStartBehavior: DragStartBehavior.start,
-          children: _tabItems.value
-              .map((i) => i.title == 'Home' || i.title == 'Happy'
-                  ? Home(): i.title == 'Paper' ? PaperAccessPage(): i.title == 'Rank' ?Rank():i.title == 'Profile' ? Profile() :PastPaper())
-                  // : ( i.title == 'Paper' ?  PaperAccessPage() : ( i.title == 'Profile' ?  Profile() : (i.title == 'Rank' ?  Rank() : PastPaper())))
-                  // )
-              .toList(growable: false)),
-      bottomNavigationBar: _badge == null
-          ? ConvexAppBar(
-              items: _tabItems.value,
-              style: _style.value,
-              curve: _curve.value,
-              backgroundColor: _barColor,
-              gradient: _gradient,
-              controller: _tabController,
-              onTap: (int i) => {debugPrint('select index=$i'), if((i == 3 && !PastPaper.val) || (i==2 && Rank.ranks.isEmpty)) {DefaultAppBarDemo.pr.show(),DefaultAppBarDemo.load = true}},
-            )
-          : ConvexAppBar.badge(
-              {3: _badge.text, 4: Icons.assistant_photo, 2: Colors.redAccent},
-              badgePadding: _badge.padding,
-              badgeColor: _badge.badgeColor,
-              badgeBorderRadius: _badge.borderRadius,
-              items: _tabItems.value,
-              style: _style.value,
-              curve: _curve.value,
-              backgroundColor: _barColor,
-              gradient: _gradient,
-              controller: _tabController,
-              onTap: (int i) => debugPrint('select index=$i'),
-            ),
+    return WillPopScope(
+      onWillPop:  () async => false,
+          child: Scaffold(
+        body: TabBarView(
+         
+            controller: _tabController,
+            dragStartBehavior: DragStartBehavior.start,
+            children: _tabItems.value
+                .map((i) => i.title == 'Home' || i.title == 'Happy'
+                    ? Home(): i.title == 'Paper' ? PaperAccessPage(): i.title == 'Rank' ?Rank():i.title == 'Profile' ? Profile() :PastPaper())
+                    // : ( i.title == 'Paper' ?  PaperAccessPage() : ( i.title == 'Profile' ?  Profile() : (i.title == 'Rank' ?  Rank() : PastPaper())))
+                    // )
+                .toList(growable: false)),
+        bottomNavigationBar: _badge == null
+            ? ConvexAppBar(
+                items: _tabItems.value,
+                style: _style.value,
+                curve: _curve.value,
+                backgroundColor: _barColor,
+                gradient: _gradient,
+                controller: _tabController,
+                onTap: (int i) => {debugPrint('select index=$i'), if((i == 3 && !PastPaper.val) || (i==2 && Rank.ranks.isEmpty)) {DefaultAppBarDemo.pr.show(),DefaultAppBarDemo.load = true}},
+              )
+            : ConvexAppBar.badge(
+                {3: _badge.text, 4: Icons.assistant_photo, 2: Colors.redAccent},
+                badgePadding: _badge.padding,
+                badgeColor: _badge.badgeColor,
+                badgeBorderRadius: _badge.borderRadius,
+                items: _tabItems.value,
+                style: _style.value,
+                curve: _curve.value,
+                backgroundColor: _barColor,
+                gradient: _gradient,
+                controller: _tabController,
+                onTap: (int i) => debugPrint('select index=$i'),
+              ),
+      ),
     );
   }
 

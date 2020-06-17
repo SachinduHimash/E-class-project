@@ -99,7 +99,7 @@ class _PaperPage40State extends State<PaperPage40> {
             child: WillPopScope(
               onWillPop: () {  },
                           child: AlertDialog(
-                                title: Text('Time out'),
+                                title: Text('Time out',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                                 content: SingleChildScrollView(
                                 child: ListBody(
                                   children: <Widget>[
@@ -108,7 +108,9 @@ class _PaperPage40State extends State<PaperPage40> {
                                   ),
                                 ),
                                 actions: <Widget>[
-                                  FlatButton(
+                                  RaisedButton(
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                                    color: Colors.blue[900],
                                     child: Text('Ok'),
                                     onPressed: () {
                                       timeout();
@@ -252,16 +254,18 @@ class _PaperPage40State extends State<PaperPage40> {
                                           barrierDismissible: false, // user must tap button!
                                           builder: (BuildContext context) {
                                             return AlertDialog(
-                                              title: Text('Marks'),
+                                              title: Text('Marks',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                                               content: SingleChildScrollView(
                                                 child: ListBody(
                                                   children: <Widget>[
-                                                    Text('Your Marks is $marks'),
+                                                    Text('Your Mark is $marks'),
                                                   ],
                                                 ),
                                               ),
                                               actions: <Widget>[
-                                                FlatButton(
+                                                RaisedButton(
+                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                                                  color: Colors.blue[900],
                                                   child: Text('Ok'),
                                                   onPressed: () {
                                                     Navigator.of(context).push(CupertinoPageRoute(
@@ -287,7 +291,7 @@ class _PaperPage40State extends State<PaperPage40> {
                                           barrierDismissible: false, // user must tap button!
                                           builder: (BuildContext context) {
                                             return AlertDialog(
-                                              title: Text('Paper not Completed'),
+                                              title: Text('Paper not Completed',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                                               content: SingleChildScrollView(
                                                 child: ListBody(
                                                   children: <Widget>[
@@ -296,7 +300,9 @@ class _PaperPage40State extends State<PaperPage40> {
                                                 ),
                                               ),
                                               actions: <Widget>[
-                                                FlatButton(
+                                                RaisedButton(
+                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                                                  color: Colors.blue[900],
                                                   child: Text('Ok'),
                                                   onPressed: () {
                                                     Navigator.of(context).pop();
