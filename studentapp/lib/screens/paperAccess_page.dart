@@ -26,6 +26,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
         padding: EdgeInsets.all(40),
         child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Image.asset("assets/logo1.png"),
               RaisedButton(
@@ -283,8 +284,9 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                      
                 
                 },
-                padding: EdgeInsets.all(30),
-                color: Colors.blue[400],
+                padding: EdgeInsets.all(18),
+                color: Colors.blue[900],
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
