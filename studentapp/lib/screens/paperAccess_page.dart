@@ -34,7 +34,7 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                   await DefaultAppBarDemo.pr.show();
                   await Firestore.instance.collection('paperAccess').document(StaticStudent.studentClass.split('.')[0]).collection('day').document(PaperAccessPage.today)
                   .get().then((x) async=> {
-                    print(x.data),
+                    print(PaperAccessPage.today),
                     if(x.data["access"]){
                       await Firestore.instance.collection('class').document(StaticStudent.studentClass).collection('students').document(StaticStudent.studentId).collection('marks').document(x.data['paper'])
                       .get().then( (y) async {

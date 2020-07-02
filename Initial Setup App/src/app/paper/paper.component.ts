@@ -76,9 +76,7 @@ export class PaperComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.timeOutIDs.push(
-      setTimeout(() => this.submitTimeout(), 1800000)
-    );
+    
   }
 
 
@@ -99,11 +97,14 @@ export class PaperComponent implements OnInit {
 
   // get_old_paper_data
   async getPaper() {
-
     // const formValue = this.updateFormGroup.value;
+    const year = new Date().getFullYear();
+    const month = new Date().getMonth().toString().length === 1 ? ('0' + (new Date().getMonth() + 1)) : (new Date().getMonth() + 1).toString();
+    const day = new Date().getDate().toString();
+    const today = year + month + day;
     
     // tslint:disable-next-line: max-line-length
-    this._af.collection('paperAccess').doc(this.grade).collection('day').doc(this.datePipe.transform(new Date(), 'yyyyMMdd')).valueChanges().subscribe((doc) => {
+    this._af.collection('paperAccess').doc(this.grade).collection('day').doc(today).valueChanges().subscribe((doc) => {
       if (doc == null){
         alert('You don\'t have any papers today');
         this.router.navigate(['home']);
@@ -121,6 +122,16 @@ export class PaperComponent implements OnInit {
                   this.router.navigate(['home']);
                 }
                 else {
+                  if (doc['questions'] === 40){
+                    this.timeOutIDs.push(
+                      setTimeout(() => this.submitTimeout(), 3600000)
+                    );
+                  } else {
+                    console.log('ddd')
+                    this.timeOutIDs.push(
+                      setTimeout(() => this.submitTimeout(), 1800000)
+                    );
+                  }
                   localStorage.removeItem('toggleKey');
                 }
               });
