@@ -147,7 +147,7 @@ class _PaperPage40State extends State<PaperPage40> {
                             child: Center(
                               heightFactor: 1.4,
                               child: FlipClock.countdown(
-                                duration: Duration(minutes: 25),
+                                duration: PaperPage40.endTime.difference(DateTime.now()),
                                 digitColor: Colors.white,
                                 backgroundColor: Colors.black,
                                 digitSize: 48.0,
@@ -343,7 +343,7 @@ class _PaperPage40State extends State<PaperPage40> {
                             child: Center(
                               heightFactor: 1.4,
                               child: FlipClock.countdown(
-                                duration: Duration(minutes: 25),
+                                duration: PaperPage40.endTime.difference(DateTime.now()),
                                 digitColor: Colors.white,
                                 backgroundColor: Colors.black,
                                 digitSize: 48.0,
@@ -443,7 +443,7 @@ class _PaperPage40State extends State<PaperPage40> {
                             child: Center(
                               heightFactor: 1.4,
                               child: FlipClock.countdown(
-                                duration: Duration(minutes: 25),
+                                duration: PaperPage40.endTime.difference(DateTime.now()),
                                 digitColor: Colors.white,
                                 backgroundColor: Colors.black,
                                 digitSize: 48.0,

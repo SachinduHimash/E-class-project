@@ -105,7 +105,7 @@ export class CreateAccessComponent implements OnInit {
       console.log(moments);
       const day = moments.year().toString()
         .concat(this.formatPaperNumber(Number(moments.month()) + 1))
-        .concat(this.formatPaperNumber(Number(moments.date())));
+        .concat(moments.date().toString());
       console.log(day);
       this.progress3 = true;
       const grade = this.firstFormGroup.value.grade;
