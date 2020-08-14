@@ -57,7 +57,7 @@
           <mat-icon>chevron_right</mat-icon>
         </button>
       </div>
-      <div *ngIf="question.number != 1 && question.number != 20" class="nav-btn">
+      <div *ngIf="question.number != 1 && question.number != paper.length" class="nav-btn">
         <button color="primary" mat-raised-button matStepperPrevious>
           <mat-icon>chevron_left</mat-icon>
           Back
@@ -67,7 +67,7 @@
           <mat-icon>chevron_right</mat-icon>
         </button>
       </div>
-      <div *ngIf="question.number == 20" class="nav-btn">
+      <div *ngIf="question.number == paper.length" class="nav-btn">
         <button color="primary" mat-raised-button matStepperPrevious>
           <mat-icon>chevron_left</mat-icon>
           Back
@@ -137,7 +137,7 @@
           <mat-icon>chevron_right</mat-icon>
         </button>
       </div>
-      <div *ngIf="question.number != 1 && question.number != 20" class="nav-btn">
+      <div *ngIf="question.number != 1 && question.number != paper.length" class="nav-btn">
         <button color="primary" mat-raised-button matStepperPrevious>
           <mat-icon>chevron_left</mat-icon>
           Back
@@ -147,7 +147,7 @@
           <mat-icon>chevron_right</mat-icon>
         </button>
       </div>
-      <div *ngIf="question.number == 20" class="nav-btn">
+      <div *ngIf="question.number == paper.length" class="nav-btn">
         <button color="primary" mat-raised-button matStepperPrevious>
           <mat-icon>chevron_left</mat-icon>
           Back

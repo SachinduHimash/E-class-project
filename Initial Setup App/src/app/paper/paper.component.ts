@@ -28,6 +28,7 @@ export class PaperComponent implements OnInit {
  // toggles to color buttons
 
   toggle: any[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  
 
 
   // fetched_paper_data;
@@ -126,6 +127,8 @@ export class PaperComponent implements OnInit {
                     this.timeOutIDs.push(
                       setTimeout(() => this.submitTimeout(), 3600000)
                     );
+                    // tslint:disable-next-line: max-line-length
+                    this.toggle = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
                   } else {
                     console.log('ddd')
                     this.timeOutIDs.push(
@@ -166,8 +169,8 @@ export class PaperComponent implements OnInit {
 
   checkAnswer(question: number, choice: number){
 
-    this.toggle[question - 1] = choice;
-    localStorage.setItem('toggleKey', JSON.stringify(this.toggle));
+      this.toggle[question - 1] = choice;
+      localStorage.setItem('toggleKey', JSON.stringify(this.toggle));
 
   }
 
@@ -246,7 +249,7 @@ export class PaperComponent implements OnInit {
       marks: this.marks,
       name: this.name,
       class: this.classN,
-      answer: this.toggle,
+      answer:  this.toggle,
       grade: localStorage.getItem('grade'),
       paperNumber: this.paperNumber,
       photo: '',
@@ -264,11 +267,20 @@ export class PaperComponent implements OnInit {
   checkMarks() {
     if (!this.val){
       this.val = true;
-      for (let index = 0; index < 20; index++) {
-        if (this.toggle[index] === this.paper[index].correctAnswer) {
-          this.marks += 5;
+      if (this.paper.length === 20) {
+        for (let index = 0; index < 20; index++) {
+          if (this.toggle[index] === this.paper[index].correctAnswer) {
+            this.marks += 5;
+          }
+        }
+      } else {
+        for (let index = 0; index < 40; index++) {
+          if (this.toggle[index] === this.paper[index].correctAnswer) {
+            this.marks += 2.5;
+          }
         }
       }
+      
     }
 
   }

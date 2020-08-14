@@ -63,26 +63,26 @@ class _AnswerPage40State extends State<AnswerPage40> {
       buildPage(18,AnswerPage40.questions[17], Color.fromRGBO(10, 10, 10,0.1)),
       buildPage(19,AnswerPage40.questions[18], Color.fromRGBO(10, 10, 10,0.1)),
       buildPage(20,AnswerPage40.questions[19], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(21,AnswerPage40.questions[0], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(22,AnswerPage40.questions[1], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(23,AnswerPage40.questions[2], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(24,AnswerPage40.questions[3], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(25,AnswerPage40.questions[4], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(26,AnswerPage40.questions[5], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(27,AnswerPage40.questions[6], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(28,AnswerPage40.questions[7], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(29,AnswerPage40.questions[8], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(30,AnswerPage40.questions[9], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(31,AnswerPage40.questions[10], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(32,AnswerPage40.questions[11], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(33,AnswerPage40.questions[12], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(34,AnswerPage40.questions[13], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(35,AnswerPage40.questions[14], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(36,AnswerPage40.questions[15], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(37,AnswerPage40.questions[16], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(38,AnswerPage40.questions[17], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(39,AnswerPage40.questions[18], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(40,AnswerPage40.questions[19], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(21,AnswerPage40.questions[20], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(22,AnswerPage40.questions[21], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(23,AnswerPage40.questions[22], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(24,AnswerPage40.questions[23], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(25,AnswerPage40.questions[24], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(26,AnswerPage40.questions[25], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(27,AnswerPage40.questions[26], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(28,AnswerPage40.questions[27], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(29,AnswerPage40.questions[28], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(30,AnswerPage40.questions[29], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(31,AnswerPage40.questions[30], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(32,AnswerPage40.questions[31], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(33,AnswerPage40.questions[32], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(34,AnswerPage40.questions[33], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(35,AnswerPage40.questions[34], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(36,AnswerPage40.questions[35], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(37,AnswerPage40.questions[36], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(38,AnswerPage40.questions[37], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(39,AnswerPage40.questions[38], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(40,AnswerPage40.questions[39], Color.fromRGBO(10, 10, 10,0.1)),
     ];
     var marks = 0.0;
     for (var i = 0; i < AnswerPage40.answer.length; i++) {
@@ -148,7 +148,7 @@ class _AnswerPage40State extends State<AnswerPage40> {
                                   onPressed: () { 
                                     AnswerPage40.qNumber = _controller.page - 1;
                                     
-    setState(() {
+                                  setState(() {
                                       _controller.previousPage(duration: Duration(microseconds: 150), curve: Curves.ease);
                                     });
                                   },
@@ -276,7 +276,7 @@ class _AnswerPage40State extends State<AnswerPage40> {
                                   onPressed: () {
                                     AnswerPage40.qNumber = _controller.page + 1;
                                     
-    setState(() {
+                                    setState(() {
                                       _controller.nextPage(duration: Duration(microseconds: 1), curve: Curves.ease);
                                     });
                                   },

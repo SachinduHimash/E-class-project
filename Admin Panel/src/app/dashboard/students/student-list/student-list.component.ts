@@ -25,6 +25,7 @@ export class StudentListComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   constructor(private _af: AngularFirestore) {
+    // this.fetchStudentData1();
   }
 
   ngOnInit(): void {
@@ -74,6 +75,40 @@ export class StudentListComponent implements OnInit, AfterViewInit, OnDestroy {
 
       });
   }
+
+  fetchStudentData1() {
+    console.log('dd');
+    this.classSubscribe = this._af.collection('users', ref => ref.where('class', '==', "11.1"))
+      .valueChanges()
+      .subscribe((docs) => {
+        console.log(docs);
+        // docs = docs.map((doc: Class) => {
+
+        //   console.log(d)
+        //   // const grade = doc.grade.toString().concat('.').concat(doc.number.toString());
+
+        //   // this.studentSubscribe = this._af.collection(`class/${grade}/students`)
+        //   //   .valueChanges({ idField: 'uid' })
+        //   //   .subscribe(results => {
+        //   //     results.map((resultDoc) => {
+        //   //       this.student.push({
+        //   //         uid: resultDoc.uid,
+        //   //         // @ts-ignore
+        //   //         fullName: resultDoc.fullName,
+        //   //         // grade: doc.grade.toString().concat(doc.number.toString()),
+        //   //         className: doc.name,
+        //   //         classType: doc.type
+        //   //       });
+        //   //     });
+        //   //     this.dataSource = new MatTableDataSource(this.student);
+        //   //     this.dataSource.paginator = this.paginator;
+        //   //     this.dataSource.sort = this.sort;
+        //   //   });
+        // });
+
+      });
+  }
+
 
 
   getRecord(row: any) {

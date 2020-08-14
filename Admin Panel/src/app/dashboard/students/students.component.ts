@@ -14,6 +14,8 @@ import {BackupStructure} from '../interfaces/backup';
 import * as moment from 'moment';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import {BackupService} from '../services/backup.service';
+import { saveAs } from 'file-saver';
+
 
 @Component({
   selector: 'app-students',
@@ -52,6 +54,7 @@ export class StudentsComponent implements OnInit, OnDestroy {
   constructor(private _af: AngularFirestore,
               private _notification: NotificationService,
               private _backup: BackupService) {
+    // this.fetchStudentData1();
   }
 
   ngOnInit(): void {
@@ -69,6 +72,44 @@ export class StudentsComponent implements OnInit, OnDestroy {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
+  }
+
+  fetchStudentData1() {
+    console.log('dd');
+    this.classSubscribe = this._af.collection('users')
+      .valueChanges()
+      .subscribe((docs) => {
+        console.log(docs);
+        const jsonObject: object = {
+          "users": docs
+        };
+        const blob = new Blob([JSON.stringify(jsonObject)], { type: 'application/json' });
+        saveAs(blob, 'abc.json');
+        // docs = docs.map((doc: Class) => {
+
+        //   console.log(d)
+        //   // const grade = doc.grade.toString().concat('.').concat(doc.number.toString());
+
+        //   // this.studentSubscribe = this._af.collection(`class/${grade}/students`)
+        //   //   .valueChanges({ idField: 'uid' })
+        //   //   .subscribe(results => {
+        //   //     results.map((resultDoc) => {
+        //   //       this.student.push({
+        //   //         uid: resultDoc.uid,
+        //   //         // @ts-ignore
+        //   //         fullName: resultDoc.fullName,
+        //   //         // grade: doc.grade.toString().concat(doc.number.toString()),
+        //   //         className: doc.name,
+        //   //         classType: doc.type
+        //   //       });
+        //   //     });
+        //   //     this.dataSource = new MatTableDataSource(this.student);
+        //   //     this.dataSource.paginator = this.paginator;
+        //   //     this.dataSource.sort = this.sort;
+        //   //   });
+        // });
+
+      });
   }
 
   async fetchStudentData(grade = 10) {
