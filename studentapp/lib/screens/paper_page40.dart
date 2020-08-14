@@ -69,26 +69,26 @@ class _PaperPage40State extends State<PaperPage40> {
       buildPage(18,PaperPage40.questions[17], Color.fromRGBO(10, 10, 10,0.1)),
       buildPage(19,PaperPage40.questions[18], Color.fromRGBO(10, 10, 10,0.1)),
       buildPage(20,PaperPage40.questions[19], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(21,PaperPage40.questions[0], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(22,PaperPage40.questions[1], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(23,PaperPage40.questions[2], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(24,PaperPage40.questions[3], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(25,PaperPage40.questions[4], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(26,PaperPage40.questions[5], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(27,PaperPage40.questions[6], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(28,PaperPage40.questions[7], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(29,PaperPage40.questions[8], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(30,PaperPage40.questions[9], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(31,PaperPage40.questions[10], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(32,PaperPage40.questions[11], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(33,PaperPage40.questions[12], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(34,PaperPage40.questions[13], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(35,PaperPage40.questions[14], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(36,PaperPage40.questions[15], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(37,PaperPage40.questions[16], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(38,PaperPage40.questions[17], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(39,PaperPage40.questions[18], Color.fromRGBO(10, 10, 10,0.1)),
-      buildPage(40,PaperPage40.questions[19], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(21,PaperPage40.questions[20], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(22,PaperPage40.questions[21], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(23,PaperPage40.questions[22], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(24,PaperPage40.questions[23], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(25,PaperPage40.questions[24], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(26,PaperPage40.questions[25], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(27,PaperPage40.questions[26], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(28,PaperPage40.questions[27], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(29,PaperPage40.questions[28], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(30,PaperPage40.questions[29], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(31,PaperPage40.questions[30], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(32,PaperPage40.questions[31], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(33,PaperPage40.questions[32], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(34,PaperPage40.questions[33], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(35,PaperPage40.questions[34], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(36,PaperPage40.questions[35], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(37,PaperPage40.questions[36], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(38,PaperPage40.questions[37], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(39,PaperPage40.questions[38], Color.fromRGBO(10, 10, 10,0.1)),
+      buildPage(40,PaperPage40.questions[39], Color.fromRGBO(10, 10, 10,0.1)),
     ];
 
     if(PaperPage40.endTime.difference(DateTime.now()).toString()[0]=='-'){
@@ -410,7 +410,7 @@ class _PaperPage40State extends State<PaperPage40> {
                                     onPressed: () {
                                       PaperPage40.qNumber = _controller.page + 1;
                                       
-    setState(() {
+                                      setState(() {
                                         _controller.nextPage(duration: Duration(microseconds: 1), curve: Curves.ease);
                                       });
                                     },
@@ -831,14 +831,14 @@ class _PaperPage40State extends State<PaperPage40> {
     if(!PaperPage40.timeout){
        print('dddd');
       PaperPage40.timeout =true;
-      var marks = 0;
+      var marks = 0.0;
       final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
         functionName: 'login/marks',
       );
       PaperPage40.qNumber = null;
       for (var i = 0; i < PaperPage40.answer.length; i++) {
         if(PaperPage40.answer[i] == PaperPage40.questions[i]['correctAnswer']){
-          marks+=5;
+          marks+=2.5;
         }
       }
       callable.call(<String, dynamic>{
