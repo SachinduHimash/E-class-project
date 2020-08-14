@@ -128,11 +128,20 @@ export class DialogboxComponent implements OnInit {
   checkMarks() {
     if (!this.val){
       this.val = true;
-      for (let index = 0; index < 20; index++) {
-        if (this.toggle[index] === this.paper[index].correctAnswer) {
-          this.marks += 5;
+      if (this.toggle.length === 20) {
+        for (let index = 0; index < 20; index++) {
+          if (this.toggle[index] === this.paper[index].correctAnswer) {
+            this.marks += 5;
+          }
+        }
+      } else {
+        for (let index = 0; index < 40; index++) {
+          if (this.toggle[index] === this.paper[index].correctAnswer) {
+            this.marks += 2.5;
+          }
         }
       }
+      
     }
   }
 }

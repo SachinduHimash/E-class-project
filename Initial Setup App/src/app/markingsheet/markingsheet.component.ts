@@ -68,14 +68,27 @@ export class MarkingsheetComponent implements OnInit {
                       const retrivedToggle = localStorage.getItem('toggleKey');
                       this.toggle = JSON.parse(retrivedToggle);
                       this.marks = 0;
-                      console.log(this.paper)
-                      for (let index = 0; index < this.toggle.length; index++) {
-                        if (this.toggle[index] === this.paper[index].correctAnswer) {
-                          this.marks += 5;
+                      console.log(this.paper);
+                      if (this.paper.length === 20) {
+                          for (let index = 0; index < this.toggle.length; index++) {
+                            if (this.toggle[index] === this.paper[index].correctAnswer) {
+                              this.marks += 5;
+                            }
+                          }
+                      } else {
+                        for (let index = 0; index < this.toggle.length; index++) {
+                          if (this.toggle[index] === this.paper[index].correctAnswer) {
+                            this.marks += 2.5;
+                          }
                         }
                       }
                     } else {
-                      this.toggle = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                      if  (this.paper.length === 20) {
+                        this.toggle = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                      } else {
+                        // tslint:disable-next-line: max-line-length
+                        this.toggle = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                      }
                       this.marks = 0;
                     }
 
@@ -86,6 +99,12 @@ export class MarkingsheetComponent implements OnInit {
                   await this._af.collection('papers').doc(this.grade).collection('paperNumbers').doc(doc[0]['paper']).valueChanges()
                     .subscribe((doc2) => {
                       this.paper = doc2['questions'];
+                      if (this.paper.length === 20) {
+                        this.toggle = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                      } else {
+                        // tslint:disable-next-line: max-line-length
+                        this.toggle = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                      }
                     });
                 } else {
                   alert('Complete your Paper');
