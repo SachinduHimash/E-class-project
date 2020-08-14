@@ -858,6 +858,10 @@ class _PaperPage40State extends State<PaperPage40> {
         'name': StaticStudent.studentFullname,
 
       });
+      PastPaper.papers =List<dynamic>();
+      PastPaper.papersId = List<String>();
+      PastPaper.visible = List<Visible>();
+      PastPaper.val =false;
     }
   }
 }
