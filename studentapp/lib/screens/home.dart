@@ -36,7 +36,7 @@ class _HomeState extends State<Home> {
         h.documents.forEach((e) async =>{
           print(e.data['mark'].runtimeType),
           print(e.documentID.runtimeType),
-          data.add(OrdinalSales(i.toString(),e.data['mark'])),
+          data.add(OrdinalSales(i.toString(),e.data['mark'].round())),
           i++
         })}).then((value) => {
           
