@@ -227,6 +227,7 @@ class _PaperPage40State extends State<PaperPage40> {
                                     ),
                                     onPressed: () async { 
                                       var marks =0.0;
+                                      print( PaperPage40.paperNumber);
                                       if(PaperPage40.answer.indexOf(0) == -1){
                                         PaperPage40.qNumber = null;
                                         for (var i = 0; i < PaperPage40.answer.length; i++) {
@@ -249,7 +250,8 @@ class _PaperPage40State extends State<PaperPage40> {
                                           'name': StaticStudent.studentFullname,
 
                                         });
-                                         PastPaper.papers =List<dynamic>();
+                                        print(resp);
+                                          PastPaper.papers =List<dynamic>();
                                           PastPaper.papersId = List<String>();
                                           PastPaper.visible = List<Visible>();
                                           PastPaper.val =false;
@@ -846,6 +848,7 @@ class _PaperPage40State extends State<PaperPage40> {
           marks+=2.5;
         }
       }
+      
       callable.call(<String, dynamic>{
         'userID': StaticStudent.studentId,
         'class': StaticStudent.studentClass,

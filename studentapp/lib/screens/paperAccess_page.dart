@@ -46,11 +46,11 @@ class _PaperAccessPageState extends State<PaperAccessPage> {
                               builder: (BuildContext context) {
                                 if(x.data["questions"] == 40) {
                                   PaperPage40.qNumber = 0;
-                                  PaperPage.timeout = false;
-                                  PaperPage.paperNumber = x.data['paper'];
+                                  PaperPage40.timeout = false;
+                                  PaperPage40.paperNumber = x.data['paper'];
                                   MyApp.page = 'PaperPage40';
                                   PaperPage40.answer= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-                                   PaperPage40.endTime = DateTime.now().add(new Duration(seconds:60*60));
+                                  PaperPage40.endTime = DateTime.now().add(new Duration(seconds:60*60));
                                   return new StreamBuilder(
                                     stream: Firestore.instance.collection('papers').document(StaticStudent.studentClass.split('.')[0]).collection('paperNumbers').document(x.data['paper']).snapshots(),
                                     builder: (context, snapshot) {
