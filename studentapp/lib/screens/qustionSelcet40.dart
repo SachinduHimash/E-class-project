@@ -417,7 +417,7 @@ class _QustionSelect40State extends State<QustionSelect40> {
                                 },
                                 child: Text('21'),
                                 padding: EdgeInsets.all(25),
-                                color: PaperPage40.answer[19] == 0 ? Colors.blue[400] : Colors.green[700],
+                                color: PaperPage40.answer[20] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                             ],
                           ),
@@ -496,8 +496,8 @@ class _QustionSelect40State extends State<QustionSelect40> {
                                   );
                                 },
                                 child: Text('25'),
-                                padding: EdgeInsets.all(24),
-                                color: PaperPage40.answer[3] == 0 ? Colors.blue[400] : Colors.green[700],
+                                padding: EdgeInsets.all(25),
+                                color: PaperPage40.answer[24] == 0 ? Colors.blue[400] : Colors.green[700],
                               ),
                               RaisedButton(
                                 onPressed: () {
