@@ -220,6 +220,93 @@ export class UpdateStudentComponent implements OnInit, OnChanges {
     }
 
   }
+
+  async updatePaper() {
+
+    try {
+
+      this.progress = true;
+
+      // const formValue = this.updateClass.value;
+      // const classId = formValue.class.value;
+
+      const userData = await this._af.firestore.collection(`paperAccess/12/day`)
+        .get();
+
+      const marksDataUpdateReferences = userData.docs.map(r => {
+        return {
+          ref: this._af.firestore.collection(`paperAccess/11/day`).doc(r.id),
+          data: r.data()
+        };
+      });
+
+      while (marksDataUpdateReferences.length) {
+        const referencesBatch2 = marksDataUpdateReferences.splice(0, 500);
+        const batch = this._af.firestore.batch();
+        for (const reference of referencesBatch2) {
+          batch.set(reference.ref, reference.data);
+        }
+        await batch.commit();
+      }
+
+      const marksDataReferences = userData.docs.map(r => r.ref);
+
+      while (marksDataReferences.length) {
+        const referencesBatch = marksDataReferences.splice(0, 500);
+        const batch = this._af.firestore.batch();
+        for (const reference of referencesBatch) {
+          batch.delete(reference);
+        }
+        await batch.commit();
+      }
+
+      // const marksData = await this._af.firestore.collection(`class/${this.student.grade}/students/${this.uid}/marks`)
+      //   .get();
+
+      // await this._af.firestore.doc(`class/${classId}/students/${this.uid}`)
+      //   .set({
+      //     ...userData.data(),
+      //     changeClassAt: firebase.firestore.FieldValue.serverTimestamp()
+      //   });
+
+      // const marksDataUpdateReferences = marksData.docs.map(r => {
+      //   return {
+      //     ref: this._af.firestore.collection(`class/${classId}/students/${this.uid}/marks`).doc(r.id),
+      //     data: r.data()
+      //   };
+      // });
+
+      // while (marksDataUpdateReferences.length) {
+      //   const referencesBatch2 = marksDataUpdateReferences.splice(0, 500);
+      //   const batch = this._af.firestore.batch();
+      //   for (const reference of referencesBatch2) {
+      //     batch.set(reference.ref, reference.data);
+      //   }
+      //   await batch.commit();
+      // }
+
+      // const marksDataReferences = marksData.docs.map(r => r.ref);
+
+      // while (marksDataReferences.length) {
+      //   const referencesBatch = marksDataReferences.splice(0, 500);
+      //   const batch = this._af.firestore.batch();
+      //   for (const reference of referencesBatch) {
+      //     batch.delete(reference);
+      //   }
+      //   await batch.commit();
+      // }
+
+      // await this._af.firestore.doc(`class/${this.student.grade}/students/${this.uid}`)
+      //   .delete();
+
+      this.progress = false;
+      this._notification.NotificationMessage('Update student successfully');
+    } catch (e) {
+      this.progress = false;
+      this._notification.NotificationMessage('Update student fail');
+    }
+
+  }
 }
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
