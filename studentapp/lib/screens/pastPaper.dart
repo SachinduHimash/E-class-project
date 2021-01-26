@@ -285,62 +285,136 @@ class _PastPaperState extends State<PastPaper> {
 
     } else {
       
-      return SafeArea(
-      child: Container(
-        padding: EdgeInsets.all(40),
-        child: Center(
-          child: Column(
-            children: 
-              PastPaper.papers.map((i) => Container(
-                margin: EdgeInsets.symmetric(vertical: 7),
-                child: new RaisedButton(
-                  color: Colors.blue[900],
-                  onPressed:() => { 
-                   
+      // return SafeArea(
+      //   child: Container(
+      //     padding: EdgeInsets.all(40),
+      //     child: Center(
+      //       child: Column(
+      //         children: 
+      //           PastPaper.papers.map((i) => Container(
+      //             margin: EdgeInsets.symmetric(vertical: 7),
+      //             child: new RaisedButton(
+      //               color: Colors.blue[900],
+      //               onPressed:() => { 
                     
-                    print(i.anwser),
-                    if(i.paperData['questions'].length == 20) {
-                      Navigator.of(context).push(CupertinoPageRoute(
-                        fullscreenDialog: true,
-                        builder: (BuildContext context) {
-                          AnswerPage.qNumber = 0;
-                          MyApp.page = 'PaperPage';
-                          AnswerPage.answer= i.anwser;
-                          AnswerPage.questions = i.paperData['questions'];
-                          return AnswerPage();
-                                     
-                      },))
                       
-                    } else {
-                      Navigator.of(context).push(CupertinoPageRoute(
-                        fullscreenDialog: true,
-                        builder: (BuildContext context) {
-                          AnswerPage40.qNumber = 0;
-                          MyApp.page = 'PaperPage40';
-                          AnswerPage40.answer= i.anwser;
-                          AnswerPage40.questions = i.paperData['questions'];
-                          return AnswerPage40();
-                                     
-                      },))
-                    }        
+      //                 print(i.anwser),
+      //                 if(i.paperData['questions'].length == 20) {
+      //                   Navigator.of(context).push(CupertinoPageRoute(
+      //                     fullscreenDialog: true,
+      //                     builder: (BuildContext context) {
+      //                       AnswerPage.qNumber = 0;
+      //                       MyApp.page = 'PaperPage';
+      //                       AnswerPage.answer= i.anwser;
+      //                       AnswerPage.questions = i.paperData['questions'];
+      //                       return AnswerPage();
+                                      
+      //                   },))
+                        
+      //                 } else {
+      //                   Navigator.of(context).push(CupertinoPageRoute(
+      //                     fullscreenDialog: true,
+      //                     builder: (BuildContext context) {
+      //                       AnswerPage40.qNumber = 0;
+      //                       MyApp.page = 'PaperPage40';
+      //                       AnswerPage40.answer= i.anwser;
+      //                       AnswerPage40.questions = i.paperData['questions'];
+      //                       return AnswerPage40();
+                                      
+      //                   },))
+      //                 }        
 
-                  },
-                  padding: EdgeInsets.all(18),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                  child:Container(
-                        padding: EdgeInsets.symmetric(horizontal: _width*0.2),
-                        child: Text(i.paperId.toString(),
-                        style: TextStyle(fontWeight:FontWeight.bold,fontSize: 18,color: Colors.white),),
-                      )
-                      
+      //               },
+      //               padding: EdgeInsets.all(18),
+      //               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+      //               child:Container(
+      //                     padding: EdgeInsets.symmetric(horizontal: _width*0.2),
+      //                     child: Text(i.paperId.toString(),
+      //                     style: TextStyle(fontWeight:FontWeight.bold,fontSize: 18,color: Colors.white),),
+      //                   )
+                        
 
+      //             ),
+      //           )).toList(),
+              
+      //       ),
+      //     ),
+      //   ),
+      // );
+      return SafeArea(
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints viewportConstraints) {
+              
+              return SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: viewportConstraints.maxHeight,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Container(
+                          padding: EdgeInsets.fromLTRB(0, 40, 0, 40),
+                          child: Center(
+                            child:  Column(
+                                children: 
+                                  PastPaper.papers.map((i) => Container(
+                                    margin: EdgeInsets.symmetric(vertical: 7),
+                                    child: new RaisedButton(
+                                      color: Colors.blue[900],
+                                      onPressed:() => { 
+                                      
+                                        
+                                        print(i.anwser),
+                                        if(i.paperData['questions'].length == 20) {
+                                          Navigator.of(context).push(CupertinoPageRoute(
+                                            fullscreenDialog: true,
+                                            builder: (BuildContext context) {
+                                              AnswerPage.qNumber = 0;
+                                              MyApp.page = 'PaperPage';
+                                              AnswerPage.answer= i.anwser;
+                                              AnswerPage.questions = i.paperData['questions'];
+                                              return AnswerPage();
+                                                        
+                                          },))
+                                          
+                                        } else {
+                                          Navigator.of(context).push(CupertinoPageRoute(
+                                            fullscreenDialog: true,
+                                            builder: (BuildContext context) {
+                                              AnswerPage40.qNumber = 0;
+                                              MyApp.page = 'PaperPage40';
+                                              AnswerPage40.answer= i.anwser;
+                                              AnswerPage40.questions = i.paperData['questions'];
+                                              return AnswerPage40();
+                                                        
+                                          },))
+                                        }        
+
+                                      },
+                                      padding: EdgeInsets.all(18),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                                      child:Container(
+                                            padding: EdgeInsets.symmetric(horizontal: _width*0.2),
+                                            child: Text(i.paperId.toString(),
+                                            style: TextStyle(fontWeight:FontWeight.bold,fontSize: 18,color: Colors.white),),
+                                          )
+                                          
+
+                                    ),
+                                  )).toList(),
+                                
+                              ),
+                            ),
+                          ),
+                    ],
+                  ),
                 ),
-              )).toList(),
-            
+              );
+            },
           ),
-        ),
-      ),
-    );
+        );
   
     }
     

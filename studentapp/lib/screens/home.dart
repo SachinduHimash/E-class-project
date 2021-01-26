@@ -30,14 +30,24 @@ class _HomeState extends State<Home> {
 
   Future _calculation() async {
     var i=1;
+    var date = new DateTime.now().year;
     List<OrdinalSales> data=[];
     await Firestore.instance.collection('class').document(StaticStudent.studentClass).collection('students').document(StaticStudent.studentId).collection('marks')
     .orderBy('createdAt',descending: true).limit(20).getDocuments().then((h) =>{
         h.documents.forEach((e) async =>{
-          print(e.data['mark'].runtimeType),
-          print(e.documentID.runtimeType),
+          // if(StaticStudent.studentClass.split('.')[0] == '12') {
+          //   data.add(OrdinalSales(i.toString(),e.data['mark'].round())),
+          //   i++
+          // } else {
+          //   if(date == e.documentID.substring(0,4)){
+          //     data.add(OrdinalSales(i.toString(),e.data['mark'].round())),
+          //     i++
+          //   }
+          // }
           data.add(OrdinalSales(i.toString(),e.data['mark'].round())),
           i++
+          
+          
         })}).then((value) => {
           
     setState(() {
