@@ -28,7 +28,7 @@ export class PaperComponent implements OnInit {
  // toggles to color buttons
 
   toggle: any[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  
+
 
 
   // fetched_paper_data;
@@ -77,7 +77,7 @@ export class PaperComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
   }
 
 
@@ -100,22 +100,32 @@ export class PaperComponent implements OnInit {
   async getPaper() {
     // const formValue = this.updateFormGroup.value;
     const year = new Date().getFullYear();
-    const month = new Date().getMonth().toString().length === 1 ? ('0' + (new Date().getMonth() + 1)) : (new Date().getMonth() + 1).toString();
+    const month = new Date().getMonth().toString().length === 1 ?
+      ('0' + (new Date().getMonth() + 1)) :
+      (new Date().getMonth() + 1).toString();
     const day = new Date().getDate().toString();
     const today = year + month + day;
-    
+    console.log(today);
+
     // tslint:disable-next-line: max-line-length
     this._af.collection('paperAccess').doc(this.grade).collection('day').doc(today).valueChanges().subscribe((doc) => {
       if (doc == null){
         alert('You don\'t have any papers today');
         this.router.navigate(['home']);
       } else {
-        this._af.collection('papers').doc(this.grade).collection('paperNumbers').doc(doc['paper']).valueChanges()
+        // @ts-ignore
+        console.log(doc.paper);
+        // @ts-ignore
+        this._af.collection('papers').doc(this.grade).collection('paperNumbers').doc(doc.paper).valueChanges()
           .subscribe((doc1) => {
-            this.paper = doc1['questions'];
-            this.paperNumber = doc1['paperNumber'];
-            localStorage.setItem('paperNumber', doc['paper']);
-            this._af.collection('class').doc(this.classN).collection('students').doc(this.userID).collection('marks').doc(doc['paper'])
+            // @ts-ignore
+            this.paper = doc1.questions;
+            // @ts-ignore
+            this.paperNumber = doc1.paperNumber;
+            // @ts-ignore
+            localStorage.setItem('paperNumber', doc.paper);
+            // @ts-ignore
+            this._af.collection('class').doc(this.classN).collection('students').doc(this.userID).collection('marks').doc(doc.paper)
               .valueChanges()
               .subscribe((doc2) => {
                 if (doc2) {
@@ -123,14 +133,15 @@ export class PaperComponent implements OnInit {
                   this.router.navigate(['home']);
                 }
                 else {
-                  if (doc['questions'] === 40){
+                  // @ts-ignore
+                  if (doc.questions === 40){
                     this.timeOutIDs.push(
                       setTimeout(() => this.submitTimeout(), 3600000)
                     );
                     // tslint:disable-next-line: max-line-length
                     this.toggle = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
                   } else {
-                    console.log('ddd')
+                    console.log('ddd');
                     this.timeOutIDs.push(
                       setTimeout(() => this.submitTimeout(), 1800000)
                     );
@@ -280,7 +291,7 @@ export class PaperComponent implements OnInit {
           }
         }
       }
-      
+
     }
 
   }
